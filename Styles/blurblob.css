@@ -1,0 +1,34 @@
+.cursor-blur-mask {
+    position: fixed;
+    top: 0;
+    left: 2;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--x, 7%) var(--y, 7%), transparent 120px, var(--bg-primary) 200px);
+    pointer-events: none;
+    transition: all 0.1s ease;
+    z-index: -109; /* Low z-index to stay behind content */
+}
+
+/* Fallback for browsers that don't support CSS variables */
+body:not([data-theme]) .cursor-blur-mask {
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), transparent 100px, rgba(240, 244, 247, 0.95) 200px);
+}
+
+[data-theme="light"] .cursor-blur-mask {
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), transparent 100px, rgba(240, 244, 247, 0.95) 200px);
+}
+
+[data-theme="dark"] .cursor-blur-mask {
+    background: radial-gradient(circle at var(--x, 20%) var(--y, 50%), transparent 100px, rgba(1, 1, 32, 0.95) 200px);
+}
+
+.blur-blob {
+    position: fixed;
+    width: 400px;
+    height: 200px;
+    border-radius: 10%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: -110; /* Even lower z-index for the blobs */
+}
