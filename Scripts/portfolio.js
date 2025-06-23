@@ -1,133 +1,266 @@
 // ==========================================
-// PORTFOLIO PAGE JAVASCRIPT - SIMPLIFIED FINAL VERSION
+// PORTFOLIO PAGE JAVASCRIPT
 // ==========================================
 
-// Portfolio-specific state (READ ONLY - doesn't manage wallet connection)
-let portfolioData = {
-  totalValue: 0,
-  totalStaked: 0,
-  totalLending: 0,
-  totalYield: 0,
-  assets: []
+// Portfolio state management
+let portfolioState = {
+  isWalletConnected: false,
+  data: {
+    totalValue: 0,
+    totalChange: 0,
+    totalStaked: 0,
+    stakedRewards: 0,
+    totalLending: 0,
+    lendingAPY: 0,
+    totalYield: 0,
+    yieldAPY: 0,
+    assets: []
+  }
 };
 
+// Mock asset data
+const mockAssets = [
+  {
+    symbol: 'ETH',
+    name: 'Ethereum',
+    balance: 2.45,
+    price: 2500.00,
+    value: 6125.00,
+    change24h: 5.2,
+    allocation: 45.5
+  },
+  {
+    symbol: 'USDC',
+    name: 'USD Coin',
+    balance: 5420.50,
+    price: 1.00,
+    value: 5420.50,
+    change24h: 0.1,
+    allocation: 40.2
+  },
+  {
+    symbol: 'WBTC',
+    name: 'Wrapped Bitcoin',
+    balance: 0.085,
+    price: 43750.00,
+    value: 3718.75,
+    change24h: 3.8,
+    allocation: 14.3
+  }
+];
+
 // ==========================================
-// WALLET EVENT LISTENERS - SIMPLIFIED
+// WALLET CONNECTION HANDLERS
 // ==========================================
+
+function connectWallet() {
+  console.log('Portfolio: connectWallet called - using global wallet');
+  
+  // Use the global wallet connection function
+  if (typeof window.globalWalletConnect === 'function') {
+    window.globalWalletConnect();
+  } else {
+    console.error('Global wallet connect function not available');
+  }
+}
 
 // Listen for global wallet connection
 window.addEventListener('globalWalletConnected', function(event) {
-  console.log('Portfolio: Received global wallet connected event', event.detail);
-  loadPortfolioData(event.detail.account, event.detail.provider);
+  console.log('Portfolio: Received global wallet connected event');
+  
+  portfolioState.isWalletConnected = true;
+  loadPortfolioData();
 });
 
 // Listen for global wallet disconnection
 window.addEventListener('globalWalletDisconnected', function(event) {
   console.log('Portfolio: Received global wallet disconnected event');
-  clearPortfolioData();
+  
+  portfolioState.isWalletConnected = false;
+  resetPortfolioData();
 });
 
 // ==========================================
-// PORTFOLIO DATA FUNCTIONS
+// DATA LOADING FUNCTIONS
 // ==========================================
 
-async function loadPortfolioData(account, provider) {
-  if (!account || !provider) {
-    console.log("No account or provider available for portfolio data");
+function loadPortfolioData() {
+  if (!portfolioState.isWalletConnected) {
+    console.log("No wallet connected for portfolio data");
     return;
   }
 
   try {
-    console.log("Loading portfolio data for:", account);
-
-    // Get ETH balance
-    const balance = await provider.getBalance(account);
-    const ethBalance = ethers.formatEther(balance);
-    const ethPrice = 2400; // Mock price for demo
-    const ethValue = parseFloat(ethBalance) * ethPrice;
-
-    // Update portfolio data
-    portfolioData = {
-      totalValue: ethValue,
-      totalStaked: ethValue * 0.3,
-      totalLending: ethValue * 0.2,
-      totalYield: ethValue * 0.15,
-      assets: [
-        {
-          symbol: 'ETH',
-          name: 'Ethereum',
-          balance: parseFloat(ethBalance).toFixed(4),
-          value: ethValue.toFixed(2),
-          change: '+2.34%',
-          allocation: ethValue > 0 ? '100%' : '0%'
-        }
-      ]
-    };
-
-    // Update UI
-    updatePortfolioUI();
-
-    console.log("Portfolio data loaded successfully");
-    if (typeof window.showMessage === 'function') {
-      window.showMessage("Portfolio data updated!", "success");
-    }
+    console.log("Loading portfolio data...");
     
+    // Calculate totals from mock assets
+    const totalValue = mockAssets.reduce((sum, asset) => sum + asset.value, 0);
+    const totalChange = totalValue * 0.052; // 5.2% gain
+    
+    // Update portfolio state
+    portfolioState.data = {
+      totalValue: totalValue,
+      totalChange: totalChange,
+      totalStaked: 2400.00,
+      stakedRewards: 125.50,
+      totalLending: 1200.00,
+      lendingAPY: 8.5,
+      totalYield: 850.00,
+      yieldAPY: 12.3,
+      assets: mockAssets
+    };
+    
+    // Update UI
+    updatePortfolioOverview();
+    updateAssetsTable();
+    
+    console.log("Portfolio data loaded successfully");
+    
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Portfolio data updated!', 'success');
+    }
   } catch (error) {
     console.error("Failed to load portfolio data:", error);
     if (typeof window.showMessage === 'function') {
       window.showMessage("Failed to load portfolio data: " + error.message, "error");
     }
-    clearPortfolioData();
+    resetPortfolioData();
   }
 }
 
-function updatePortfolioUI() {
-  // Update portfolio cards
-  const elements = {
-    totalValue: document.getElementById("totalValue"),
-    totalChange: document.getElementById("totalChange"),
-    totalStaked: document.getElementById("totalStaked"),
-    stakedRewards: document.getElementById("stakedRewards"),
-    totalLending: document.getElementById("totalLending"),
-    lendingAPY: document.getElementById("lendingAPY"),
-    totalYield: document.getElementById("totalYield"),
-    yieldAPY: document.getElementById("yieldAPY")
-  };
-
-  if (elements.totalValue) {
-    elements.totalValue.textContent = `$${portfolioData.totalValue.toFixed(2)}`;
+function updatePortfolioOverview() {
+  const data = portfolioState.data;
+  
+  // Update total portfolio value
+  const totalValueEl = document.getElementById('totalValue');
+  if (totalValueEl) {
+    totalValueEl.textContent = `$${data.totalValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
   }
-  if (elements.totalChange) {
-    elements.totalChange.textContent = "+$23.45 (0.97%)";
+  
+  // Update total change
+  const totalChangeEl = document.getElementById('totalChange');
+  if (totalChangeEl) {
+    const changePercent = ((data.totalChange / (data.totalValue - data.totalChange)) * 100).toFixed(2);
+    totalChangeEl.textContent = `+$${data.totalChange.toFixed(2)} (+${changePercent}%)`;
+    totalChangeEl.className = data.totalChange >= 0 ? 'card-change positive' : 'card-change negative';
   }
-  if (elements.totalStaked) {
-    elements.totalStaked.textContent = `$${portfolioData.totalStaked.toFixed(2)}`;
+  
+  // Update staking info
+  const totalStakedEl = document.getElementById('totalStaked');
+  if (totalStakedEl) {
+    totalStakedEl.textContent = `$${data.totalStaked.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
   }
-  if (elements.stakedRewards) {
-    elements.stakedRewards.textContent = "+$12.34 rewards";
+  
+  const stakedRewardsEl = document.getElementById('stakedRewards');
+  if (stakedRewardsEl) {
+    stakedRewardsEl.textContent = `+$${data.stakedRewards.toFixed(2)} rewards`;
   }
-  if (elements.totalLending) {
-    elements.totalLending.textContent = `${portfolioData.totalLending.toFixed(2)}`;
+  
+  // Update lending info
+  const totalLendingEl = document.getElementById('totalLending');
+  if (totalLendingEl) {
+    totalLendingEl.textContent = `$${data.totalLending.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
   }
-  if (elements.lendingAPY) {
-    elements.lendingAPY.textContent = "4.25% APY";
+  
+  const lendingAPYEl = document.getElementById('lendingAPY');
+  if (lendingAPYEl) {
+    lendingAPYEl.textContent = `${data.lendingAPY}% APY`;
   }
-  if (elements.totalYield) {
-    elements.totalYield.textContent = `${portfolioData.totalYield.toFixed(2)}`;
+  
+  // Update yield farming info
+  const totalYieldEl = document.getElementById('totalYield');
+  if (totalYieldEl) {
+    totalYieldEl.textContent = `$${data.totalYield.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
   }
-  if (elements.yieldAPY) {
-    elements.yieldAPY.textContent = "8.5% APY";
+  
+  const yieldAPYEl = document.getElementById('yieldAPY');
+  if (yieldAPYEl) {
+    yieldAPYEl.textContent = `${data.yieldAPY}% APY`;
   }
-
-  // Update assets table
-  updateAssetsTable();
 }
 
 function updateAssetsTable() {
-  const assetsTableBody = document.getElementById("assetsTableBody");
+  const assetsTableBody = document.getElementById('assetsTableBody');
   if (!assetsTableBody) return;
+  
+  const assets = portfolioState.data.assets;
+  
+  if (assets.length === 0) {
+    assetsTableBody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px; font-size: 1.1rem;">
+          <div style="margin-bottom: 10px;">📊 No assets found</div>
+          <div style="font-size: 0.9rem; opacity: 0.8;">Your portfolio appears to be empty</div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+  
+  assetsTableBody.innerHTML = assets.map(asset => {
+    const changeClass = asset.change24h >= 0 ? 'positive' : 'negative';
+    const changeSymbol = asset.change24h >= 0 ? '+' : '';
+    
+    return `
+      <tr>
+        <td>
+          <div class="asset-info">
+            <div class="asset-icon">${asset.symbol}</div>
+            <div class="asset-details">
+              <div class="asset-symbol">${asset.symbol}</div>
+              <div class="asset-name">${asset.name}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="balance-info">
+            <div class="balance-amount">${asset.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})}</div>
+            <div class="balance-symbol">${asset.symbol}</div>
+          </div>
+        </td>
+        <td>
+          <div class="value-info">
+            <div class="value-amount">$${asset.value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+            <div class="value-price">@$${asset.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+          </div>
+        </td>
+        <td>
+          <div class="change-info ${changeClass}">
+            ${changeSymbol}${asset.change24h.toFixed(1)}%
+          </div>
+        </td>
+        <td>
+          <div class="allocation-info">
+            <div class="allocation-percent">${asset.allocation.toFixed(1)}%</div>
+            <div class="allocation-bar">
+              <div class="allocation-fill" style="width: ${asset.allocation}%"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
 
-  if (portfolioData.assets.length === 0) {
+function resetPortfolioData() {
+  portfolioState.data = {
+    totalValue: 0,
+    totalChange: 0,
+    totalStaked: 0,
+    stakedRewards: 0,
+    totalLending: 0,
+    lendingAPY: 0,
+    totalYield: 0,
+    yieldAPY: 0,
+    assets: []
+  };
+  
+  // Update overview with zeros
+  updatePortfolioOverview();
+  
+  // Reset assets table
+  const assetsTableBody = document.getElementById('assetsTableBody');
+  if (assetsTableBody) {
     assetsTableBody.innerHTML = `
       <tr>
         <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px; font-size: 1.1rem;">
@@ -136,97 +269,27 @@ function updateAssetsTable() {
         </td>
       </tr>
     `;
-    return;
   }
-
-  assetsTableBody.innerHTML = portfolioData.assets.map(asset => `
-    <tr>
-      <td>
-        <div class="asset-info">
-          <div class="asset-icon">${asset.symbol}</div>
-          <div>
-            <div style="font-weight: 600;">${asset.name}</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">${asset.symbol}</div>
-          </div>
-        </div>
-      </td>
-      <td>${asset.balance} ${asset.symbol}</td>
-      <td>${asset.value}</td>
-      <td class="positive">${asset.change}</td>
-      <td>${asset.allocation}</td>
-    </tr>
-  `).join('') + `
-    <tr>
-      <td>
-        <div class="asset-info">
-          <div class="asset-icon">USDC</div>
-          <div>
-            <div style="font-weight: 600;">USD Coin</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">USDC</div>
-          </div>
-        </div>
-      </td>
-      <td>0.00 USDC</td>
-      <td>$0.00</td>
-      <td class="positive">+0.01%</td>
-      <td>0%</td>
-    </tr>
-  `;
-}
-
-function clearPortfolioData() {
-  // Reset portfolio data
-  portfolioData = {
-    totalValue: 0,
-    totalStaked: 0,
-    totalLending: 0,
-    totalYield: 0,
-    assets: []
-  };
-
-  // Reset UI to default values
-  const elements = {
-    totalValue: document.getElementById("totalValue"),
-    totalChange: document.getElementById("totalChange"),
-    totalStaked: document.getElementById("totalStaked"),
-    stakedRewards: document.getElementById("stakedRewards"),
-    totalLending: document.getElementById("totalLending"),
-    lendingAPY: document.getElementById("lendingAPY"),
-    totalYield: document.getElementById("totalYield"),
-    yieldAPY: document.getElementById("yieldAPY")
-  };
-
-  if (elements.totalValue) elements.totalValue.textContent = "$0.00";
-  if (elements.totalChange) elements.totalChange.textContent = "+$0.00 (0.00%)";
-  if (elements.totalStaked) elements.totalStaked.textContent = "$0.00";
-  if (elements.stakedRewards) elements.stakedRewards.textContent = "+$0.00 rewards";
-  if (elements.totalLending) elements.totalLending.textContent = "$0.00";
-  if (elements.lendingAPY) elements.lendingAPY.textContent = "0.00% APY";
-  if (elements.totalYield) elements.totalYield.textContent = "$0.00";
-  if (elements.yieldAPY) elements.yieldAPY.textContent = "0.00% APY";
-
-  // Reset assets table
-  updateAssetsTable();
 }
 
 // ==========================================
-// PORTFOLIO INITIALIZATION
+// PAGE INITIALIZATION
 // ==========================================
 
 function initializePortfolioPage() {
-  console.log("Portfolio page initialized");
+  console.log('Portfolio page initialized');
   
-  // Start with cleared data
-  clearPortfolioData();
+  // Initialize with default state
+  resetPortfolioData();
   
   // Check if wallet is already connected
   if (window.globalWalletState && 
       window.globalWalletState.isConnected && 
-      window.globalWalletState.account && 
-      window.globalWalletState.provider) {
+      window.globalWalletState.hasUserConnected) {
     
-    console.log("Wallet already connected, loading portfolio data");
-    loadPortfolioData(window.globalWalletState.account, window.globalWalletState.provider);
+    console.log('Wallet already connected, loading portfolio data');
+    portfolioState.isWalletConnected = true;
+    loadPortfolioData();
   }
 }
 
@@ -237,3 +300,9 @@ if (document.readyState === 'loading') {
   // If already loaded (dynamic loading case)
   setTimeout(initializePortfolioPage, 100);
 }
+
+// ==========================================
+// EXPORT FOR GLOBAL ACCESS
+// ==========================================
+
+window.initializePortfolioPage = initializePortfolioPage;
