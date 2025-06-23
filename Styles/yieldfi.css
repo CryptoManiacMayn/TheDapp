@@ -1,0 +1,1561 @@
+/* ==========================================
+   YIELDFI SPECIFIC STYLES - FIXED VERSION (NO CONFLICTS)
+   ========================================== */
+
+.yieldfi-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.yieldfi-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.yieldfi-header h1 {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================
+   NAVIGATION TABS
+   ========================================== */
+
+.yieldfi-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 30px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 4px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-tab {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nav-tab.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .nav-tab.active {
+  box-shadow: 0 2px 8px rgba(77, 162, 255, 0.3);
+}
+
+.nav-tab:hover:not(.active) {
+  background: var(--glass-bg-light);
+  color: var(--text-primary);
+}
+
+.tab-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ==========================================
+   TAB CONTENT
+   ========================================== */
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ==========================================
+   SWAP LAYOUT
+   ========================================== */
+
+.swap-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.swap-section {
+  position: sticky;
+  top: 20px;
+}
+
+.swap-container {
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow-light);
+}
+
+.swap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.swap-header h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.settings-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.settings-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.settings-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ==========================================
+   SLIPPAGE SETTINGS
+   ========================================== */
+
+.slippage-panel {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.slippage-panel h4 {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.slippage-options {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.slippage-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slippage-btn.active,
+.slippage-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.custom-slippage {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.custom-slippage input {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.custom-slippage span {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* ==========================================
+   TOKEN INPUT CONTAINERS
+   ========================================== */
+
+.token-input-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 4px;
+  transition: all var(--transition-fast);
+}
+
+.token-input-container:hover {
+  border-color: var(--accent);
+}
+
+.token-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.token-input-header span:first-child {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.balance {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.token-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.token-select {
+  display: flex;
+  align-items: center;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 120px;
+  border: 1px solid transparent;
+}
+
+.token-select:hover {
+  background: var(--glass-bg-light);
+  border-color: var(--accent);
+}
+
+.token-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.token-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.token-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.token-symbol {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.token-name {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.dropdown-arrow {
+  width: 16px;
+  height: 16px;
+  fill: var(--text-secondary);
+  margin-left: 8px;
+}
+
+.amount-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amount-input input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: right;
+  outline: none;
+}
+
+.amount-input input::placeholder {
+  color: var(--text-secondary);
+}
+
+.max-btn,
+.max-buttons .max-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.max-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.token-value {
+  text-align: right;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* ==========================================
+   SWAP DIRECTION BUTTON
+   ========================================== */
+
+.swap-direction {
+  display: flex;
+  justify-content: center;
+  margin: -12px 0;
+  z-index: 1;
+  position: relative;
+}
+
+.swap-flip-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--bg-secondary);
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.swap-flip-btn:hover {
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .swap-flip-btn:hover {
+  box-shadow: 0 6px 20px rgba(77, 162, 255, 0.3);
+}
+
+.swap-flip-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* ==========================================
+   SWAP DETAILS & ACTIONS
+   ========================================== */
+
+.swap-details {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-row span:first-child {
+  color: var(--text-secondary);
+}
+
+.detail-row span:last-child {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.swap-actions {
+  margin-top: 20px;
+}
+
+.swap-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.swap-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .swap-btn:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(77, 162, 255, 0.3);
+}
+
+.swap-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   CHART SECTION
+   ========================================== */
+
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-container {
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow-light);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.chart-title h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.chart-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-price span:first-child {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.chart-timeframes {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.timeframe-btn {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.timeframe-btn.active,
+.timeframe-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.chart-content {
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  padding: 15px;
+}
+
+#priceChart {
+  width: 100%;
+  height: 400px;
+  display: block;
+}
+
+/* ==========================================
+   MARKET STATS
+   ========================================== */
+
+.market-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.stat-card {
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glass-hover-shadow-light);
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ==========================================
+   BRIDGE LAYOUT - FIXED NETWORK SELECTORS
+   ========================================== */
+
+.bridge-layout {
+  display: flex;
+  justify-content: center;
+}
+
+.bridge-container {
+  max-width: 500px;
+  width: 100%;
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow-light);
+}
+
+.bridge-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.bridge-header h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.bridge-header p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   BRIDGE NETWORK SELECTION - SCOPED TO AVOID CONFLICTS
+   ========================================== */
+
+.bridge-network-selection {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 15px;
+  align-items: end;
+  margin-bottom: 25px;
+}
+
+.bridge-network-from,
+.bridge-network-to {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bridge-network-from label,
+.bridge-network-to label {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.bridge-network-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bridge-network-select:hover {
+  border-color: var(--accent);
+  background: var(--glass-bg-light);
+}
+
+.bridge-network-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bridge-network-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bridge-network-icon.ethereum {
+  background: linear-gradient(135deg, #627eea, #3c56d1);
+}
+
+.bridge-network-icon.polygon {
+  background: linear-gradient(135deg, #8247e5, #6b2de8);
+}
+
+.bridge-network-icon.bsc {
+  background: linear-gradient(135deg, #f3ba2f, #e8a317);
+}
+
+.bridge-network-icon.arbitrum {
+  background: linear-gradient(135deg, #28a0f0, #1e7dcf);
+}
+
+.bridge-network-icon.optimism {
+  background: linear-gradient(135deg, #ff0420, #cc0318);
+}
+
+.bridge-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bridge-flip-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--bg-secondary);
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.bridge-flip-btn:hover {
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .bridge-flip-btn:hover {
+  box-shadow: 0 4px 15px rgba(77, 162, 255, 0.3);
+}
+
+.bridge-flip-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ==========================================
+   BRIDGE TOKEN CONTAINER
+   ========================================== */
+
+.bridge-token-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all var(--transition-fast);
+}
+
+.bridge-token-container:hover {
+  border-color: var(--accent);
+}
+
+/* ==========================================
+   BRIDGE DETAILS & ACTIONS
+   ========================================== */
+
+.bridge-details {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+}
+
+.bridge-actions {
+  margin-top: 20px;
+}
+
+.bridge-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bridge-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .bridge-btn:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(77, 162, 255, 0.3);
+}
+
+.bridge-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   LIQUIDITY LAYOUT
+   ========================================== */
+
+.liquidity-layout {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.liquidity-container {
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow-light);
+  position: sticky;
+  top: 20px;
+}
+
+.liquidity-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.liquidity-header h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.liquidity-header p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   POOL SELECTION
+   ========================================== */
+
+.pool-selection {
+  margin-bottom: 25px;
+}
+
+.pool-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pool-select:hover {
+  border-color: var(--accent);
+  background: var(--glass-bg-light);
+}
+
+.pool-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pool-tokens {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.token-pair {
+  display: flex;
+  align-items: center;
+  gap: -8px;
+}
+
+.token-pair .token-icon:last-child {
+  margin-left: -8px;
+  border: 2px solid var(--bg-secondary);
+}
+
+.pool-apy {
+  color: #38a169;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   LIQUIDITY INPUTS
+   ========================================== */
+
+.liquidity-inputs {
+  margin-bottom: 20px;
+}
+
+.liquidity-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.token-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 100px;
+}
+
+.token-display span {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   LIQUIDITY DETAILS & ACTIONS
+   ========================================== */
+
+.liquidity-details {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+}
+
+.liquidity-actions {
+  margin-top: 20px;
+}
+
+.liquidity-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.liquidity-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .liquidity-btn:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(77, 162, 255, 0.3);
+}
+
+.liquidity-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   YOUR LIQUIDITY POSITIONS
+   ========================================== */
+
+.your-liquidity {
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow-light);
+}
+
+.your-liquidity-header {
+  margin-bottom: 20px;
+}
+
+.your-liquidity-header h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.liquidity-positions {
+  min-height: 200px;
+}
+
+.no-positions {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+}
+
+.no-positions p:first-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.no-positions p:last-child {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==========================================
+   MODAL OVERLAYS - SCOPED TO AVOID CONFLICTS
+   ========================================== */
+
+.yieldfi-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.yieldfi-token-selector,
+.yieldfi-network-selector {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideInUp 0.3s ease-out;
+}
+
+.yieldfi-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border);
+}
+
+.yieldfi-selector-header h3 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.yieldfi-close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+}
+
+.yieldfi-close-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.yieldfi-selector-search {
+  padding: 15px 25px;
+  border-bottom: 1px solid var(--border);
+}
+
+.yieldfi-selector-search input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.yieldfi-selector-search input:focus {
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+.yieldfi-token-list,
+.yieldfi-network-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.yieldfi-token-item,
+.yieldfi-network-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 25px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.yieldfi-token-item:hover,
+.yieldfi-network-item:hover {
+  background: var(--glass-bg-light);
+}
+
+.yieldfi-token-item .token-icon,
+.yieldfi-network-item .bridge-network-icon {
+  flex-shrink: 0;
+}
+
+.yieldfi-token-item-info,
+.yieldfi-network-item-info {
+  flex: 1;
+}
+
+.yieldfi-token-item-info .token-symbol,
+.yieldfi-network-item-info .bridge-network-name {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.yieldfi-token-item-info .token-name {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.yieldfi-token-balance {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+/* ==========================================
+   CONNECT WALLET PROMPT
+   ========================================== */
+
+.connect-wallet-prompt {
+  text-align: center;
+  padding: 40px;
+  background: var(--glass-bg-light);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: var(--glass-shadow-light);
+}
+
+.connect-wallet-prompt h2 {
+  color: var(--text-primary);
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.connect-wallet-prompt p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.connect-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.connect-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .connect-btn:hover {
+  box-shadow: 0 8px 25px rgba(77, 162, 255, 0.3);
+}
+
+.connect-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+
+.positive {
+  color: #38a169;
+}
+
+.negative {
+  color: #e53e3e;
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 1200px) {
+  .swap-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .swap-section {
+    position: static;
+  }
+
+  .liquidity-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .liquidity-container {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .yieldfi-container {
+    padding: 0 1rem;
+  }
+
+  .yieldfi-nav {
+    margin-bottom: 20px;
+  }
+
+  .nav-tab {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+
+  .tab-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .swap-container,
+  .bridge-container,
+  .liquidity-container,
+  .your-liquidity {
+    padding: 20px;
+  }
+
+  .token-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .amount-input input {
+    text-align: left;
+  }
+
+  .bridge-network-selection {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .bridge-arrow {
+    margin: 10px 0;
+  }
+
+  .bridge-flip-btn {
+    transform: rotate(90deg);
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .chart-timeframes {
+    align-self: stretch;
+    justify-content: space-between;
+  }
+
+  .market-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .yieldfi-token-selector,
+  .yieldfi-network-selector {
+    width: 95%;
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .yieldfi-nav {
+    flex-direction: column;
+    gap: 4px;
+    max-width: none;
+  }
+
+  .nav-tab {
+    justify-content: flex-start;
+    padding: 12px 16px;
+  }
+
+  .swap-container,
+  .bridge-container,
+  .liquidity-container,
+  .your-liquidity {
+    padding: 15px;
+  }
+
+  .token-input-container {
+    padding: 15px;
+  }
+
+  .chart-content {
+    padding: 10px;
+  }
+
+  #priceChart {
+    height: 250px;
+  }
+
+  .market-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-row {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==========================================
+   DARK THEME ENHANCEMENTS
+   ========================================== */
+
+[data-theme="dark"] .swap-container,
+[data-theme="dark"] .bridge-container,
+[data-theme="dark"] .liquidity-container,
+[data-theme="dark"] .your-liquidity,
+[data-theme="dark"] .chart-container {
+  background: rgba(77, 162, 255, 0.1);
+  border: 1px solid rgba(77, 162, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(1, 1, 32, 0.3);
+}
+
+[data-theme="dark"] .token-input-container,
+[data-theme="dark"] .bridge-token-container {
+  background: rgba(24, 39, 88, 0.5);
+  border: 1px solid rgba(77, 162, 255, 0.3);
+}
+
+[data-theme="dark"] .slippage-panel,
+[data-theme="dark"] .swap-details,
+[data-theme="dark"] .bridge-details,
+[data-theme="dark"] .liquidity-details {
+  background: rgba(24, 39, 88, 0.3);
+  border: 1px solid rgba(77, 162, 255, 0.3);
+}
+
+[data-theme="dark"] .yieldfi-modal-overlay {
+  background: rgba(1, 1, 32, 0.7);
+}
+
+[data-theme="dark"] .yieldfi-token-selector,
+[data-theme="dark"] .yieldfi-network-selector {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(77, 162, 255, 0.3);
+  box-shadow: 0 20px 60px rgba(1, 1, 32, 0.5);
+}
+
+/* ==========================================
+   ACCESSIBILITY IMPROVEMENTS - YIELDFI BUTTONS
+   ========================================== */
+
+/* Quick scale pulse on click for YieldFi buttons */
+@keyframes quickPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* YieldFi button active states with pulse animation */
+.swap-btn:active,
+.bridge-btn:active,
+.liquidity-btn:active,
+.connect-btn:active,
+.nav-tab:active,
+.token-select:active,
+.bridge-network-select:active,
+.pool-select:active,
+.timeframe-btn:active,
+.slippage-btn:active,
+.max-btn:active,
+.swap-flip-btn:active,
+.bridge-flip-btn:active,
+.settings-btn:active,
+.yieldfi-close-btn:active,
+.yieldfi-token-item:active,
+.yieldfi-network-item:active {
+  animation: quickPulse 0.15s ease;
+  outline: none;
+}
+
+/* Remove persistent focus outlines from YieldFi buttons */
+.swap-btn:focus,
+.bridge-btn:focus,
+.liquidity-btn:focus,
+.connect-btn:focus,
+.nav-tab:focus,
+.token-select:focus,
+.bridge-network-select:focus,
+.pool-select:focus,
+.timeframe-btn:focus,
+.slippage-btn:focus,
+.max-btn:focus,
+.swap-flip-btn:focus,
+.bridge-flip-btn:focus,
+.settings-btn:focus,
+.yieldfi-close-btn:focus,
+.yieldfi-token-item:focus,
+.yieldfi-network-item:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .swap-flip-btn:hover,
+  .bridge-flip-btn:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .swap-container,
+  .bridge-container,
+  .liquidity-container,
+  .your-liquidity,
+  .chart-container,
+  .token-input-container,
+  .bridge-token-container {
+    border-width: 2px;
+  }
+
+  .swap-btn,
+  .bridge-btn,
+  .liquidity-btn,
+  .connect-btn,
+  .nav-tab,
+  .timeframe-btn,
+  .slippage-btn,
+  .max-btn {
+    border: 2px solid transparent;
+  }
+}
+
+/* ==========================================
+   CUSTOM SCROLLBAR FOR MODALS
+   ========================================== */
+
+.yieldfi-token-list::-webkit-scrollbar,
+.yieldfi-network-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.yieldfi-token-list::-webkit-scrollbar-track,
+.yieldfi-network-list::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+.yieldfi-token-list::-webkit-scrollbar-thumb,
+.yieldfi-network-list::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.yieldfi-token-list::-webkit-scrollbar-thumb:hover,
+.yieldfi-network-list::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
+}
