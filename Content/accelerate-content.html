@@ -1,0 +1,261 @@
+<!-- Accelerate Content - Now shows by default, no wallet prompt -->
+<div id="accelerateContent" class="accelerate-container">
+  
+  <!-- Overview Stats -->
+  <div class="accelerate-overview">
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Total Value Locked</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="totalTVL">$24.7M</div>
+      <div class="card-change positive">+2.4% this week</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Your Liquidity</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="userLiquidity">$0.00</div>
+      <div class="card-change positive" id="userRewards">+$0.00 rewards</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Total Pools</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="totalPools">12</div>
+      <div class="card-change positive">Active pools</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Average APR</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="avgAPR">24.5%</div>
+      <div class="card-change positive">Across all pools</div>
+    </div>
+  </div>
+
+  <!-- Pool Filters and Search -->
+  <div class="pool-filters glass-card">
+    <div class="filter-section">
+      <div class="search-container">
+        <input type="text" id="poolSearch" placeholder="Search pools..." class="search-input">
+        <svg class="search-icon" viewBox="0 0 24 24">
+          <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
+      
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Pools</button>
+        <button class="filter-btn" data-filter="stable">Stable</button>
+        <button class="filter-btn" data-filter="weighted">Weighted</button>
+        <button class="filter-btn" data-filter="boosted">Boosted</button>
+        <button class="filter-btn" data-filter="my-pools">My Pools</button>
+      </div>
+    </div>
+    
+    <div class="sort-section">
+      <label for="sortBy">Sort by:</label>
+      <select id="sortBy" class="sort-select">
+        <option value="tvl">TVL</option>
+        <option value="apr">APR</option>
+        <option value="volume">Volume (24h)</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Pool List -->
+  <div class="pools-section">
+    <div class="pools-table glass-card">
+      <div class="table-header">
+        <div class="table-cell pool-name-header">Pool</div>
+        <div class="table-cell">TVL</div>
+        <div class="table-cell">APR</div>
+        <div class="table-cell">Volume (24h)</div>
+        <div class="table-cell">My Liquidity</div>
+        <div class="table-cell">Actions</div>
+      </div>
+      
+      <div class="pools-list" id="poolsList">
+        <!-- ETH/USDC Weighted Pool -->
+        <div class="pool-row" data-pool-type="weighted" data-tvl="8250000" data-apr="28.5" onclick="navigateToPoolDetails('eth-usdc')">
+          <div class="table-cell pool-info">
+            <div class="pool-tokens">
+              <div class="token-icons">
+                <div class="token-icon">ETH</div>
+                <div class="token-icon">USDC</div>
+              </div>
+              <div class="pool-details">
+                <div class="pool-name">ETH/USDC</div>
+                <div class="pool-type">Weighted 80/20</div>
+                <div class="pool-address">0x1234...5678</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-tvl">
+            <div class="value">$8.25M</div>
+            <div class="change positive">+5.2%</div>
+          </div>
+          
+          <div class="table-cell pool-apr">
+            <div class="apr-value">28.5%</div>
+            <div class="apr-breakdown">
+              <span class="trading-fees">12.1% Trading</span>
+              <span class="incentives">16.4% Rewards</span>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-volume">
+            <div class="value">$1.2M</div>
+            <div class="change positive">+12.4%</div>
+          </div>
+          
+          <div class="table-cell my-liquidity">
+            <div class="value">$0.00</div>
+            <div class="tokens">0 ETH, 0 USDC</div>
+          </div>
+          
+          <div class="table-cell pool-actions">
+            <button class="action-btn add-liquidity" onclick="event.stopPropagation(); openLiquidityModal('eth-usdc', 'add')">Add</button>
+            <button class="action-btn view-pool" onclick="event.stopPropagation(); viewPoolDetails('eth-usdc')">View</button>
+          </div>
+        </div>
+
+        <!-- USDC/USDT Stable Pool -->
+        <div class="pool-row" data-pool-type="stable" data-tvl="12800000" data-apr="8.2" onclick="navigateToPoolDetails('usdc-usdt')">
+          <div class="table-cell pool-info">
+            <div class="pool-tokens">
+              <div class="token-icons">
+                <div class="token-icon">USDC</div>
+                <div class="token-icon">USDT</div>
+              </div>
+              <div class="pool-details">
+                <div class="pool-name">USDC/USDT</div>
+                <div class="pool-type">Stable Pool</div>
+                <div class="pool-address">0x5678...9012</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-tvl">
+            <div class="value">$12.8M</div>
+            <div class="change positive">+2.1%</div>
+          </div>
+          
+          <div class="table-cell pool-apr">
+            <div class="apr-value">8.2%</div>
+            <div class="apr-breakdown">
+              <span class="trading-fees">3.1% Trading</span>
+              <span class="incentives">5.1% Rewards</span>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-volume">
+            <div class="value">$2.8M</div>
+            <div class="change positive">+8.7%</div>
+          </div>
+          
+          <div class="table-cell my-liquidity">
+            <div class="value">$0.00</div>
+            <div class="tokens">0 USDC, 0 USDT</div>
+          </div>
+          
+          <div class="table-cell pool-actions">
+            <button class="action-btn add-liquidity" onclick="event.stopPropagation(); openLiquidityModal('usdc-usdt', 'add')">Add</button>
+            <button class="action-btn view-pool" onclick="event.stopPropagation(); viewPoolDetails('usdc-usdt')">View</button>
+          </div>
+        </div>
+
+        <!-- WBTC/ETH Weighted Pool -->
+        <div class="pool-row" data-pool-type="weighted" data-tvl="6450000" data-apr="32.1" onclick="navigateToPoolDetails('wbtc-eth')">
+          <div class="table-cell pool-info">
+            <div class="pool-tokens">
+              <div class="token-icons">
+                <div class="token-icon">BTC</div>
+                <div class="token-icon">ETH</div>
+              </div>
+              <div class="pool-details">
+                <div class="pool-name">WBTC/ETH</div>
+                <div class="pool-type">Weighted 50/50</div>
+                <div class="pool-address">0x9012...3456</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-tvl">
+            <div class="value">$6.45M</div>
+            <div class="change positive">+7.8%</div>
+          </div>
+          
+          <div class="table-cell pool-apr">
+            <div class="apr-value">32.1%</div>
+            <div class="apr-breakdown">
+              <span class="trading-fees">15.2% Trading</span>
+              <span class="incentives">16.9% Rewards</span>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-volume">
+            <div class="value">$890K</div>
+            <div class="change positive">+15.3%</div>
+          </div>
+          
+          <div class="table-cell my-liquidity">
+            <div class="value">$0.00</div>
+            <div class="tokens">0 WBTC, 0 ETH</div>
+          </div>
+          
+          <div class="table-cell pool-actions">
+            <button class="action-btn add-liquidity" onclick="event.stopPropagation(); openLiquidityModal('wbtc-eth', 'add')">Add</button>
+            <button class="action-btn view-pool" onclick="event.stopPropagation(); viewPoolDetails('wbtc-eth')">View</button>
+          </div>
+        </div>
+
+        <!-- Boosted ETH Pool -->
+        <div class="pool-row" data-pool-type="boosted" data-tvl="15200000" data-apr="45.8" onclick="navigateToPoolDetails('boosted-eth')">
+          <div class="table-cell pool-info">
+            <div class="pool-tokens">
+              <div class="token-icons">
+                <div class="token-icon">ETH</div>
+                <div class="token-icon boost">⚡</div>
+              </div>
+              <div class="pool-details">
+                <div class="pool-name">Boosted ETH Pool</div>
+                <div class="pool-type">Boosted Yield</div>
+                <div class="pool-address">0x3456...7890</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-tvl">
+            <div class="value">$15.2M</div>
+            <div class="change positive">+9.1%</div>
+          </div>
+          
+          <div class="table-cell pool-apr">
+            <div class="apr-value">45.8%</div>
+            <div class="apr-breakdown">
+              <span class="trading-fees">8.5% Base</span>
+              <span class="incentives">37.3% Boost</span>
+            </div>
+          </div>
+          
+          <div class="table-cell pool-volume">
+            <div class="value">$1.8M</div>
+            <div class="change positive">+22.1%</div>
+          </div>
+          
+          <div class="table-cell my-liquidity">
+            <div class="value">$0.00</div>
+            <div class="tokens">0 ETH</div>
+          </div>
+          
+          <div class="table-cell pool-actions">
+            <button class="action-btn add-liquidity boost" onclick="event.stopPropagation(); openLiquidityModal('boosted-eth', 'add')">Add</button>
+            <button class="action-btn view-pool" onclick="event.stopPropagation(); viewPoolDetails('boosted-eth')">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
