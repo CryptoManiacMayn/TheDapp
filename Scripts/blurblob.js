@@ -7,7 +7,7 @@ document.body.appendChild(mask);
 const createBlurBlob = (color, top, left) => {
     const blob = document.createElement('div');
     blob.className = 'blur-blob';
-    blob.style.background = `radial-gradient(circle, ${color} 0%, transparent 40%)`;
+    blob.style.background = `radial-gradient(circle, ${color} 0%, transparent 60%)`;
     blob.style.top = top;
     blob.style.left = left;
     document.body.appendChild(blob);
@@ -16,29 +16,38 @@ const createBlurBlob = (color, top, left) => {
 
 // Add your blur blobs
 const blobs = [
-    createBlurBlob('rgba(255, 105, 180, 0.5)', '20%', '60%'),
-    createBlurBlob('rgba(11, 142, 223, 0.5)', '50%', '10%'),
-    createBlurBlob('rgba(11, 14, 223, 0.5)', '50%', '50%'),
-    createBlurBlob('rgba(138, 43, 226, 0.4)', '70%', '20%'),  
-    createBlurBlob('rgba(230, 230, 12, 0.4)', '70%', '70%'),  
-    createBlurBlob('rgba(138, 43, 226, 0.4)', '10%', '50%'),  
-    createBlurBlob('rgba(213, 17, 17, 0.4)', '10%', '10%'),  
-    createBlurBlob('rgba(30, 144, 255, 0.4)', '80%', '45%') 
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '90%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '80%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '70%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '60%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '50%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '40%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '30%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '20%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '10%', '10%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '20%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '30%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '40%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '50%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '60%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '70%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '80%'),
+    createBlurBlob('rgb(77, 162, 255, .4)', '60%', '90%'),
 ];
 
 // Mouse tracking
 document.addEventListener('mousemove', (e) => {
     const centerX = window.innerWidth / 15;
-    const centerY = window.innerHeight / 35;
+    const centerY = window.innerHeight / 15;
     
-    const offsetX = (e.clientX - centerX) * 0.89;
-    const offsetY = (e.clientY - centerY) * 0.89;
+    const offsetX = (e.clientX - centerX) * 1;
+    const offsetY = (e.clientY - centerY) * 1;
     
     const dampedX = centerX + offsetX;
     const dampedY = centerY + offsetY;
     
-    const xPercent = (dampedX / window.innerWidth) * 120;
-    const yPercent = (dampedY / window.innerHeight) * 120;
+    const xPercent = (dampedX / window.innerWidth) * 100;
+    const yPercent = (dampedY / window.innerHeight) * 100;
     
     mask.style.setProperty('--x', xPercent + '%');
     mask.style.setProperty('--y', yPercent + '%');
