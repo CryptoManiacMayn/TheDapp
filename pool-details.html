@@ -1,0 +1,220 @@
+<!-- Pool Details Content - Now integrated with main shell -->
+<div id="poolDetailsWalletPrompt" class="connect-wallet-prompt glass-card">
+  <h2>🔐 Connect Your Wallet</h2>
+  <p>Connect your wallet to view detailed pool information and manage your liquidity.</p>
+  <button id="poolDetailsConnectBtn" class="connect-btn" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+</div>
+
+<!-- Pool Details Content (hidden by default) -->
+<div id="poolDetailsContent" class="pool-details-content" style="display: none;">
+  
+  <!-- Back Navigation -->
+  <div class="back-nav">
+    <button class="back-btn" onclick="goBackToAccelerate()">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path d="M19 12H5m7-7l-7 7 7 7"/>
+      </svg>
+      <span>Back to Pools</span>
+    </button>
+  </div>
+
+  <!-- Pool Header -->
+  <div class="pool-header-section glass-card">
+    <div class="pool-main-info">
+      <div class="pool-tokens-large">
+        <div class="token-icons-large" id="poolTokenIconsLarge">
+          <!-- Populated by JS -->
+        </div>
+        <div class="pool-title-info">
+          <h1 id="poolTitle">ETH/USDC</h1>
+          <div class="pool-meta">
+            <span id="poolComposition">Weighted 80/20</span>
+            <span class="separator">•</span>
+            <span id="poolAddress">0x1234...5678</span>
+            <button class="copy-address" onclick="copyAddress()">
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="pool-key-stats">
+        <div class="key-stat">
+          <div class="stat-label">APR</div>
+          <div class="stat-value primary" id="poolAPR">28.5%</div>
+        </div>
+        <div class="key-stat">
+          <div class="stat-label">TVL</div>
+          <div class="stat-value" id="poolTVL">$8.25M</div>
+        </div>
+        <div class="key-stat">
+          <div class="stat-label">Volume (24h)</div>
+          <div class="stat-value" id="poolVolume">$1.2M</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pool-actions-main">
+      <button class="action-btn-large add-liquidity" onclick="openLiquidityModal('add')">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 5v14m-7-7h14"/>
+        </svg>
+        Add Liquidity
+      </button>
+      <button class="action-btn-large remove-liquidity" onclick="openLiquidityModal('remove')">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path d="M5 12h14"/>
+        </svg>
+        Remove Liquidity
+      </button>
+      <button class="action-btn-large secondary" onclick="openSwapModal()">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+        </svg>
+        Swap
+      </button>
+    </div>
+  </div>
+
+  <!-- Pool Analytics -->
+  <div class="pool-analytics">
+    <div class="analytics-grid">
+      
+      <!-- Pool Composition -->
+      <div class="analytics-card glass-card">
+        <h3>Pool Composition</h3>
+        <div class="composition-chart">
+          <canvas id="compositionChart" width="300" height="300"></canvas>
+        </div>
+        <div class="composition-breakdown" id="compositionBreakdown">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Pool Statistics -->
+      <div class="analytics-card glass-card">
+        <h3>Pool Statistics</h3>
+        <div class="pool-stats-detailed">
+          <div class="stat-row">
+            <span>Pool Type</span>
+            <span id="poolType">Weighted Pool</span>
+          </div>
+          <div class="stat-row">
+            <span>Swap Fee</span>
+            <span id="swapFee">0.3%</span>
+          </div>
+          <div class="stat-row">
+            <span>Total Swaps</span>
+            <span id="totalSwaps">12,450</span>
+          </div>
+          <div class="stat-row">
+            <span>Unique LPs</span>
+            <span id="uniqueLPs">245</span>
+          </div>
+          <div class="stat-row">
+            <span>Pool Age</span>
+            <span id="poolAge">127 days</span>
+          </div>
+          <div class="stat-row">
+            <span>Pool Utilization</span>
+            <span id="poolUtilization">85.2%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- APR Breakdown -->
+      <div class="analytics-card glass-card">
+        <h3>APR Breakdown</h3>
+        <div class="apr-breakdown-detailed">
+          <div class="apr-item">
+            <div class="apr-item-header">
+              <span>Trading Fees</span>
+              <span class="apr-value" id="tradingAPR">12.1%</span>
+            </div>
+            <div class="apr-bar">
+              <div class="apr-fill trading" style="width: 42.5%"></div>
+            </div>
+          </div>
+          <div class="apr-item">
+            <div class="apr-item-header">
+              <span>Token Incentives</span>
+              <span class="apr-value" id="incentiveAPR">16.4%</span>
+            </div>
+            <div class="apr-bar">
+              <div class="apr-fill incentive" style="width: 57.5%"></div>
+            </div>
+          </div>
+          <div class="apr-total">
+            <div class="apr-item-header total">
+              <span>Total APR</span>
+              <span class="apr-value total" id="totalAPR">28.5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Chart -->
+      <div class="analytics-card glass-card chart-card">
+        <h3>Price History</h3>
+        <div class="chart-controls">
+          <button class="chart-period active" data-period="24h" onclick="updateChart('24h')">24H</button>
+          <button class="chart-period" data-period="7d" onclick="updateChart('7d')">7D</button>
+          <button class="chart-period" data-period="30d" onclick="updateChart('30d')">30D</button>
+          <button class="chart-period" data-period="90d" onclick="updateChart('90d')">90D</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="priceChart" width="600" height="300"></canvas>
+        </div>
+      </div>
+
+      <!-- Volume Chart -->
+      <div class="analytics-card glass-card chart-card">
+        <h3>Volume History</h3>
+        <div class="chart-controls">
+          <button class="chart-period active" data-period="24h" onclick="updateVolumeChart('24h')">24H</button>
+          <button class="chart-period" data-period="7d" onclick="updateVolumeChart('7d')">7D</button>
+          <button class="chart-period" data-period="30d" onclick="updateVolumeChart('30d')">30D</button>
+          <button class="chart-period" data-period="90d" onclick="updateVolumeChart('90d')">90D</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="volumeChart" width="600" height="300"></canvas>
+        </div>
+      </div>
+
+      <!-- Your Position -->
+      <div class="analytics-card glass-card">
+        <h3>Your Position</h3>
+        <div id="userPositionContent">
+          <div class="no-position">
+            <div class="no-position-icon">💧</div>
+            <div class="no-position-text">No liquidity provided</div>
+            <div class="no-position-subtext">Add liquidity to start earning fees</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="recent-transactions glass-card">
+    <h3>Recent Transactions</h3>
+    <div class="transactions-table">
+      <div class="table-header">
+        <div class="table-cell">Type</div>
+        <div class="table-cell">Amount</div>
+        <div class="table-cell">Value</div>
+        <div class="table-cell">Account</div>
+        <div class="table-cell">Time</div>
+      </div>
+      <div class="transactions-list" id="transactionsList">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+</div>
