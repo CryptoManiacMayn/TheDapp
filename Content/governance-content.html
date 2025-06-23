@@ -1,0 +1,74 @@
+<!-- Wallet Connection Prompt -->
+<div id="governanceWalletPrompt" class="connect-wallet-prompt glass-card">
+  <h2>🗳️ Connect Your Wallet</h2>
+  <p>Connect your Web3 wallet to participate in governance and view proposals.</p>
+  <button id="governanceConnectBtn" class="connect-btn" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+</div>
+
+<!-- Main Governance Content (hidden by default) -->
+<div id="governanceContent" class="governance-container" style="display: none;">
+  
+  <!-- Governance Overview Cards -->
+  <div class="governance-overview">
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="votingPower">0</div>
+      <div class="overview-label">Voting Power</div>
+      <div class="overview-change positive">Your influence</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="activeProposals">0</div>
+      <div class="overview-label">Active Proposals</div>
+      <div class="overview-change positive">Available to vote</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="votesThisMonth">0</div>
+      <div class="overview-label">Votes This Month</div>
+      <div class="overview-change positive">Your participation</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="totalProposals">0</div>
+      <div class="overview-label">Total Proposals</div>
+      <div class="overview-change positive">All time</div>
+    </div>
+  </div>
+
+  <!-- Active Proposals Section -->
+  <div class="proposals-section">
+    <h2 class="section-title">Active Proposals</h2>
+    <div id="proposalsList" class="proposals-list">
+      <div class="no-proposals glass-card">
+        <p>🔒 Connect your wallet to view governance proposals</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voting History Section -->
+  <div class="voting-history">
+    <h2 class="section-title">Voting History</h2>
+    <div class="history-table glass-card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Proposal</th>
+            <th>Your Vote</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="votingHistoryBody">
+          <tr>
+            <td colspan="4" style="text-align: center; color: var(--text-secondary); padding: 40px;">
+              🔒 Connect your wallet to view your voting history
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
