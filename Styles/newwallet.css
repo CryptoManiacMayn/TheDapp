@@ -1,0 +1,156 @@
+        .wallet-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .network-selector {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .network-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            min-width: 100px;
+        }
+
+        .network-button:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 254, 0.2);
+        }
+
+        .network-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #10b981;
+            flex-shrink: 0;
+        }
+
+        .network-dot.disconnected {
+            background-color: #ef4444;
+        }
+
+        .network-name {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .chevron-down {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            transition: transform 0.2s ease;
+        }
+
+        .network-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .network-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .network-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .network-option:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .network-option:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .network-option:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        .network-option.selected {
+            background: rgba(0, 0, 254, 0.1);
+            color: var(--accent);
+        }
+
+        .network-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .network-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .network-chain-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .network-chain-id {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .wallet-connect-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .wallet-connect-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 254, 0.3);
+        }
+
+        .wallet-connect-btn.connected {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
