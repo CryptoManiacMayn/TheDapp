@@ -1,0 +1,678 @@
+/* ==========================================
+   LENDER SPECIFIC STYLES - LIQUITY INSPIRED
+   ========================================== */
+
+.lender-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lender-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.lender-header h1 {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================
+   PROTOCOL OVERVIEW
+   ========================================== */
+
+.protocol-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* ==========================================
+   YOUR POSITION SECTION
+   ========================================== */
+
+.your-position-section {
+  margin-bottom: 30px;
+}
+
+.position-card {
+  padding: 30px;
+  transition: all var(--transition-normal);
+}
+
+.position-empty {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.position-empty p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.position-empty .text-secondary {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.open-trove-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 10px;
+}
+
+.open-trove-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 254, 0.3);
+}
+
+.position-active {
+  display: none;
+}
+
+.position-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.position-item {
+  text-align: center;
+  padding: 15px;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+}
+
+.position-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.position-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.position-usd {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.position-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.position-status.safe {
+  background: rgba(72, 187, 120, 0.2);
+  color: #38a169;
+  border: 1px solid rgba(72, 187, 120, 0.3);
+}
+
+.position-status.warning {
+  background: rgba(237, 137, 54, 0.2);
+  color: #dd6b20;
+  border: 1px solid rgba(237, 137, 54, 0.3);
+}
+
+.position-status.danger {
+  background: rgba(245, 101, 101, 0.2);
+  color: #e53e3e;
+  border: 1px solid rgba(245, 101, 101, 0.3);
+}
+
+.position-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.adjust-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+}
+
+.close-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   COLLATERAL MARKETS
+   ========================================== */
+
+.collateral-markets {
+  margin-bottom: 30px;
+}
+
+.markets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.market-card {
+  padding: 25px;
+  transition: all var(--transition-normal);
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+}
+
+.market-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.market-info {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.market-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.market-details h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-bottom: 5px;
+}
+
+.market-details p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.market-stats-compact {
+  text-align: right;
+}
+
+.stat-compact .stat-value {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.stat-compact .stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.market-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 10px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.market-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.borrow-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.borrow-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
+}
+
+/* ==========================================
+   STABILITY POOL SECTION
+   ========================================== */
+
+.stability-pool-section {
+  margin-bottom: 30px;
+}
+
+.stability-pool-card {
+  padding: 30px;
+}
+
+.pool-info {
+  margin-bottom: 25px;
+}
+
+.pool-info h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.pool-info p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.pool-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.pool-stat {
+  text-align: center;
+  padding: 15px;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+}
+
+.pool-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.deposit-btn,
+.withdraw-btn,
+.claim-rewards-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.deposit-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+}
+
+.withdraw-btn {
+  background: linear-gradient(135deg, #805ad5, #6b46c1);
+  color: white;
+}
+
+.claim-rewards-btn {
+  background: linear-gradient(135deg, #ed8936, #dd6b20);
+  color: white;
+}
+
+.deposit-btn:hover,
+.withdraw-btn:hover:not(:disabled),
+.claim-rewards-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.deposit-btn:disabled,
+.withdraw-btn:disabled,
+.claim-rewards-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================
+   BUTFI STAKING SECTION
+   ========================================== */
+
+.butfi-staking-section {
+  margin-bottom: 30px;
+}
+
+.butfi-card {
+  padding: 30px;
+  background: linear-gradient(135deg, var(--glass-bg-light), rgba(138, 43, 226, 0.05));
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+[data-theme="dark"] .butfi-card {
+  background: linear-gradient(135deg, var(--glass-bg-light), rgba(138, 43, 226, 0.1));
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.butfi-info {
+  margin-bottom: 25px;
+}
+
+.butfi-info h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.butfi-info p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.butfi-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.butfi-stat {
+  text-align: center;
+  padding: 15px;
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.butfi-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stake-butfi-btn,
+.unstake-butfi-btn,
+.claim-fees-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.stake-butfi-btn {
+  background: linear-gradient(135deg, #8a2be2, #6a1b9a);
+  color: white;
+}
+
+.unstake-butfi-btn {
+  background: linear-gradient(135deg, #e91e63, #c2185b);
+  color: white;
+}
+
+.claim-fees-btn {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+}
+
+.stake-butfi-btn:hover,
+.unstake-butfi-btn:hover:not(:disabled),
+.claim-fees-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.stake-butfi-btn:disabled,
+.unstake-butfi-btn:disabled,
+.claim-fees-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================
+   LIQUIDATIONS TABLE
+   ========================================== */
+
+.liquidations-section {
+  margin-bottom: 30px;
+}
+
+.liquidations-table {
+  padding: 25px;
+  overflow-x: auto;
+}
+
+.asset-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.asset-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 768px) {
+  .lender-container {
+    padding: 0 1rem;
+  }
+  
+  .protocol-overview,
+  .markets-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .position-grid,
+  .pool-stats-grid,
+  .butfi-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .market-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .pool-actions,
+  .butfi-actions,
+  .position-actions {
+    flex-direction: column;
+  }
+  
+  .lender-header h1 {
+    font-size: 2rem;
+  }
+  
+  .market-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .market-stats-compact {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .position-grid,
+  .pool-stats-grid,
+  .butfi-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .position-card,
+  .stability-pool-card,
+  .butfi-card,
+  .liquidations-table {
+    padding: 15px;
+  }
+  
+  .table {
+    font-size: 0.8rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px 6px;
+  }
+}
+
+/* ==========================================
+   DARK THEME SPECIFIC
+   ========================================== */
+
+[data-theme="dark"] .position-status.safe {
+  background: rgba(72, 187, 120, 0.15);
+  border: 1px solid rgba(72, 187, 120, 0.25);
+}
+
+[data-theme="dark"] .position-status.warning {
+  background: rgba(237, 137, 54, 0.15);
+  border: 1px solid rgba(237, 137, 54, 0.25);
+}
+
+[data-theme="dark"] .position-status.danger {
+  background: rgba(245, 101, 101, 0.15);
+  border: 1px solid rgba(245, 101, 101, 0.25);
+}
+
+[data-theme="dark"] .butfi-stat {
+  background: rgba(138, 43, 226, 0.05);
+  border: 1px solid rgba(138, 43, 226, 0.15);
+}
+
+/* ==========================================
+   ACCESSIBILITY IMPROVEMENTS - LENDER BUTTONS
+   ========================================== */
+
+/* Quick scale pulse on click for Lender buttons */
+@keyframes quickPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Lender button active states with pulse animation */
+.borrow-btn:active,
+.open-trove-btn:active,
+.action-btn:active,
+.adjust-btn:active,
+.close-btn:active,
+.deposit-btn:active,
+.withdraw-btn:active,
+.claim-rewards-btn:active,
+.stake-butfi-btn:active,
+.unstake-butfi-btn:active,
+.claim-fees-btn:active,
+.market-card:active,
+.position-card:active,
+.stability-pool-card:active,
+.butfi-card:active {
+  animation: quickPulse 0.15s ease;
+  outline: none;
+}
+
+/* Remove persistent focus outlines from Lender buttons */
+.borrow-btn:focus,
+.open-trove-btn:focus,
+.action-btn:focus,
+.adjust-btn:focus,
+.close-btn:focus,
+.deposit-btn:focus,
+.withdraw-btn:focus,
+.claim-rewards-btn:focus,
+.stake-butfi-btn:focus,
+.unstake-butfi-btn:focus,
+.claim-fees-btn:focus,
+.market-card:focus,
+.position-card:focus,
+.stability-pool-card:focus,
+.butfi-card:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-card,
+  .position-card,
+  .stability-pool-card,
+  .butfi-card,
+  .borrow-btn,
+  .action-btn,
+  .deposit-btn,
+  .stake-butfi-btn {
+    transition: none !important;
+  }
+}
