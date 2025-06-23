@@ -1,10 +1,11 @@
 // ==========================================
-// SHELL DYNAMIC CONTENT LOADING SYSTEM - WITH NETWORK SELECTOR
+// SHELL DYNAMIC CONTENT LOADING SYSTEM - WITH POOL DETAILS INTEGRATION
 // ==========================================
 
 // Current page state
 let currentPage = 'portfolio';
 let loadedScripts = new Set();
+let currentPoolId = null; // Track current pool for details
 
 // SIMPLIFIED Global wallet state - this is the single source of truth
 window.globalWalletState = {
@@ -58,7 +59,7 @@ window.currentNetworkState = {
   selectedNetwork: 'base'
 };
 
-// Page configurations
+// Page configurations - UPDATED WITH POOL DETAILS
 const pageConfigs = {
   portfolio: {
     title: "PORTFOLIO",
@@ -101,7 +102,51 @@ const pageConfigs = {
     contentFile: "Content/accelerate-content.html",
     scriptFile: "Scripts/accelerate.js",
     cssFiles: ["Styles/accelerate.css"]
+  },
+  // NEW: Pool Details page configuration
+  'pool-details': {
+    title: "POOL DETAILS",
+    subtitle: "Detailed analytics and management for liquidity pools",
+    contentFile: "Content/pool-details-content.html",
+    scriptFile: "Scripts/pool-details-integrated.js",
+    cssFiles: ["Styles/pool-details.css"]
   }
+};
+
+// ==========================================
+// POOL DETAILS NAVIGATION FUNCTIONS
+// ==========================================
+
+// Function to navigate to pool details (called from accelerate page)
+window.navigateToPoolDetails = function(poolId) {
+  console.log('Navigating to pool details for:', poolId);
+  currentPoolId = poolId;
+  
+  // Store pool ID for the details page to use
+  sessionStorage.setItem('currentPoolId', poolId);
+  
+  // Switch to pool details page
+  selectPage('pool-details');
+  
+  window.showMessage(`Loading ${poolId} pool details...`, 'success');
+};
+
+// Function to go back to accelerate page (called from pool details)
+window.goBackToAccelerate = function() {
+  console.log('Going back to accelerate page');
+  currentPoolId = null;
+  sessionStorage.removeItem('currentPoolId');
+  selectPage('accelerate');
+};
+
+// Update the existing navigateToPoolDetailsWithContext function
+window.navigateToPoolDetailsWithContext = function(poolId) {
+  window.navigateToPoolDetails(poolId);
+};
+
+// Update the existing viewPoolDetailsWithContext function
+window.viewPoolDetailsWithContext = function(poolId) {
+  window.navigateToPoolDetails(poolId);
 };
 
 // ==========================================
@@ -569,7 +614,7 @@ async function handleChainChanged(chainIdHex) {
 }
 
 // ==========================================
-// PAGE NAVIGATION (UNCHANGED)
+// PAGE NAVIGATION (UPDATED WITH POOL DETAILS)
 // ==========================================
 
 function selectPage(page) {
@@ -583,9 +628,12 @@ function selectPage(page) {
     allNavItems[i].classList.remove("active");
   }
 
+  // For pool-details, keep accelerate as active in navigation
+  const activePageForNav = page === 'pool-details' ? 'accelerate' : page;
+
   // Add active class to clicked items
-  var regularNavItems = document.querySelectorAll('.nav-item[data-page="' + page + '"]');
-  var expandedNavItems = document.querySelectorAll('.expanded-nav-item[data-page="' + page + '"]');
+  var regularNavItems = document.querySelectorAll('.nav-item[data-page="' + activePageForNav + '"]');
+  var expandedNavItems = document.querySelectorAll('.expanded-nav-item[data-page="' + activePageForNav + '"]');
 
   for (var i = 0; i < regularNavItems.length; i++) {
     regularNavItems[i].classList.add("active");
@@ -664,7 +712,6 @@ async function loadPageContent(page, config) {
 
 function showLoadingState(container) {
   container.innerHTML = `
-
     <div style="display: flex; align-items: center; justify-content: center; min-height: 400px; flex-direction: column; gap: 20px;">
       <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid var(--border); border-top: 3px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite;"></div>
       <div style="color: var(--text-secondary); font-size: 1.1rem;">Loading page content...</div>
@@ -674,7 +721,6 @@ function showLoadingState(container) {
 
 function showErrorState(container, message) {
   container.innerHTML = `
-
     <div style="display: flex; align-items: center; justify-content: center; min-height: 400px; flex-direction: column; gap: 20px;">
       <div style="color: var(--text-primary); font-size: 1.5rem;">⚠️ Error</div>
       <div style="color: var(--text-secondary); font-size: 1rem; text-align: center; max-width: 500px;">${message}</div>
@@ -717,12 +763,6 @@ async function loadHTMLContent(contentFile, container) {
     }
     const htmlContent = await response.text();
     
-    const contentHeader = `
-      <div class="content-header">
-        <p class="content-subtitle">${pageConfigs[currentPage]?.subtitle || ''}</p>
-      </div>
-    `;
-    
     container.innerHTML = htmlContent;
     console.log(`Successfully loaded content from: ${contentFile}`);
     
@@ -734,7 +774,6 @@ async function loadHTMLContent(contentFile, container) {
 
 function restorePortfolioContent(container) {
   const portfolioHTML = `
-
     <div class="portfolio-container">
       <div class="portfolio-grid">
         <div class="portfolio-card">
@@ -826,6 +865,9 @@ function initializePage(page) {
     case 'portfolio':
       if (typeof initializePortfolioPage === 'function') {
         initializePortfolioPage();
+      } else {
+        // Initialize basic portfolio functionality
+        console.log('Portfolio page initialized (basic mode)');
       }
       break;
     case 'staking':
@@ -851,6 +893,11 @@ function initializePage(page) {
     case 'accelerate':
       if (typeof initializeAcceleratePage === 'function') {
         initializeAcceleratePage();
+      }
+      break;
+    case 'pool-details':
+      if (typeof initializePoolDetailsPage === 'function') {
+        initializePoolDetailsPage();
       }
       break;
   }
@@ -955,6 +1002,37 @@ window.showMessage = function(message, type) {
   const messageDiv = document.createElement('div');
   messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
   messageDiv.textContent = message;
+  
+  // Add some basic styles if they don't exist
+  if (!document.querySelector('#message-styles')) {
+    const messageStyles = document.createElement('style');
+    messageStyles.id = 'message-styles';
+    messageStyles.textContent = `
+      .success-message, .error-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      }
+      .success-message {
+        background-color: #10B981;
+      }
+      .error-message {
+        background-color: #EF4444;
+      }
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(messageStyles);
+  }
+  
   document.body.appendChild(messageDiv);
 
   setTimeout(() => {
@@ -989,5 +1067,44 @@ window.shellAPI = {
   switchNetwork: switchNetwork,
   connectWallet: window.globalWalletConnect,
   disconnectWallet: window.globalWalletDisconnect,
-  showMessage: window.showMessage
+  showMessage: window.showMessage,
+  getCurrentPoolId: () => currentPoolId,
+  navigateToPoolDetails: window.navigateToPoolDetails,
+  goBackToAccelerate: window.goBackToAccelerate
 };
+
+// ==========================================
+// SIMPLIFIED NAVIGATION FUNCTIONS
+// ==========================================
+
+// Simple navigation function for pages
+window.selectPage = selectPage;
+
+// Handle browser back/forward
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    selectPage(event.state.page);
+  }
+});
+
+// Update URL hash when page changes (optional)
+function updateURLHash(page) {
+  if (window.location.hash !== `#${page}`) {
+    window.history.pushState({ page: page }, `${page} - DeFiTools`, `#${page}`);
+  }
+}
+
+// Initialize from URL hash if present
+function initializeFromHash() {
+  const hash = window.location.hash.substring(1);
+  if (hash && pageConfigs[hash]) {
+    selectPage(hash);
+  } else {
+    selectPage('portfolio');
+  }
+}
+
+// Export essential functions for global access
+window.toggleSidebar = toggleSidebar;
+window.toggleTheme = toggleTheme;
+window.toggleWallet = toggleWallet;
