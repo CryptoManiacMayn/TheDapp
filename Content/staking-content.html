@@ -1,0 +1,196 @@
+<!-- Wallet Connection Prompt -->
+<div id="walletPrompt" class="connect-wallet-prompt glass-card">
+  <h2>🔐 Connect Your Wallet</h2>
+  <p>Connect your Web3 wallet to access staking features and view your positions.</p>
+  <button id="connectBtn" class="connect-btn" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+</div>
+
+<!-- Main Staking Content (hidden by default) -->
+<div id="stakingContent" class="staking-container" style="display: none;">
+  
+  <!-- Staking Overview Cards -->
+  <div class="staking-overview">
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="totalStaked">$0.00</div>
+      <div class="overview-label">Total Staked</div>
+      <div class="overview-change positive">+2.4% this week</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="totalRewards">$0.00</div>
+      <div class="overview-label">Total Rewards</div>
+      <div class="overview-change positive">+12.3% APY</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="avgApy">0.00%</div>
+      <div class="overview-label">Average APY</div>
+      <div class="overview-change positive">Across all pools</div>
+    </div>
+    
+    <div class="overview-card glass-card">
+      <div class="overview-value" id="activeStakes">0</div>
+      <div class="overview-label">Active Stakes</div>
+      <div class="overview-change positive">Active positions</div>
+    </div>
+  </div>
+
+  <!-- Available Staking Pools -->
+  <h2 class="section-title">Available Staking Pools</h2>
+  <div class="staking-pools">
+    <!-- ETH Staking Pool -->
+    <div class="pool-card glass-card">
+      <div class="pool-header">
+        <div class="pool-info">
+          <div class="pool-icon">ETH</div>
+          <div class="pool-details">
+            <h3>Ethereum Staking</h3>
+            <p>Stake ETH and earn rewards</p>
+          </div>
+        </div>
+        <div class="pool-apy">
+          <div class="apy-value">5.2%</div>
+          <div class="apy-label">APY</div>
+        </div>
+      </div>
+      
+      <div class="pool-stats">
+        <div class="stat-item">
+          <div class="stat-value">1,234 ETH</div>
+          <div class="stat-label">Total Staked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0.1 ETH</div>
+          <div class="stat-label">Min Stake</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">365 days</div>
+          <div class="stat-label">Lock Period</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2.5 ETH</div>
+          <div class="stat-label">Your Stake</div>
+        </div>
+      </div>
+      
+      <div class="pool-actions">
+        <button class="stake-btn" onclick="handleStakeAction('stake', 'ETH')">Stake</button>
+        <button class="unstake-btn" onclick="handleStakeAction('unstake', 'ETH')">Unstake</button>
+        <button class="claim-btn" onclick="handleStakeAction('claim', 'ETH')">Claim</button>
+      </div>
+    </div>
+
+    <!-- USDC Staking Pool -->
+    <div class="pool-card glass-card">
+      <div class="pool-header">
+        <div class="pool-info">
+          <div class="pool-icon">USDC</div>
+          <div class="pool-details">
+            <h3>USDC Staking</h3>
+            <p>Stable coin staking pool</p>
+          </div>
+        </div>
+        <div class="pool-apy">
+          <div class="apy-value">8.5%</div>
+          <div class="apy-label">APY</div>
+        </div>
+      </div>
+      
+      <div class="pool-stats">
+        <div class="stat-item">
+          <div class="stat-value">2.1M USDC</div>
+          <div class="stat-label">Total Staked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100 USDC</div>
+          <div class="stat-label">Min Stake</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">30 days</div>
+          <div class="stat-label">Lock Period</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">5000 USDC</div>
+          <div class="stat-label">Your Stake</div>
+        </div>
+      </div>
+      
+      <div class="pool-actions">
+        <button class="stake-btn" onclick="handleStakeAction('stake', 'USDC')">Stake</button>
+        <button class="unstake-btn" onclick="handleStakeAction('unstake', 'USDC')">Unstake</button>
+        <button class="claim-btn" onclick="handleStakeAction('claim', 'USDC')">Claim</button>
+      </div>
+    </div>
+
+    <!-- DeFi Token Staking Pool -->
+    <div class="pool-card glass-card">
+      <div class="pool-header">
+        <div class="pool-info">
+          <div class="pool-icon">DEFI</div>
+          <div class="pool-details">
+            <h3>DeFiTools Token</h3>
+            <p>Native token staking</p>
+          </div>
+        </div>
+        <div class="pool-apy">
+          <div class="apy-value">12.8%</div>
+          <div class="apy-label">APY</div>
+        </div>
+      </div>
+      
+      <div class="pool-stats">
+        <div class="stat-item">
+          <div class="stat-value">5.7M DEFI</div>
+          <div class="stat-label">Total Staked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">1000 DEFI</div>
+          <div class="stat-label">Min Stake</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">90 days</div>
+          <div class="stat-label">Lock Period</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">10000 DEFI</div>
+          <div class="stat-label">Your Stake</div>
+        </div>
+      </div>
+      
+      <div class="pool-actions">
+        <button class="stake-btn" onclick="handleStakeAction('stake', 'DEFI')">Stake</button>
+        <button class="unstake-btn" onclick="handleStakeAction('unstake', 'DEFI')">Unstake</button>
+        <button class="claim-btn" onclick="handleStakeAction('claim', 'DEFI')">Claim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Stakes Section -->
+  <div class="my-stakes glass-card">
+    <h2 class="section-title">My Staking Positions</h2>
+    <div class="stakes-table-container">
+      <table class="stakes-table">
+        <thead>
+          <tr>
+            <th>Pool</th>
+            <th>Staked Amount</th>
+            <th>Rewards Earned</th>
+            <th>APY</th>
+            <th>Unlock Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="stakesTableBody">
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 40px;">
+              🔒 Connect your wallet to view your staking positions
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
