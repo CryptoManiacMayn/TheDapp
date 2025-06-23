@@ -1,0 +1,1191 @@
+/* ==========================================
+   ACCELERATE PAGE STYLES - LIQUIDITY POOLS
+   ========================================== */
+
+.accelerate-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.accelerate-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.accelerate-header h1 {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================
+   OVERVIEW SECTION
+   ========================================== */
+
+.accelerate-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.accelerate-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.accelerate-header h1 {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================
+   OVERVIEW SECTION
+   ========================================== */
+
+.accelerate-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* ==========================================
+   POOL FILTERS & SEARCH
+   ========================================== */
+
+.pool-filters {
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 40px 10px 15px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  width: 250px;
+  transition: border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.sort-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-section label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sort-select {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ==========================================
+   POOLS TABLE
+   ========================================== */
+
+.pools-section {
+  margin-bottom: 30px;
+}
+
+.pools-table {
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px 25px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pool-name-header {
+  justify-self: start;
+}
+
+.table-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.pools-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.pool-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition-fast);
+}
+
+.pool-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.pool-row:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .pool-row:hover {
+  background: rgba(77, 162, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(77, 162, 255, 0.1);
+}
+
+.pool-row:last-child {
+  border-bottom: none;
+}
+
+/* ==========================================
+   POOL INFO SECTION
+   ========================================== */
+
+.pool-info {
+  display: flex;
+  align-items: center;
+}
+
+.pool-tokens {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.token-icons {
+  display: flex;
+  position: relative;
+}
+
+.token-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+  border: 2px solid var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.token-icon:not(:first-child) {
+  margin-left: -12px;
+}
+
+.token-icon.boost {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  font-size: 1rem;
+}
+
+.pool-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pool-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pool-type {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.pool-address {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: 'Courier New', monospace;
+}
+
+/* ==========================================
+   POOL STATS SECTIONS
+   ========================================== */
+
+.pool-tvl,
+.pool-volume,
+.my-liquidity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pool-tvl .value,
+.pool-volume .value,
+.my-liquidity .value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pool-tvl .change,
+.pool-volume .change {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.my-liquidity .tokens {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   APR SECTION
+   ========================================== */
+
+.pool-apr {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.apr-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38a169;
+}
+
+.apr-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trading-fees,
+.incentives {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.trading-fees {
+  color: var(--text-secondary);
+}
+
+.incentives {
+  color: #38a169;
+}
+
+/* ==========================================
+   POOL ACTIONS
+   ========================================== */
+
+.pool-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-liquidity {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+}
+
+.add-liquidity:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+.add-liquidity.boost {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: white;
+}
+
+.add-liquidity.boost:hover {
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.view-pool {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.view-pool:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.remove-liquidity {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+}
+
+.remove-liquidity:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
+}
+
+/* ==========================================
+   MY POSITIONS SECTION
+   ========================================== */
+
+.my-positions-section {
+  margin-bottom: 30px;
+}
+
+.positions-table {
+  overflow-x: auto;
+}
+
+.positions-list {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-positions {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-subtext {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   LIQUIDITY MODAL
+   ========================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal {
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 25px 0 25px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+}
+
+.modal-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.modal-content {
+  padding: 0 25px;
+}
+
+.pool-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.pool-info-modal {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pool-info-modal .token-icons .token-icon {
+  width: 32px;
+  height: 32px;
+  font-size: 0.7rem;
+}
+
+.apr-display {
+  text-align: right;
+}
+
+.apr-display .apr-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #38a169;
+  margin-bottom: 4px;
+}
+
+.apr-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   LIQUIDITY INPUTS
+   ========================================== */
+
+.liquidity-inputs {
+  margin-bottom: 25px;
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+.input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.input-header label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.balance {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.token-input {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  transition: border-color var(--transition-fast);
+}
+
+.token-input:focus-within {
+  border-color: var(--accent);
+}
+
+.amount-input {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.token-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  min-width: 80px;
+  justify-content: center;
+}
+
+.token-select:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* ==========================================
+   TRANSACTION SUMMARY
+   ========================================== */
+
+.transaction-summary {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.9rem;
+}
+
+.summary-row:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-row span:first-child {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.summary-row span:last-child {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ==========================================
+   MODAL ACTIONS
+   ========================================== */
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 25px 25px 25px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.modal-btn.secondary {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.modal-btn.secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.modal-btn.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+}
+
+.modal-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 254, 0.3);
+}
+
+[data-theme="dark"] .modal-btn.primary:hover {
+  box-shadow: 0 4px 12px rgba(77, 162, 255, 0.3);
+}
+
+.modal-btn.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 1200px) {
+  .accelerate-container {
+    padding: 0 1rem;
+  }
+  
+  .table-header,
+  .pool-row {
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.8fr 0.8fr;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  .pool-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .filter-section {
+    justify-content: space-between;
+  }
+  
+  .search-input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .accelerate-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .pool-filters {
+    padding: 15px;
+  }
+  
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .filter-buttons {
+    justify-content: center;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  /* Stack table on mobile */
+  .pools-table {
+    display: block;
+  }
+  
+  .table-header {
+    display: none;
+  }
+  
+  .pool-row {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    padding: 20px;
+  }
+  
+  .pool-row .table-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .pool-row .table-cell:last-child {
+    border-bottom: none;
+    justify-content: flex-start;
+    padding-top: 15px;
+  }
+  
+  .pool-row .table-cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .pool-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .pool-info::before {
+    display: none;
+  }
+  
+  .pool-actions {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .action-btn {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  /* Modal responsiveness */
+  .modal {
+    width: 95%;
+    margin: 0 10px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .liquidity-inputs {
+    gap: 15px;
+  }
+  
+  .token-input {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  
+  .amount-input {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .accelerate-header h1 {
+    font-size: 2rem;
+  }
+  
+  .pool-filters {
+    padding: 10px;
+  }
+  
+  .filter-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  .pool-row {
+    padding: 15px;
+  }
+  
+  .token-icons .token-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.7rem;
+  }
+  
+  .pool-name {
+    font-size: 0.9rem;
+  }
+  
+  .modal-header {
+    padding: 20px 20px 0 20px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .modal-content {
+    padding: 0 20px;
+  }
+  
+  .modal-actions {
+    padding: 0 20px 20px 20px;
+  }
+}
+
+/* ==========================================
+   LOADING STATES
+   ========================================== */
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+[data-theme="dark"] .loading-overlay {
+  background: rgba(24, 39, 88, 0.8);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+.action-btn:focus,
+.modal-btn:focus,
+.filter-btn:focus,
+.search-input:focus,
+.sort-select:focus,
+.amount-input:focus,
+.token-select:focus,
+.modal-close:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+
+.hidden {
+  display: none !important;
+}
+
+.positive {
+  color: #38a169;
+}
+
+.negative {
+  color: #e53e3e;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ==========================================
+   DARK THEME ENHANCEMENTS
+   ========================================== */
+
+[data-theme="dark"] .pool-row:hover {
+  background: rgba(77, 162, 255, 0.05);
+}
+
+[data-theme="dark"] .search-input {
+  background: rgba(24, 39, 88, 0.5);
+}
+
+[data-theme="dark"] .sort-select {
+  background: rgba(24, 39, 88, 0.5);
+}
+
+[data-theme="dark"] .token-input {
+  background: rgba(24, 39, 88, 0.3);
+}
+
+[data-theme="dark"] .amount-input {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .token-select {
+  background: rgba(24, 39, 88, 0.5);
+}
+
+[data-theme="dark"] .transaction-summary {
+  background: rgba(24, 39, 88, 0.3);
+}
+
+[data-theme="dark"] .pool-summary {
+  background: rgba(24, 39, 88, 0.3);
+}
+/* ==========================================
+   USER LIQUIDITY POSITION HIGHLIGHTS
+   ========================================== */
+
+/* Highlight rows where user has liquidity positions */
+.pool-row.user-has-liquidity {
+  background: rgba(16, 185, 129, 0.05);
+  border-left: 3px solid #10b981;
+}
+
+[data-theme="dark"] .pool-row.user-has-liquidity {
+  background: rgba(16, 185, 129, 0.1);
+  border-left: 3px solid #10b981;
+}
+
+.pool-row.user-has-liquidity:hover {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme="dark"] .pool-row.user-has-liquidity:hover {
+  background: rgba(16, 185, 129, 0.15);
+}
+
+/* Highlight user liquidity values */
+.my-liquidity .value.has-liquidity {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Add icon for user positions */
+.pool-row.user-has-liquidity .pool-name::after {
+  content: "👤";
+  margin-left: 8px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Wallet connection indicator in top bar */
+.wallet-connect-btn.connected::before {
+  content: "🟢";
+  margin-right: 6px;
+  font-size: 0.8rem;
+}
+
+.wallet-connect-btn:not(.connected)::before {
+  content: "🔴";
+  margin-right: 6px;
+  font-size: 0.8rem;
+}
+
+/* Enhanced action buttons for user positions */
+.pool-row.user-has-liquidity .remove-liquidity {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  border: none;
+}
+
+.pool-row.user-has-liquidity .remove-liquidity:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
+}
+
+/* Connected state styling for overview cards */
+.accelerate-overview .portfolio-card .card-value {
+  transition: color var(--transition-fast);
+}
+
+/* When wallet is connected, make user values more prominent */
+body[data-wallet-connected="true"] .accelerate-overview .portfolio-card:nth-child(2) .card-value,
+body[data-wallet-connected="true"] .accelerate-overview .portfolio-card:nth-child(2) .card-change {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Subtle animation for user liquidity updates */
+@keyframes liquidityUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.my-liquidity .value.has-liquidity.updating {
+  animation: liquidityUpdate 0.5s ease;
+}
+
+/* Filter button highlight for "My Pools" */
+.filter-btn[data-filter="my-pools"].active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #10b981;
+  color: white;
+}
+
+.filter-btn[data-filter="my-pools"]:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+/* Responsive adjustments for user highlights */
+@media (max-width: 768px) {
+  .pool-row.user-has-liquidity {
+    border-left: 2px solid #10b981;
+  }
+  
+  .pool-row.user-has-liquidity .pool-name::after {
+    display: none; /* Hide icon on mobile for space */
+  }
+  
+  .my-liquidity .value.has-liquidity {
+    font-size: 1rem;
+  }
+}
