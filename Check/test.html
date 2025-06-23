@@ -1,0 +1,305 @@
+import React, { useState, useEffect } from 'react';
+import { Wallet, X, ExternalLink, CheckCircle } from 'lucide-react';
+
+const WalletConnector = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [connectedWallet, setConnectedWallet] = useState(null);
+  const [account, setAccount] = useState('');
+  const [connecting, setConnecting] = useState('');
+
+  // Wallet configurations
+  const wallets = [
+    {
+      id: 'metamask',
+      name: 'MetaMask',
+      icon: '🦊',
+      description: 'Connect using browser extension',
+      checkAvailable: () => typeof window !== 'undefined' && window.ethereum && window.ethereum.isMetaMask
+    },
+    {
+      id: 'walletconnect',
+      name: 'WalletConnect',
+      icon: '🔗',
+      description: 'Scan with WalletConnect to connect',
+      checkAvailable: () => true // WalletConnect is always available via QR
+    },
+    {
+      id: 'rabby',
+      name: 'Rabby',
+      icon: '🐰',
+      description: 'Connect using Rabby wallet',
+      checkAvailable: () => typeof window !== 'undefined' && window.ethereum && window.ethereum.isRabby
+    },
+    {
+      id: 'trustwallet',
+      name: 'Trust Wallet',
+      icon: '🛡️',
+      description: 'Connect using Trust Wallet',
+      checkAvailable: () => typeof window !== 'undefined' && window.ethereum && window.ethereum.isTrust
+    },
+    {
+      id: 'keplr',
+      name: 'Keplr',
+      icon: '⭐',
+      description: 'Connect to Cosmos ecosystem',
+      checkAvailable: () => typeof window !== 'undefined' && window.keplr
+    },
+    {
+      id: 'coinbase',
+      name: 'Coinbase Wallet',
+      icon: '🔵',
+      description: 'Connect using Coinbase Wallet',
+      checkAvailable: () => typeof window !== 'undefined' && window.ethereum && window.ethereum.isCoinbaseWallet
+    }
+  ];
+
+  // Check for existing connections on component mount
+  useEffect(() => {
+    checkExistingConnection();
+  }, []);
+
+  const checkExistingConnection = async () => {
+    if (typeof window === 'undefined') return;
+
+    // Check MetaMask
+    if (window.ethereum && window.ethereum.isMetaMask) {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setConnectedWallet('metamask');
+          setAccount(accounts[0]);
+        }
+      } catch (error) {
+        console.log('No existing MetaMask connection');
+      }
+    }
+
+    // Check Keplr
+    if (window.keplr) {
+      try {
+        const key = await window.keplr.getKey("cosmoshub-4");
+        if (key) {
+          setConnectedWallet('keplr');
+          setAccount(key.bech32Address);
+        }
+      } catch (error) {
+        console.log('No existing Keplr connection');
+      }
+    }
+  };
+
+  const connectWallet = async (walletId) => {
+    setConnecting(walletId);
+    
+    try {
+      switch (walletId) {
+        case 'metamask':
+          await connectMetaMask();
+          break;
+        case 'walletconnect':
+          await connectWalletConnect();
+          break;
+        case 'rabby':
+          await connectRabby();
+          break;
+        case 'trustwallet':
+          await connectTrustWallet();
+          break;
+        case 'keplr':
+          await connectKeplr();
+          break;
+        case 'coinbase':
+          await connectCoinbaseWallet();
+          break;
+        default:
+          throw new Error('Unsupported wallet');
+      }
+    } catch (error) {
+      console.error(`Failed to connect ${walletId}:`, error);
+      alert(`Failed to connect ${walletId}: ${error.message}`);
+    } finally {
+      setConnecting('');
+    }
+  };
+
+  const connectMetaMask = async () => {
+    if (!window.ethereum || !window.ethereum.isMetaMask) {
+      throw new Error('MetaMask not detected. Please install MetaMask extension.');
+    }
+    
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+    
+    setConnectedWallet('metamask');
+    setAccount(accounts[0]);
+    setIsOpen(false);
+  };
+
+  const connectWalletConnect = async () => {
+    // This is a simplified version - in production you'd use @walletconnect/web3-provider
+    alert('WalletConnect integration requires additional setup with @walletconnect/web3-provider package. This would show a QR code for mobile wallet connection.');
+  };
+
+  const connectRabby = async () => {
+    if (!window.ethereum || !window.ethereum.isRabby) {
+      throw new Error('Rabby wallet not detected. Please install Rabby extension.');
+    }
+    
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+    
+    setConnectedWallet('rabby');
+    setAccount(accounts[0]);
+    setIsOpen(false);
+  };
+
+  const connectTrustWallet = async () => {
+    if (!window.ethereum || !window.ethereum.isTrust) {
+      throw new Error('Trust Wallet not detected. Please install Trust Wallet or use Trust Wallet browser.');
+    }
+    
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+    
+    setConnectedWallet('trustwallet');
+    setAccount(accounts[0]);
+    setIsOpen(false);
+  };
+
+  const connectKeplr = async () => {
+    if (!window.keplr) {
+      throw new Error('Keplr not detected. Please install Keplr extension.');
+    }
+    
+    await window.keplr.enable("cosmoshub-4");
+    const key = await window.keplr.getKey("cosmoshub-4");
+    
+    setConnectedWallet('keplr');
+    setAccount(key.bech32Address);
+    setIsOpen(false);
+  };
+
+  const connectCoinbaseWallet = async () => {
+    if (!window.ethereum || !window.ethereum.isCoinbaseWallet) {
+      throw new Error('Coinbase Wallet not detected. Please install Coinbase Wallet extension.');
+    }
+    
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+    
+    setConnectedWallet('coinbase');
+    setAccount(accounts[0]);
+    setIsOpen(false);
+  };
+
+  const disconnect = () => {
+    setConnectedWallet(null);
+    setAccount('');
+  };
+
+  const formatAddress = (address) => {
+    if (!address) return '';
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const getWalletInfo = (walletId) => {
+    return wallets.find(w => w.id === walletId);
+  };
+
+  return (
+    <div className="relative">
+      {/* Connect Button */}
+      {!connectedWallet ? (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors"
+        >
+          <Wallet size={20} />
+          Connect Wallet
+        </button>
+      ) : (
+        <div className="flex items-center gap-3">
+          <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg flex items-center gap-2">
+            <CheckCircle size={16} />
+            <span className="text-sm font-medium">
+              {getWalletInfo(connectedWallet)?.name}
+            </span>
+            <span className="text-sm">{formatAddress(account)}</span>
+          </div>
+          <button
+            onClick={disconnect}
+            className="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+          >
+            Disconnect
+          </button>
+        </div>
+      )}
+
+      {/* Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b">
+              <h2 className="text-xl font-bold text-gray-900">Connect Wallet</h2>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Wallet Options */}
+            <div className="p-6 space-y-3">
+              {wallets.map((wallet) => {
+                const isAvailable = wallet.checkAvailable();
+                const isConnecting = connecting === wallet.id;
+                
+                return (
+                  <button
+                    key={wallet.id}
+                    onClick={() => isAvailable && connectWallet(wallet.id)}
+                    disabled={!isAvailable || isConnecting}
+                    className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                      isAvailable
+                        ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                        : 'border-gray-100 bg-gray-50 cursor-not-allowed opacity-50'
+                    } ${isConnecting ? 'border-blue-500 bg-blue-50' : ''}`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="text-2xl">{wallet.icon}</div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-gray-900 flex items-center gap-2">
+                          {wallet.name}
+                          {!isAvailable && <span className="text-xs text-red-500">(Not Available)</span>}
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          {isConnecting ? 'Connecting...' : wallet.description}
+                        </div>
+                      </div>
+                      <ExternalLink size={16} className="text-gray-400" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Footer */}
+            <div className="p-6 border-t bg-gray-50 rounded-b-xl">
+              <p className="text-sm text-gray-600 text-center">
+                By connecting a wallet, you agree to our Terms of Service and Privacy Policy.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default WalletConnector;
