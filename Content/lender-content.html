@@ -1,0 +1,349 @@
+<!-- Wallet Connection Prompt -->
+<div id="lenderWalletPrompt" class="connect-wallet-prompt glass-card">
+  <h2>🔐 Connect Your Wallet</h2>
+  <p>Connect your wallet to access the BeautyFi lending protocol.</p>
+  <button id="lenderConnectBtn" class="connect-btn" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+</div>
+
+<!-- Main Lender Content (hidden by default) -->
+<div id="lenderContent" class="lender-container" style="display: none;">
+  
+  <!-- Protocol Overview -->
+  <div class="protocol-overview">
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Total Collateral</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="totalCollateral">$0.00</div>
+      <div class="card-change positive">Locked in protocol</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Total Debt</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="totalDebt">0 BUTDC</div>
+      <div class="card-change positive">Outstanding loans</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">Borrow Fee</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="borrowFee">0.5%</div>
+      <div class="card-change positive">One-time fee</div>
+    </div>
+    
+    <div class="portfolio-card glass-card">
+      <div class="card-title">BUTFI APY</div>
+      <div class="spacer"></div>
+      <div class="card-value" id="butfiApy">42.5%</div>
+      <div class="card-change positive">Staking rewards</div>
+    </div>
+  </div>
+
+  <!-- Your Position Section -->
+  <div class="your-position-section">
+    <div class="portfolio-card glass-card position-card">
+      <h2 style="margin-bottom: 20px; color: var(--text-primary)">Your Borrowing Position</h2>
+      
+      <!-- Empty Position State -->
+      <div id="emptyPosition" class="position-empty">
+        <p>You don't have an active borrowing position yet.</p>
+        <p class="text-secondary">Open a trove to start borrowing BUTDC against your collateral.</p>
+        <button class="open-trove-btn" onclick="openTroveModal('ETH')">Open Trove</button>
+      </div>
+      
+      <!-- Active Position State -->
+      <div id="activePosition" class="position-active" style="display: none;">
+        <div class="position-grid">
+          <div class="position-item">
+            <div class="position-label">Collateral</div>
+            <div class="position-value" id="userCollateral">0.000 ETH</div>
+            <div class="position-usd" id="userCollateralUSD">$0.00</div>
+          </div>
+          
+          <div class="position-item">
+            <div class="position-label">Debt</div>
+            <div class="position-value" id="userDebt">0 BUTDC</div>
+          </div>
+          
+          <div class="position-item">
+            <div class="position-label">Collateral Ratio</div>
+            <div class="position-value" id="userRatio">0.0%</div>
+            <div class="position-status safe" id="ratioStatus">Safe</div>
+          </div>
+          
+          <div class="position-item">
+            <div class="position-label">Liquidation Price</div>
+            <div class="position-value" id="liquidationPrice">$0.00</div>
+          </div>
+        </div>
+        
+        <div class="position-actions">
+          <button class="action-btn adjust-btn" onclick="adjustTrove()">Adjust</button>
+          <button class="action-btn close-btn" onclick="closeTrove()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collateral Markets -->
+  <div class="collateral-markets">
+    <h2 style="margin-bottom: 20px; color: var(--text-primary)">Collateral Markets</h2>
+    <div class="markets-grid">
+      
+      <!-- ETH Market -->
+      <div class="portfolio-card glass-card market-card">
+        <div class="market-header">
+          <div class="market-info">
+            <div class="market-icon">ETH</div>
+            <div class="market-details">
+              <h3>Ethereum</h3>
+              <p>110% minimum ratio</p>
+            </div>
+          </div>
+          <div class="market-stats-compact">
+            <div class="stat-compact">
+              <div class="stat-value">$2,420</div>
+              <div class="stat-label">Price</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="market-stats">
+          <div class="stat-item">
+            <div class="stat-value">8,250</div>
+            <div class="stat-label">ETH Locked</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">12.8M</div>
+            <div class="stat-label">BUTDC Minted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">185%</div>
+            <div class="stat-label">Avg Ratio</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">0.5%</div>
+            <div class="stat-label">Borrow Fee</div>
+          </div>
+        </div>
+        
+        <div class="market-actions">
+          <button class="borrow-btn" onclick="openTroveModal('ETH')">Borrow BUTDC</button>
+        </div>
+      </div>
+      
+      <!-- WBTC Market -->
+      <div class="portfolio-card glass-card market-card">
+        <div class="market-header">
+          <div class="market-info">
+            <div class="market-icon">BTC</div>
+            <div class="market-details">
+              <h3>Wrapped Bitcoin</h3>
+              <p>110% minimum ratio</p>
+            </div>
+          </div>
+          <div class="market-stats-compact">
+            <div class="stat-compact">
+              <div class="stat-value">$43,850</div>
+              <div class="stat-label">Price</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="market-stats">
+          <div class="stat-item">
+            <div class="stat-value">156</div>
+            <div class="stat-label">WBTC Locked</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4.2M</div>
+            <div class="stat-label">BUTDC Minted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">198%</div>
+            <div class="stat-label">Avg Ratio</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">0.5%</div>
+            <div class="stat-label">Borrow Fee</div>
+          </div>
+        </div>
+        
+        <div class="market-actions">
+          <button class="borrow-btn" onclick="openTroveModal('WBTC')">Borrow BUTDC</button>
+        </div>
+      </div>
+      
+      <!-- wTAO Market -->
+      <div class="portfolio-card glass-card market-card">
+        <div class="market-header">
+          <div class="market-info">
+            <div class="market-icon">TAO</div>
+            <div class="market-details">
+              <h3>Wrapped TAO</h3>
+              <p>150% minimum ratio</p>
+            </div>
+          </div>
+          <div class="market-stats-compact">
+            <div class="stat-compact">
+              <div class="stat-value">$625</div>
+              <div class="stat-label">Price</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="market-stats">
+          <div class="stat-item">
+            <div class="stat-value">2,180</div>
+            <div class="stat-label">wTAO Locked</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">1.5M</div>
+            <div class="stat-label">BUTDC Minted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">225%</div>
+            <div class="stat-label">Avg Ratio</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">0.5%</div>
+            <div class="stat-label">Borrow Fee</div>
+          </div>
+        </div>
+        
+        <div class="market-actions">
+          <button class="borrow-btn" onclick="openTroveModal('wTAO')">Borrow BUTDC</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stability Pool Section -->
+  <div class="stability-pool-section">
+    <div class="portfolio-card glass-card stability-pool-card">
+      <div class="pool-info">
+        <h3>Stability Pool</h3>
+        <p>Deposit BUTDC to earn BUTFI rewards and liquidation gains. Help maintain the protocol's stability while earning attractive returns.</p>
+      </div>
+      
+      <div class="pool-stats-grid">
+        <div class="pool-stat">
+          <div class="position-label">Pool Size</div>
+          <div class="position-value">24.7M BUTDC</div>
+        </div>
+        <div class="pool-stat">
+          <div class="position-label">APR</div>
+          <div class="position-value">18.5%</div>
+        </div>
+        <div class="pool-stat">
+          <div class="position-label">Your Deposit</div>
+          <div class="position-value">0 BUTDC</div>
+        </div>
+        <div class="pool-stat">
+          <div class="position-label">Pending Rewards</div>
+          <div class="position-value">0 BUTFI</div>
+        </div>
+      </div>
+      
+      <div class="pool-actions">
+        <button class="deposit-btn" onclick="openStabilityPoolModal()">Deposit</button>
+        <button class="withdraw-btn" disabled>Withdraw</button>
+        <button class="claim-rewards-btn" disabled>Claim Rewards</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUTFI Staking Section -->
+  <div class="butfi-staking-section">
+    <div class="portfolio-card glass-card butfi-card">
+      <div class="butfi-info">
+        <h3>BUTFI Staking</h3>
+        <p>Stake BUTFI tokens to earn a share of the protocol's borrowing and redemption fees. Stakers receive ETH, WBTC, and wTAO rewards.</p>
+      </div>
+      
+      <div class="butfi-stats-grid">
+        <div class="butfi-stat">
+          <div class="position-label">Total Staked</div>
+          <div class="position-value">5.8M BUTFI</div>
+        </div>
+        <div class="butfi-stat">
+          <div class="position-label">Staking APR</div>
+          <div class="position-value">28.3%</div>
+        </div>
+        <div class="butfi-stat">
+          <div class="position-label">Your Stake</div>
+          <div class="position-value">0 BUTFI</div>
+        </div>
+        <div class="butfi-stat">
+          <div class="position-label">Pending Fees</div>
+          <div class="position-value">0 ETH</div>
+        </div>
+      </div>
+      
+      <div class="butfi-actions">
+        <button class="stake-butfi-btn" onclick="openBUTFIStakeModal()">Stake BUTFI</button>
+        <button class="unstake-butfi-btn" disabled>Unstake</button>
+        <button class="claim-fees-btn" disabled>Claim Fees</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Liquidations -->
+  <div class="liquidations-section">
+    <div class="portfolio-card glass-card liquidations-table">
+      <h2 style="margin-bottom: 20px; color: var(--text-primary)">Recent Liquidations</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Collateral</th>
+            <th>Debt</th>
+            <th>Ratio</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="asset-info">
+                <div class="asset-icon">ETH</div>
+                <span>Ethereum</span>
+              </div>
+            </td>
+            <td>2.45 ETH</td>
+            <td>5,928 BUTDC</td>
+            <td>108.2%</td>
+            <td>2 hours ago</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="asset-info">
+                <div class="asset-icon">BTC</div>
+                <span>WBTC</span>
+              </div>
+            </td>
+            <td>0.15 WBTC</td>
+            <td>6,577 BUTDC</td>
+            <td>109.1%</td>
+            <td>5 hours ago</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="asset-info">
+                <div class="asset-icon">TAO</div>
+                <span>wTAO</span>
+              </div>
+            </td>
+            <td>12.8 wTAO</td>
+            <td>8,000 BUTDC</td>
+            <td>148.9%</td>
+            <td>1 day ago</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
