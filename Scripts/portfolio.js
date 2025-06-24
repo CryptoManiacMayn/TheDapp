@@ -107,7 +107,7 @@ function loadPortfolioData() {
       lendingAPY: 8.5,
       totalYield: 850.00,
       yieldAPY: 12.3,
-      assets: mockAssets
+      assets: []
     };
     
     // Update UI
@@ -187,12 +187,8 @@ function updateAssetsTable() {
   
   if (assets.length === 0) {
     assetsTableBody.innerHTML = `
-      <tr>
-        <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px; font-size: 1.1rem;">
-          <div style="margin-bottom: 10px;">📊 No assets found</div>
-          <div style="font-size: 0.9rem; opacity: 0.8;">Your portfolio appears to be empty</div>
-        </td>
-      </tr>
+
+
     `;
     return;
   }
@@ -263,10 +259,7 @@ function resetPortfolioData() {
   if (assetsTableBody) {
     assetsTableBody.innerHTML = `
       <tr>
-        <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px; font-size: 1.1rem;">
-          <div style="margin-bottom: 10px;">🔒 Connect your wallet to view your portfolio</div>
-          <div style="font-size: 0.9rem; opacity: 0.8;">Your assets and balances will appear here once connected</div>
-        </td>
+
       </tr>
     `;
   }
