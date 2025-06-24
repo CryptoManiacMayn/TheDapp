@@ -1,5 +1,5 @@
 /* ==========================================
-   LENDER SPECIFIC STYLES - LIQUITY INSPIRED
+   LENDER SPECIFIC STYLES - LIQUITY INSPIRED - FIXED
    ========================================== */
 
 .lender-container {
@@ -615,20 +615,19 @@
 }
 
 /* ==========================================
-   ACCESSIBILITY IMPROVEMENTS - LENDER BUTTONS
+   ACCESSIBILITY IMPROVEMENTS - FIXED BUTTON ANIMATIONS
    ========================================== */
 
-/* Quick scale pulse on click for Lender buttons */
+/* Quick scale pulse on click for INDIVIDUAL buttons only */
 @keyframes quickPulse {
   0% { transform: scale(1); }
   50% { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
 
-/* Lender button active states with pulse animation */
+/* FIXED: Apply animations only to the specific button being clicked, not the parent containers */
 .borrow-btn:active,
 .open-trove-btn:active,
-.action-btn:active,
 .adjust-btn:active,
 .close-btn:active,
 .deposit-btn:active,
@@ -636,32 +635,54 @@
 .claim-rewards-btn:active,
 .stake-butfi-btn:active,
 .unstake-butfi-btn:active,
-.claim-fees-btn:active,
-.market-card:active,
-.position-card:active,
-.stability-pool-card:active,
-.butfi-card:active {
+.claim-fees-btn:active {
   animation: quickPulse 0.15s ease;
   outline: none;
 }
 
-/* Remove persistent focus outlines from Lender buttons */
-.borrow-btn:focus,
-.open-trove-btn:focus,
-.action-btn:focus,
-.adjust-btn:focus,
-.close-btn:focus,
-.deposit-btn:focus,
-.withdraw-btn:focus,
-.claim-rewards-btn:focus,
-.stake-butfi-btn:focus,
-.unstake-butfi-btn:focus,
-.claim-fees-btn:focus,
-.market-card:focus,
-.position-card:focus,
-.stability-pool-card:focus,
-.butfi-card:focus {
-  outline: none;
+/* OVERRIDE GLOBAL FOCUS RULES - Auto-fading focus outlines for lender buttons */
+.lender-container .borrow-btn:focus,
+.lender-container .open-trove-btn:focus,
+.lender-container .adjust-btn:focus,
+.lender-container .close-btn:focus,
+.lender-container .deposit-btn:focus,
+.lender-container .withdraw-btn:focus,
+.lender-container .claim-rewards-btn:focus,
+.lender-container .stake-butfi-btn:focus,
+.lender-container .unstake-butfi-btn:focus,
+.lender-container .claim-fees-btn:focus {
+  outline: 2px solid rgba(16, 185, 129, 0.6) !important;
+  outline-offset: 2px !important;
+  transition: outline-color 0.3s ease, outline-width 0.3s ease !important;
+}
+
+/* Auto-fade focus after interaction - OVERRIDE GLOBAL RULES */
+.lender-container .borrow-btn.auto-blur:focus,
+.lender-container .open-trove-btn.auto-blur:focus,
+.lender-container .adjust-btn.auto-blur:focus,
+.lender-container .close-btn.auto-blur:focus,
+.lender-container .deposit-btn.auto-blur:focus,
+.lender-container .withdraw-btn.auto-blur:focus,
+.lender-container .claim-rewards-btn.auto-blur:focus,
+.lender-container .stake-butfi-btn.auto-blur:focus,
+.lender-container .unstake-butfi-btn.auto-blur:focus,
+.lender-container .claim-fees-btn.auto-blur:focus {
+  outline-color: transparent !important;
+  outline-width: 0 !important;
+}
+
+/* Ensure global rules don't interfere with lender buttons */
+.lender-container .wallet-action-btn:focus,
+.lender-container .action-btn:focus {
+  outline: 2px solid rgba(16, 185, 129, 0.6) !important;
+  outline-offset: 2px !important;
+  transition: outline-color 0.3s ease, outline-width 0.3s ease !important;
+}
+
+.lender-container .wallet-action-btn.auto-blur:focus,
+.lender-container .action-btn.auto-blur:focus {
+  outline-color: transparent !important;
+  outline-width: 0 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -674,5 +695,362 @@
   .deposit-btn,
   .stake-butfi-btn {
     transition: none !important;
+  }
+}
+
+/* ==========================================
+   USER HIGHLIGHTING - FIXED TO AVOID GREEN BUTTON ISSUE
+   ========================================== */
+
+/* Default user position elements */
+.user-position-highlight,
+.user-pool-highlight,
+.user-butfi-highlight {
+  transition: all var(--transition-fast);
+  opacity: 0.8;
+}
+
+/* Highlight user positions when wallet is connected */
+.user-position-highlight.connected,
+.user-pool-highlight.connected,
+.user-butfi-highlight.connected {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+/* Enhanced position values for connected users */
+.user-position-highlight.connected .position-value,
+.user-pool-highlight.connected .position-value,
+.user-butfi-highlight.connected .position-value {
+  color: #10b981;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================
+   WALLET ACTION BUTTONS - FIXED
+   ==========================================*/
+
+/* Default state - encouraging connection */
+.wallet-action-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-action-text {
+  transition: all var(--transition-fast);
+}
+
+/* FIXED: Only change button color when wallet is connected AND it's NOT a disabled button */
+.lender-container[data-wallet-connected="true"] .open-trove-btn:not(:disabled),
+.lender-container[data-wallet-connected="true"] .borrow-btn:not(:disabled),
+.lender-container[data-wallet-connected="true"] .deposit-btn:not(:disabled),
+.lender-container[data-wallet-connected="true"] .stake-butfi-btn:not(:disabled) {
+  /* Keep original colors instead of forcing green */
+}
+
+/* FIXED: Only apply enhanced styling to enabled action buttons */
+.lender-container[data-wallet-connected="true"] .adjust-btn:not(:disabled),
+.lender-container[data-wallet-connected="true"] .close-btn:not(:disabled) {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.lender-container[data-wallet-connected="true"] .adjust-btn:hover:not(:disabled),
+.lender-container[data-wallet-connected="true"] .close-btn:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+/* FIXED: Only enhance specific user action buttons when they're enabled */
+.lender-container[data-wallet-connected="true"] .withdraw-btn:not(:disabled):enabled,
+.lender-container[data-wallet-connected="true"] .claim-rewards-btn:not(:disabled):enabled,
+.lender-container[data-wallet-connected="true"] .unstake-butfi-btn:not(:disabled):enabled,
+.lender-container[data-wallet-connected="true"] .claim-fees-btn:not(:disabled):enabled {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================
+   POSITION STATUS ENHANCEMENTS
+   ========================================== */
+
+/* Enhanced position status indicators */
+.position-status.safe {
+  background: linear-gradient(135deg, rgba(72, 187, 120, 0.2), rgba(56, 161, 105, 0.1));
+  border: 1px solid rgba(72, 187, 120, 0.4);
+  box-shadow: 0 2px 8px rgba(72, 187, 120, 0.2);
+}
+
+.position-status.warning {
+  background: linear-gradient(135deg, rgba(237, 137, 54, 0.2), rgba(221, 107, 32, 0.1));
+  border: 1px solid rgba(237, 137, 54, 0.4);
+  box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
+}
+
+.position-status.danger {
+  background: linear-gradient(135deg, rgba(245, 101, 101, 0.2), rgba(229, 62, 62, 0.1));
+  border: 1px solid rgba(245, 101, 101, 0.4);
+  box-shadow: 0 2px 8px rgba(245, 101, 101, 0.2);
+  animation: dangerPulse 2s infinite;
+}
+
+@keyframes dangerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ==========================================
+   MARKET CARD ENHANCEMENTS - FIXED
+   ========================================== */
+
+/* Enhanced market cards for connected users - subtle enhancement only */
+.lender-container[data-wallet-connected="true"] .market-card {
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.lender-container[data-wallet-connected="true"] .market-card:hover {
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1);
+  transform: translateY(-4px);
+}
+
+/* REMOVED: Enhanced market icons to prevent color changes */
+
+/* ==========================================
+   CONNECTION STATUS INDICATORS
+   ========================================== */
+
+/* Add connection status to main container */
+.lender-container[data-wallet-connected="true"]::before {
+  content: "🔗 Connected";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 10;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.lender-container:not([data-wallet-connected="true"])::before {
+  content: "🔒 Connect Wallet";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(156, 163, 175, 0.2);
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 10;
+  border: 1px solid var(--border);
+}
+
+/* ==========================================
+   USER VALUE HIGHLIGHTING
+   ========================================== */
+
+/* Specific highlighting for user values */
+.user-stability-deposit,
+.user-stability-rewards,
+.user-butfi-stake,
+.user-butfi-fees {
+  transition: all var(--transition-fast);
+}
+
+.lender-container[data-wallet-connected="true"] .user-stability-deposit,
+.lender-container[data-wallet-connected="true"] .user-stability-rewards,
+.lender-container[data-wallet-connected="true"] .user-butfi-stake,
+.lender-container[data-wallet-connected="true"] .user-butfi-fees {
+  color: #10b981;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Add indicator icons for user values */
+.lender-container[data-wallet-connected="true"] .user-stability-deposit::after,
+.lender-container[data-wallet-connected="true"] .user-stability-rewards::after,
+.lender-container[data-wallet-connected="true"] .user-butfi-stake::after,
+.lender-container[data-wallet-connected="true"] .user-butfi-fees::after {
+  content: "👤";
+  margin-left: 6px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ==========================================
+   RESPONSIVE ENHANCEMENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+  .user-position-highlight.connected,
+  .user-pool-highlight.connected,
+  .user-butfi-highlight.connected {
+    transform: translateY(-1px);
+  }
+  
+  .lender-container::before {
+    top: 10px;
+    right: 10px;
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+  
+  .user-stability-deposit::after,
+  .user-stability-rewards::after,
+  .user-butfi-stake::after,
+  .user-butfi-fees::after {
+    font-size: 0.7rem;
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lender-container::before {
+    display: none; /* Hide on very small screens */
+  }
+  
+  .user-position-highlight.connected,
+  .user-pool-highlight.connected,
+  .user-butfi-highlight.connected {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  }
+}
+
+/* ==========================================
+   DARK THEME ENHANCEMENTS
+   ========================================== */
+
+[data-theme="dark"] .user-position-highlight.connected,
+[data-theme="dark"] .user-pool-highlight.connected,
+[data-theme="dark"] .user-butfi-highlight.connected {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .lender-container[data-wallet-connected="true"] .market-card {
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+[data-theme="dark"] .lender-container[data-wallet-connected="true"] .stability-pool-card {
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+[data-theme="dark"] .lender-container[data-wallet-connected="true"] .butfi-card {
+  background: linear-gradient(135deg, var(--glass-bg-light), rgba(138, 43, 226, 0.12), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(138, 43, 226, 0.5);
+}
+
+[data-theme="dark"] .lender-container[data-wallet-connected="true"] .pool-stat {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .lender-container[data-wallet-connected="true"] .butfi-stat {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+/* ==========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ========================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .user-position-highlight.connected,
+  .user-pool-highlight.connected,
+  .user-butfi-highlight.connected {
+    border-width: 2px;
+    border-color: #10b981;
+  }
+  
+  .lender-container[data-wallet-connected="true"] .market-card,
+  .lender-container[data-wallet-connected="true"] .stability-pool-card,
+  .lender-container[data-wallet-connected="true"] .butfi-card {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .user-position-highlight,
+  .user-pool-highlight,
+  .user-butfi-highlight,
+  .wallet-action-btn,
+  .market-card,
+  .stability-pool-card,
+  .butfi-card {
+    transition: none;
+  }
+  
+  .dangerPulse {
+    animation: none;
+  }
+}
+
+/* ==========================================
+   FOCUS INDICATORS FOR CONNECTED STATE
+   ========================================== */
+
+.lender-container[data-wallet-connected="true"] .wallet-action-btn:focus,
+.lender-container[data-wallet-connected="true"] .adjust-btn:focus,
+.lender-container[data-wallet-connected="true"] .close-btn:focus,
+.lender-container[data-wallet-connected="true"] .withdraw-btn:focus,
+.lender-container[data-wallet-connected="true"] .claim-rewards-btn:focus,
+.lender-container[data-wallet-connected="true"] .unstake-butfi-btn:focus,
+.lender-container[data-wallet-connected="true"] .claim-fees-btn:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================
+   LOADING STATES
+   ========================================== */
+
+.user-position-highlight.loading,
+.user-pool-highlight.loading,
+.user-butfi-highlight.loading {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .lender-container[data-wallet-connected="true"] {
+    border: 2px solid #10b981;
+  }
+  
+  .user-position-highlight.connected,
+  .user-pool-highlight.connected,
+  .user-butfi-highlight.connected {
+    border: 1px solid #000;
+    background: none;
+  }
+  
+  .user-stability-deposit,
+  .user-stability-rewards,
+  .user-butfi-stake,
+  .user-butfi-fees {
+    color: #000 !important;
+    font-weight: 700 !important;
   }
 }
