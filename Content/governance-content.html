@@ -1,39 +1,30 @@
-<!-- Wallet Connection Prompt -->
-<div id="governanceWalletPrompt" class="connect-wallet-prompt glass-card">
-  <h2>🗳️ Connect Your Wallet</h2>
-  <p>Connect your Web3 wallet to participate in governance and view proposals.</p>
-  <button id="governanceConnectBtn" class="connect-btn" onclick="connectWallet()">
-    Connect Wallet
-  </button>
-</div>
-
-<!-- Main Governance Content (hidden by default) -->
-<div id="governanceContent" class="governance-container" style="display: none;">
+<!-- Main Governance Content - Always Visible -->
+<div id="governanceContent" class="governance-container">
   
   <!-- Governance Overview Cards -->
   <div class="governance-overview">
     <div class="overview-card glass-card">
-      <div class="overview-value" id="votingPower">0</div>
-      <div class="overview-label">Voting Power</div>
-      <div class="overview-change positive">Your influence</div>
+      <div class="overview-value" id="votingPower">12,500</div>
+      <div class="overview-label">Total Voting Power</div>
+      <div class="overview-change positive">Active governance tokens</div>
     </div>
     
     <div class="overview-card glass-card">
-      <div class="overview-value" id="activeProposals">0</div>
+      <div class="overview-value" id="activeProposals">2</div>
       <div class="overview-label">Active Proposals</div>
       <div class="overview-change positive">Available to vote</div>
     </div>
     
     <div class="overview-card glass-card">
-      <div class="overview-value" id="votesThisMonth">0</div>
+      <div class="overview-value" id="votesThisMonth">47</div>
       <div class="overview-label">Votes This Month</div>
-      <div class="overview-change positive">Your participation</div>
+      <div class="overview-change positive">Community participation</div>
     </div>
     
     <div class="overview-card glass-card">
-      <div class="overview-value" id="totalProposals">0</div>
+      <div class="overview-value" id="totalProposals">15</div>
       <div class="overview-label">Total Proposals</div>
-      <div class="overview-change positive">All time</div>
+      <div class="overview-change positive">All time governance</div>
     </div>
   </div>
 
@@ -41,15 +32,121 @@
   <div class="proposals-section">
     <h2 class="section-title">Active Proposals</h2>
     <div id="proposalsList" class="proposals-list">
-      <div class="no-proposals glass-card">
-        <p>🔒 Connect your wallet to view governance proposals</p>
+      
+      <!-- Proposal 1 -->
+      <div class="proposal-card glass-card">
+        <div class="proposal-header">
+          <h3>Increase Staking Rewards for ETH Pool</h3>
+          <span class="proposal-status status-active">Active</span>
+        </div>
+        <p class="proposal-description">
+          Proposal to increase ETH staking rewards from 5.2% to 6.5% APY to attract more liquidity and remain competitive with other protocols. This change would be implemented gradually over a 30-day period.
+        </p>
+        <div class="proposal-stats">
+          <div class="vote-progress">
+            <div class="vote-bar">
+              <div class="vote-for" style="width: 65%"></div>
+              <div class="vote-against" style="width: 35%"></div>
+            </div>
+            <div class="vote-labels">
+              <span class="for-label">For: 65%</span>
+              <span class="against-label">Against: 35%</span>
+            </div>
+          </div>
+          <div class="proposal-meta">
+            <span>Ends in 3 days</span>
+            <span>1,234 votes cast</span>
+          </div>
+        </div>
+        <div class="proposal-actions user-specific" id="proposal1Actions">
+          <button class="vote-btn vote-for" onclick="handleVote(1, 'for')">
+            Vote For
+          </button>
+          <button class="vote-btn vote-against" onclick="handleVote(1, 'against')">
+            Vote Against
+          </button>
+        </div>
       </div>
+
+      <!-- Proposal 2 -->
+      <div class="proposal-card glass-card">
+        <div class="proposal-header">
+          <h3>Implement Cross-Chain Bridge</h3>
+          <span class="proposal-status status-active">Active</span>
+        </div>
+        <p class="proposal-description">
+          Enable cross-chain functionality to support multiple blockchain networks including Polygon, Arbitrum, and Optimism. This will allow users to stake tokens across different chains seamlessly.
+        </p>
+        <div class="proposal-stats">
+          <div class="vote-progress">
+            <div class="vote-bar">
+              <div class="vote-for" style="width: 78%"></div>
+              <div class="vote-against" style="width: 22%"></div>
+            </div>
+            <div class="vote-labels">
+              <span class="for-label">For: 78%</span>
+              <span class="against-label">Against: 22%</span>
+            </div>
+          </div>
+          <div class="proposal-meta">
+            <span>Ends in 7 days</span>
+            <span>892 votes cast</span>
+          </div>
+        </div>
+        <div class="proposal-actions user-specific" id="proposal2Actions">
+          <button class="vote-btn vote-for" onclick="handleVote(2, 'for')">
+            Vote For
+          </button>
+          <button class="vote-btn vote-against" onclick="handleVote(2, 'against')">
+            Vote Against
+          </button>
+        </div>
+      </div>
+
+      <!-- Proposal 3 - Recently Closed -->
+      <div class="proposal-card glass-card">
+        <div class="proposal-header">
+          <h3>Reduce Protocol Trading Fees</h3>
+          <span class="proposal-status status-passed">Passed</span>
+        </div>
+        <p class="proposal-description">
+          Reduce trading fees from 0.3% to 0.25% to improve competitiveness and increase trading volume. This proposal passed with overwhelming community support.
+        </p>
+        <div class="proposal-stats">
+          <div class="vote-progress">
+            <div class="vote-bar">
+              <div class="vote-for" style="width: 89%"></div>
+              <div class="vote-against" style="width: 11%"></div>
+            </div>
+            <div class="vote-labels">
+              <span class="for-label">For: 89%</span>
+              <span class="against-label">Against: 11%</span>
+            </div>
+          </div>
+          <div class="proposal-meta">
+            <span>Ended 2 days ago</span>
+            <span>1,567 votes cast</span>
+          </div>
+        </div>
+        <div class="proposal-actions">
+          <button class="vote-btn vote-for" disabled>
+            Voting Ended
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <!-- Voting History Section -->
   <div class="voting-history">
     <h2 class="section-title">Voting History</h2>
+    <div class="wallet-status-info" id="governanceWalletStatusInfo">
+      <div class="status-message">
+        <i class="fas fa-info-circle"></i>
+        <span>Connect your wallet to view your personal voting history and participate in governance</span>
+      </div>
+    </div>
     <div class="history-table glass-card">
       <table class="table">
         <thead>
@@ -63,7 +160,12 @@
         <tbody id="votingHistoryBody">
           <tr>
             <td colspan="4" style="text-align: center; color: var(--text-secondary); padding: 40px;">
-              🔒 Connect your wallet to view your voting history
+              <div style="margin-bottom: 10px">
+                🔒 Connect your wallet to view your voting history
+              </div>
+              <div style="font-size: 0.9rem; opacity: 0.8">
+                Your votes and participation record will appear here once connected
+              </div>
             </td>
           </tr>
         </tbody>
@@ -71,4 +173,412 @@
     </div>
   </div>
 
+  <!-- Governance Information Cards -->
+  <div class="governance-info-grid">
+    <div class="info-card glass-card">
+      <h3>How Governance Works</h3>
+      <p>Participate in the future of DeFiTools by voting on proposals that shape the protocol. Your voice matters in building a decentralized future.</p>
+      <ul>
+        <li>Hold DEFI tokens to gain voting power</li>
+        <li>Review active proposals and their impact</li>
+        <li>Cast your vote before the deadline</li>
+        <li>Track results and implementation progress</li>
+      </ul>
+    </div>
+
+    <div class="info-card glass-card">
+      <h3>Voting Power</h3>
+      <p>Your voting power is determined by the amount of DEFI tokens you hold and stake. More tokens mean greater influence in governance decisions.</p>
+      <ul>
+        <li>1 DEFI token = 1 vote</li>
+        <li>Staked tokens provide 1.5x voting power</li>
+        <li>Voting power is calculated at proposal creation</li>
+        <li>Delegate your votes to trusted community members</li>
+      </ul>
+    </div>
+
+    <div class="info-card glass-card">
+      <h3>Proposal Process</h3>
+      <p>Anyone can submit proposals to improve the protocol. Learn about the process from idea to implementation.</p>
+      <ul>
+        <li>Discuss ideas in the community forum first</li>
+        <li>Submit formal proposals with detailed specifications</li>
+        <li>Community review and discussion period</li>
+        <li>Voting period followed by implementation</li>
+      </ul>
+    </div>
+  </div>
+
 </div>
+
+<style>
+/* User-specific elements highlighting */
+.user-specific {
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.wallet-connected .user-specific {
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background: rgba(77, 162, 255, 0.1);
+  padding: 12px;
+}
+
+[data-theme="dark"] .wallet-connected .user-specific {
+  background: rgba(77, 162, 255, 0.15);
+  border-color: rgba(77, 162, 255, 0.8);
+}
+
+/* Wallet status info styling */
+.wallet-status-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 10px;
+  transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .wallet-status-info {
+  background: rgba(255, 193, 7, 0.08);
+  border-color: rgba(255, 193, 7, 0.25);
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.status-message i {
+  color: #ffc107;
+  font-size: 1.1rem;
+}
+
+/* Information cards grid */
+.governance-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 15px;
+  padding: 25px;
+  transition: all var(--transition-normal);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+[data-theme="dark"] .info-card {
+  background: rgba(77, 162, 255, 0.1);
+  border: 1px solid rgba(77, 162, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(1, 1, 32, 0.3);
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+}
+
+[data-theme="dark"] .info-card:hover {
+  background: rgba(77, 162, 255, 0.15);
+  border: 1px solid rgba(77, 162, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(1, 1, 32, 0.4);
+}
+
+.info-card h3 {
+  color: var(--text-primary);
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.info-card p {
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card li {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.info-card li:before {
+  content: "✓";
+  color: var(--accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Wallet connected state modifications */
+.wallet-connected .wallet-status-info {
+  background: rgba(56, 161, 105, 0.1);
+  border-color: rgba(56, 161, 105, 0.3);
+}
+
+.wallet-connected .status-message i {
+  color: #38a169;
+}
+
+/* Voting button enhancement for non-connected state */
+body:not(.wallet-connected) .vote-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+body:not(.wallet-connected) .vote-btn:hover:before {
+  content: "Connect wallet to vote";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  z-index: 1;
+  border-radius: 8px;
+}
+
+/* Completely eliminate any possible border/outline on vote buttons */
+.vote-btn,
+.vote-btn:focus,
+.vote-btn:active,
+.vote-btn:hover,
+.vote-btn:focus-visible,
+.vote-btn:focus-within {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Target by element type as well */
+button.vote-btn,
+button.vote-btn:focus,
+button.vote-btn:active,
+button.vote-btn:hover,
+button.vote-btn:focus-visible {
+  outline: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Firefox specific fix */
+.vote-btn::-moz-focus-inner,
+button.vote-btn::-moz-focus-inner {
+  border: 0 !important;
+  outline: none !important;
+}
+
+/* Even more specific targeting */
+.proposal-actions .vote-btn,
+.proposal-actions .vote-btn:focus,
+.proposal-actions .vote-btn:active,
+.proposal-card .vote-btn,
+.proposal-card .vote-btn:focus,
+.proposal-card .vote-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Nuclear option - target by any possible path */
+* .vote-btn,
+* .vote-btn:focus,
+* .vote-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* FINAL OVERRIDE - This should be the last rule */
+html body .vote-btn:focus,
+html body .vote-btn:active,
+html body button.vote-btn:focus,
+html body button.vote-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: inherit !important;
+}
+
+/* Quick pulse animation on click */
+@keyframes voteBtnPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.vote-btn:active {
+  animation: voteBtnPulse 0.15s ease;
+}
+
+<script>
+// Global click handler to automatically blur vote buttons when clicked
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('vote-btn')) {
+    // Small delay to allow the click to register, then blur
+    setTimeout(() => {
+      event.target.blur();
+    }, 50);
+  }
+});
+
+// Also remove focus on any button that might get focused programmatically
+document.addEventListener('DOMContentLoaded', function() {
+  // Remove focus from any focused vote buttons every 100ms
+  setInterval(() => {
+    const focusedElement = document.activeElement;
+    if (focusedElement && focusedElement.classList.contains('vote-btn')) {
+      focusedElement.blur();
+    }
+  }, 100);
+});
+</script>
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .governance-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wallet-status-info {
+    padding: 12px;
+  }
+  
+  .status-message {
+    font-size: 0.9rem;
+  }
+  
+  .info-card {
+    padding: 20px;
+  }
+  
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    padding: 15px;
+  }
+  
+  .wallet-status-info {
+    padding: 10px;
+  }
+  
+  .status-message {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 0.85rem;
+  }
+}
+</style>
+
+<!-- Global CSS to completely eliminate all focus borders site-wide -->
+<style>
+/* NUCLEAR OPTION: Remove ALL focus borders from EVERYTHING */
+*,
+*:focus,
+*:active,
+*:focus-visible,
+*:focus-within {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Specifically target all button elements */
+button,
+button:focus,
+button:active,
+button:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove all webkit and firefox focus rings */
+*::-moz-focus-inner {
+  border: 0 !important;
+  outline: none !important;
+}
+
+/* Override any possible focus styles with maximum specificity */
+html body *:focus,
+html body *:active,
+html body button:focus,
+html body button:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Make sure vote buttons specifically have no border */
+.vote-btn {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.vote-btn:focus,
+.vote-btn:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+</style>
+
+<script>
+// Aggressively remove focus from vote buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // Remove focus immediately when any vote button is clicked
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('vote-btn')) {
+      setTimeout(() => e.target.blur(), 10);
+    }
+  });
+  
+  // Nuclear option: constantly check for focused vote buttons and blur them
+  setInterval(() => {
+    const focused = document.activeElement;
+    if (focused && focused.classList.contains('vote-btn')) {
+      focused.blur();
+    }
+  }, 50);
+});
+</script>
