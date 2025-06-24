@@ -1,28 +1,19 @@
-<!-- Wallet Connection Prompt -->
-<div id="lenderWalletPrompt" class="connect-wallet-prompt glass-card">
-  <h2>🔐 Connect Your Wallet</h2>
-  <p>Connect your wallet to access the BeautyFi lending protocol.</p>
-  <button id="lenderConnectBtn" class="connect-btn" onclick="connectWallet()">
-    Connect Wallet
-  </button>
-</div>
-
-<!-- Main Lender Content (hidden by default) -->
-<div id="lenderContent" class="lender-container" style="display: none;">
+<!-- Main Lender Content (visible by default, no wallet prompt) -->
+<div id="lenderContent" class="lender-container">
   
   <!-- Protocol Overview -->
   <div class="protocol-overview">
     <div class="portfolio-card glass-card">
       <div class="card-title">Total Collateral</div>
       <div class="spacer"></div>
-      <div class="card-value" id="totalCollateral">$0.00</div>
+      <div class="card-value" id="totalCollateral">$19.9M</div>
       <div class="card-change positive">Locked in protocol</div>
     </div>
     
     <div class="portfolio-card glass-card">
       <div class="card-title">Total Debt</div>
       <div class="spacer"></div>
-      <div class="card-value" id="totalDebt">0 BUTDC</div>
+      <div class="card-value" id="totalDebt">17.9M BUTDC</div>
       <div class="card-change positive">Outstanding loans</div>
     </div>
     
@@ -48,32 +39,37 @@
       
       <!-- Empty Position State -->
       <div id="emptyPosition" class="position-empty">
-        <p>You don't have an active borrowing position yet.</p>
-        <p class="text-secondary">Open a trove to start borrowing BUTDC against your collateral.</p>
-        <button class="open-trove-btn" onclick="openTroveModal('ETH')">Open Trove</button>
+        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+          <div style="font-size: 2rem; margin-bottom: 15px;">🏦</div>
+          <div style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">No active borrowing position</div>
+          <div style="font-size: 0.9rem; margin-bottom: 20px;">Connect your wallet to open a trove and start borrowing BUTDC</div>
+          <button class="open-trove-btn wallet-action-btn" onclick="openTroveModal('ETH')">
+            <span class="wallet-action-text">Connect Wallet to Open Trove</span>
+          </button>
+        </div>
       </div>
       
       <!-- Active Position State -->
       <div id="activePosition" class="position-active" style="display: none;">
         <div class="position-grid">
-          <div class="position-item">
+          <div class="position-item user-position-highlight">
             <div class="position-label">Collateral</div>
             <div class="position-value" id="userCollateral">0.000 ETH</div>
             <div class="position-usd" id="userCollateralUSD">$0.00</div>
           </div>
           
-          <div class="position-item">
+          <div class="position-item user-position-highlight">
             <div class="position-label">Debt</div>
             <div class="position-value" id="userDebt">0 BUTDC</div>
           </div>
           
-          <div class="position-item">
+          <div class="position-item user-position-highlight">
             <div class="position-label">Collateral Ratio</div>
             <div class="position-value" id="userRatio">0.0%</div>
             <div class="position-status safe" id="ratioStatus">Safe</div>
           </div>
           
-          <div class="position-item">
+          <div class="position-item user-position-highlight">
             <div class="position-label">Liquidation Price</div>
             <div class="position-value" id="liquidationPrice">$0.00</div>
           </div>
@@ -130,7 +126,9 @@
         </div>
         
         <div class="market-actions">
-          <button class="borrow-btn" onclick="openTroveModal('ETH')">Borrow BUTDC</button>
+          <button class="borrow-btn wallet-action-btn" onclick="openTroveModal('ETH')">
+            <span class="wallet-action-text">Connect Wallet to Borrow</span>
+          </button>
         </div>
       </div>
       
@@ -172,7 +170,9 @@
         </div>
         
         <div class="market-actions">
-          <button class="borrow-btn" onclick="openTroveModal('WBTC')">Borrow BUTDC</button>
+          <button class="borrow-btn wallet-action-btn" onclick="openTroveModal('WBTC')">
+            <span class="wallet-action-text">Connect Wallet to Borrow</span>
+          </button>
         </div>
       </div>
       
@@ -214,7 +214,9 @@
         </div>
         
         <div class="market-actions">
-          <button class="borrow-btn" onclick="openTroveModal('wTAO')">Borrow BUTDC</button>
+          <button class="borrow-btn wallet-action-btn" onclick="openTroveModal('wTAO')">
+            <span class="wallet-action-text">Connect Wallet to Borrow</span>
+          </button>
         </div>
       </div>
     </div>
@@ -237,18 +239,20 @@
           <div class="position-label">APR</div>
           <div class="position-value">18.5%</div>
         </div>
-        <div class="pool-stat">
+        <div class="pool-stat user-pool-highlight">
           <div class="position-label">Your Deposit</div>
-          <div class="position-value">0 BUTDC</div>
+          <div class="position-value user-stability-deposit">0 BUTDC</div>
         </div>
-        <div class="pool-stat">
+        <div class="pool-stat user-pool-highlight">
           <div class="position-label">Pending Rewards</div>
-          <div class="position-value">0 BUTFI</div>
+          <div class="position-value user-stability-rewards">0 BUTFI</div>
         </div>
       </div>
       
       <div class="pool-actions">
-        <button class="deposit-btn" onclick="openStabilityPoolModal()">Deposit</button>
+        <button class="deposit-btn wallet-action-btn" onclick="openStabilityPoolModal()">
+          <span class="wallet-action-text">Connect Wallet to Deposit</span>
+        </button>
         <button class="withdraw-btn" disabled>Withdraw</button>
         <button class="claim-rewards-btn" disabled>Claim Rewards</button>
       </div>
@@ -272,18 +276,20 @@
           <div class="position-label">Staking APR</div>
           <div class="position-value">28.3%</div>
         </div>
-        <div class="butfi-stat">
+        <div class="butfi-stat user-butfi-highlight">
           <div class="position-label">Your Stake</div>
-          <div class="position-value">0 BUTFI</div>
+          <div class="position-value user-butfi-stake">0 BUTFI</div>
         </div>
-        <div class="butfi-stat">
+        <div class="butfi-stat user-butfi-highlight">
           <div class="position-label">Pending Fees</div>
-          <div class="position-value">0 ETH</div>
+          <div class="position-value user-butfi-fees">0 ETH</div>
         </div>
       </div>
       
       <div class="butfi-actions">
-        <button class="stake-butfi-btn" onclick="openBUTFIStakeModal()">Stake BUTFI</button>
+        <button class="stake-butfi-btn wallet-action-btn" onclick="openBUTFIStakeModal()">
+          <span class="wallet-action-text">Connect Wallet to Stake</span>
+        </button>
         <button class="unstake-butfi-btn" disabled>Unstake</button>
         <button class="claim-fees-btn" disabled>Claim Fees</button>
       </div>
