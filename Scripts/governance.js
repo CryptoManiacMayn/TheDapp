@@ -1,26 +1,29 @@
 // ==========================================
-// GOVERNANCE PAGE JAVASCRIPT - SIMPLIFIED FINAL VERSION
+// ENHANCED GOVERNANCE PAGE JAVASCRIPT
 // ==========================================
 
-// Governance state management (READ ONLY - doesn't manage wallet connection)
+// Governance state management
 let governanceState = {
   isWalletConnected: false,
-  data: {
+  globalData: {
+    totalVotingPower: 12500,
+    activeProposals: 2,
+    votesThisMonth: 47,
+    totalProposals: 15
+  },
+  userData: {
     votingPower: 0,
-    activeProposals: 0,
     votesThisMonth: 0,
-    totalProposals: 0,
-    proposals: [],
     votingHistory: []
   }
 };
 
-// Mock governance data
-const mockProposals = [
+// Mock proposals data (always visible)
+const governanceProposals = [
   {
     id: 1,
     title: "Increase Staking Rewards for ETH Pool",
-    description: "Proposal to increase ETH staking rewards from 5.2% to 6.5% APY to attract more liquidity.",
+    description: "Proposal to increase ETH staking rewards from 5.2% to 6.5% APY to attract more liquidity and remain competitive with other protocols. This change would be implemented gradually over a 30-day period.",
     status: "Active",
     votesFor: 65,
     votesAgainst: 35,
@@ -31,46 +34,26 @@ const mockProposals = [
   {
     id: 2,
     title: "Implement Cross-Chain Bridge",
-    description: "Enable cross-chain functionality to support multiple blockchain networks.",
+    description: "Enable cross-chain functionality to support multiple blockchain networks including Polygon, Arbitrum, and Optimism. This will allow users to stake tokens across different chains seamlessly.",
     status: "Active",
     votesFor: 78,
     votesAgainst: 22,
     totalVotes: 892,
     endDate: "7 days",
     userVote: null
+  },
+  {
+    id: 3,
+    title: "Reduce Protocol Trading Fees",
+    description: "Reduce trading fees from 0.3% to 0.25% to improve competitiveness and increase trading volume. This proposal passed with overwhelming community support.",
+    status: "Passed",
+    votesFor: 89,
+    votesAgainst: 11,
+    totalVotes: 1567,
+    endDate: "Ended 2 days ago",
+    userVote: "for"
   }
 ];
-
-// ==========================================
-// WALLET CONNECTION FUNCTIONS FOR PAGE-SPECIFIC BUTTONS
-// ==========================================
-
-function connectWallet() {
-  console.log('Governance: connectWallet called - using global wallet');
-  
-  const connectBtn = document.getElementById('governanceConnectBtn');
-  if (connectBtn) {
-    connectBtn.textContent = 'Connecting...';
-    connectBtn.disabled = true;
-  }
-  
-  // Use the global wallet connection function
-  if (typeof window.globalWalletConnect === 'function') {
-    window.globalWalletConnect().then(success => {
-      // Reset button state
-      if (connectBtn) {
-        connectBtn.textContent = 'Connect Wallet';
-        connectBtn.disabled = false;
-      }
-    });
-  } else {
-    console.error('Global wallet connect function not available');
-    if (connectBtn) {
-      connectBtn.textContent = 'Connect Wallet';
-      connectBtn.disabled = false;
-    }
-  }
-}
 
 // ==========================================
 // WALLET EVENT LISTENERS
@@ -82,15 +65,17 @@ window.addEventListener('globalWalletConnected', function(event) {
   
   governanceState.isWalletConnected = true;
   
-  // Show governance content, hide wallet prompt
-  const walletPrompt = document.getElementById('governanceWalletPrompt');
-  const governanceContent = document.getElementById('governanceContent');
+  // Add wallet connected class to body for CSS targeting
+  document.body.classList.add('wallet-connected');
   
-  if (walletPrompt) walletPrompt.style.display = 'none';
-  if (governanceContent) governanceContent.style.display = 'block';
+  // Load user-specific governance data
+  loadUserGovernanceData();
   
-  // Load governance data
-  loadGovernanceData();
+  // Update wallet status info
+  updateWalletStatusInfo();
+  
+  // Update user-specific highlighting
+  updateUserSpecificHighlighting();
 });
 
 // Listen for global wallet disconnection
@@ -99,65 +84,22 @@ window.addEventListener('globalWalletDisconnected', function(event) {
   
   governanceState.isWalletConnected = false;
   
-  // Show wallet prompt, hide governance content
-  const walletPrompt = document.getElementById('governanceWalletPrompt');
-  const governanceContent = document.getElementById('governanceContent');
+  // Remove wallet connected class
+  document.body.classList.remove('wallet-connected');
   
-  if (walletPrompt) walletPrompt.style.display = 'block';
-  if (governanceContent) governanceContent.style.display = 'none';
+  // Reset user-specific data
+  resetUserGovernanceData();
   
-  // Reset governance data
-  resetGovernanceData();
+  // Update wallet status info
+  updateWalletStatusInfo();
 });
 
 // ==========================================
-// GOVERNANCE DATA FUNCTIONS
+// DATA MANAGEMENT FUNCTIONS
 // ==========================================
 
-function loadGovernanceData() {
-  if (!governanceState.isWalletConnected) {
-    console.log("No wallet connected for governance data");
-    return;
-  }
-
-  try {
-    console.log("Loading governance data...");
-    
-    // Calculate mock governance overview
-    const votingPowerValue = 12500;
-    const activeProposalsValue = 2;
-    const votesThisMonthValue = 3;
-    const totalProposalsValue = 15;
-    
-    // Update governance data
-    governanceState.data = {
-      votingPower: votingPowerValue,
-      activeProposals: activeProposalsValue,
-      votesThisMonth: votesThisMonthValue,
-      totalProposals: totalProposalsValue,
-      proposals: mockProposals,
-      votingHistory: generateMockVotingHistory()
-    };
-    
-    updateGovernanceOverview();
-    updateProposalsList();
-    updateVotingHistory();
-    
-    console.log("Governance data loaded successfully");
-    
-    if (typeof window.showMessage === 'function') {
-      window.showMessage('Governance data updated!', 'success');
-    }
-  } catch (error) {
-    console.error("Failed to load governance data:", error);
-    if (typeof window.showMessage === 'function') {
-      window.showMessage("Failed to load governance data: " + error.message, "error");
-    }
-    resetGovernanceData();
-  }
-}
-
-function updateGovernanceOverview() {
+function loadGlobalGovernanceData() {
+  // Always show global governance data
   const elements = {
     votingPower: document.getElementById('votingPower'),
     activeProposals: document.getElementById('activeProposals'),
@@ -166,84 +108,117 @@ function updateGovernanceOverview() {
   };
   
   if (elements.votingPower) {
-    elements.votingPower.textContent = governanceState.data.votingPower.toLocaleString();
+    elements.votingPower.textContent = governanceState.globalData.totalVotingPower.toLocaleString();
   }
   if (elements.activeProposals) {
-    elements.activeProposals.textContent = governanceState.data.activeProposals.toString();
+    elements.activeProposals.textContent = governanceState.globalData.activeProposals.toString();
   }
   if (elements.votesThisMonth) {
-    elements.votesThisMonth.textContent = governanceState.data.votesThisMonth.toString();
+    elements.votesThisMonth.textContent = governanceState.globalData.votesThisMonth.toString();
   }
   if (elements.totalProposals) {
-    elements.totalProposals.textContent = governanceState.data.totalProposals.toString();
+    elements.totalProposals.textContent = governanceState.globalData.totalProposals.toString();
   }
 }
 
-function updateProposalsList() {
-  const proposalsList = document.getElementById('proposalsList');
-  if (!proposalsList) return;
-  
-  if (governanceState.data.proposals.length === 0) {
-    proposalsList.innerHTML = `
-      <div class="no-proposals glass-card">
-        <p>No active proposals found.</p>
-      </div>
-    `;
+function loadUserGovernanceData() {
+  if (!governanceState.isWalletConnected) {
     return;
   }
+
+  try {
+    console.log("Loading user governance data...");
+    
+    // Generate user-specific governance data
+    governanceState.userData = {
+      votingPower: 2500,
+      votesThisMonth: 3,
+      votingHistory: generateUserVotingHistory()
+    };
+    
+    // Update overview cards with user data
+    updateOverviewCardsForUser();
+    
+    // Update voting history table
+    updateVotingHistory();
+    
+    console.log("User governance data loaded successfully");
+    
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Personal governance data loaded!', 'success');
+    }
+  } catch (error) {
+    console.error("Failed to load user governance data:", error);
+    if (typeof window.showMessage === 'function') {
+      window.showMessage("Failed to load user governance data: " + error.message, "error");
+    }
+  }
+}
+
+function updateOverviewCardsForUser() {
+  // Update overview cards to show user-specific data when wallet is connected
+  const elements = {
+    votingPower: document.getElementById('votingPower'),
+    votesThisMonth: document.getElementById('votesThisMonth')
+  };
   
-  proposalsList.innerHTML = governanceState.data.proposals.map(proposal => `
-    <div class="proposal-card glass-card">
-      <div class="proposal-header">
-        <h3>${proposal.title}</h3>
-        <span class="proposal-status status-${proposal.status.toLowerCase()}">${proposal.status}</span>
-      </div>
-      <p class="proposal-description">${proposal.description}</p>
-      <div class="proposal-stats">
-        <div class="vote-progress">
-          <div class="vote-bar">
-            <div class="vote-for" style="width: ${proposal.votesFor}%"></div>
-            <div class="vote-against" style="width: ${proposal.votesAgainst}%"></div>
-          </div>
-          <div class="vote-labels">
-            <span class="for-label">For: ${proposal.votesFor}%</span>
-            <span class="against-label">Against: ${proposal.votesAgainst}%</span>
-          </div>
-        </div>
-        <div class="proposal-meta">
-          <span>Ends in ${proposal.endDate}</span>
-          <span>${proposal.totalVotes} votes cast</span>
-        </div>
-      </div>
-      <div class="proposal-actions">
-        <button class="vote-btn vote-for" onclick="handleVote(${proposal.id}, 'for')" ${proposal.userVote ? 'disabled' : ''}>
-          Vote For
-        </button>
-        <button class="vote-btn vote-against" onclick="handleVote(${proposal.id}, 'against')" ${proposal.userVote ? 'disabled' : ''}>
-          Vote Against
-        </button>
-      </div>
-    </div>
-  `).join('');
+  if (elements.votingPower) {
+    elements.votingPower.textContent = governanceState.userData.votingPower.toLocaleString();
+  }
+  if (elements.votesThisMonth) {
+    elements.votesThisMonth.textContent = governanceState.userData.votesThisMonth.toString();
+  }
+  
+  // Update card labels for user context
+  const labels = document.querySelectorAll('.overview-label');
+  if (labels.length >= 4) {
+    labels[0].textContent = 'Your Voting Power';
+    labels[2].textContent = 'Your Votes This Month';
+  }
+}
+
+function updateUserSpecificHighlighting() {
+  // Add highlighting to user-specific sections
+  const userSpecificElements = document.querySelectorAll('.user-specific');
+  userSpecificElements.forEach((el, index) => {
+    // Add a subtle animation
+    setTimeout(() => {
+      el.style.animation = 'pulse 0.6s ease-in-out';
+      setTimeout(() => {
+        if (el.style) {
+          el.style.animation = '';
+        }
+      }, 600);
+    }, index * 200);
+  });
 }
 
 function updateVotingHistory() {
   const votingHistoryBody = document.getElementById('votingHistoryBody');
   if (!votingHistoryBody) return;
   
-  if (governanceState.data.votingHistory.length === 0) {
+  if (!governanceState.isWalletConnected || governanceState.userData.votingHistory.length === 0) {
     votingHistoryBody.innerHTML = `
       <tr>
         <td colspan="4" style="text-align: center; color: var(--text-secondary); padding: 40px;">
-          No voting history found. Cast your first vote!
+          <div style="margin-bottom: 10px">
+            ${governanceState.isWalletConnected ? 
+              '📊 No voting history found' : 
+              '🔒 Connect your wallet to view your voting history'}
+          </div>
+          <div style="font-size: 0.9rem; opacity: 0.8">
+            ${governanceState.isWalletConnected ? 
+              'Cast your first vote to see your history here' : 
+              'Your votes and participation record will appear here once connected'}
+          </div>
         </td>
       </tr>
     `;
     return;
   }
   
-  votingHistoryBody.innerHTML = governanceState.data.votingHistory.map(vote => `
-    <tr>
+  votingHistoryBody.innerHTML = governanceState.userData.votingHistory.map(vote => `
+    <tr class="user-vote-row">
       <td>${vote.proposal}</td>
       <td>
         <span class="vote-badge vote-${vote.vote.toLowerCase()}">${vote.vote}</span>
@@ -256,7 +231,7 @@ function updateVotingHistory() {
   `).join('');
 }
 
-function generateMockVotingHistory() {
+function generateUserVotingHistory() {
   return [
     {
       proposal: "Reduce Trading Fees",
@@ -279,50 +254,46 @@ function generateMockVotingHistory() {
   ];
 }
 
-function resetGovernanceData() {
-  governanceState.data = {
+function resetUserGovernanceData() {
+  governanceState.userData = {
     votingPower: 0,
-    activeProposals: 0,
     votesThisMonth: 0,
-    totalProposals: 0,
-    proposals: [],
     votingHistory: []
   };
   
-  // Reset overview
-  const elements = {
-    votingPower: document.getElementById('votingPower'),
-    activeProposals: document.getElementById('activeProposals'),
-    votesThisMonth: document.getElementById('votesThisMonth'),
-    totalProposals: document.getElementById('totalProposals')
-  };
+  // Reset overview cards to global data
+  loadGlobalGovernanceData();
   
-  Object.values(elements).forEach(el => {
-    if (el) {
-      el.textContent = '0';
-    }
-  });
-  
-  // Reset proposals list
-  const proposalsList = document.getElementById('proposalsList');
-  if (proposalsList) {
-    proposalsList.innerHTML = `
-      <div class="no-proposals glass-card">
-        <p>🔒 Connect your wallet to view governance proposals</p>
-      </div>
-    `;
+  // Reset card labels to global context
+  const labels = document.querySelectorAll('.overview-label');
+  if (labels.length >= 4) {
+    labels[0].textContent = 'Total Voting Power';
+    labels[2].textContent = 'Votes This Month';
   }
   
   // Reset voting history
-  const votingHistoryBody = document.getElementById('votingHistoryBody');
-  if (votingHistoryBody) {
-    votingHistoryBody.innerHTML = `
-      <tr>
-        <td colspan="4" style="text-align: center; color: var(--text-secondary); padding: 40px;">
-          🔒 Connect your wallet to view your voting history
-        </td>
-      </tr>
-    `;
+  updateVotingHistory();
+  
+  // Remove user highlighting
+  document.querySelectorAll('.user-specific').forEach(el => {
+    el.classList.remove('user-highlight');
+  });
+}
+
+function updateWalletStatusInfo() {
+  const walletStatusInfo = document.getElementById('governanceWalletStatusInfo');
+  const statusMessage = walletStatusInfo?.querySelector('.status-message span');
+  
+  if (statusMessage) {
+    if (governanceState.isWalletConnected) {
+      statusMessage.textContent = 'Wallet connected! Your personal voting history and governance participation are now visible.';
+      walletStatusInfo.style.background = 'rgba(56, 161, 105, 0.1)';
+      walletStatusInfo.style.borderColor = 'rgba(56, 161, 105, 0.3)';
+    } else {
+      statusMessage.textContent = 'Connect your wallet to view your personal voting history and participate in governance';
+      walletStatusInfo.style.background = 'rgba(255, 193, 7, 0.1)';
+      walletStatusInfo.style.borderColor = 'rgba(255, 193, 7, 0.3)';
+    }
   }
 }
 
@@ -332,13 +303,19 @@ function resetGovernanceData() {
 
 function handleVote(proposalId, voteType) {
   if (!governanceState.isWalletConnected) {
+    // Instead of blocking, show connection prompt
     if (typeof window.showMessage === 'function') {
-      window.showMessage('Please connect your wallet first', 'error');
+      window.showMessage('Please connect your wallet to participate in governance', 'warning');
+    }
+    
+    // Trigger wallet connection
+    if (typeof window.globalWalletConnect === 'function') {
+      window.globalWalletConnect();
     }
     return;
   }
   
-  const proposal = governanceState.data.proposals.find(p => p.id === proposalId);
+  const proposal = governanceProposals.find(p => p.id === proposalId);
   if (!proposal) {
     if (typeof window.showMessage === 'function') {
       window.showMessage('Proposal not found', 'error');
@@ -353,19 +330,58 @@ function handleVote(proposalId, voteType) {
     return;
   }
   
+  if (proposal.status !== 'Active') {
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Voting has ended for this proposal', 'error');
+    }
+    return;
+  }
+  
   console.log(`Voting ${voteType} on proposal ${proposalId}: ${proposal.title}`);
   
+  // Show loading state
+  const voteButtons = document.querySelectorAll(`#proposal${proposalId}Actions .vote-btn`);
+  voteButtons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent.toLowerCase().includes(voteType)) {
+      btn.textContent = `Voting ${voteType}...`;
+    }
+  });
+  
   if (typeof window.showMessage === 'function') {
-    window.showMessage(`Submitting your ${voteType} vote...`, 'success');
+    window.showMessage(`Submitting your ${voteType} vote...`, 'info');
   }
   
   // Mock: Simulate voting transaction
   setTimeout(() => {
     proposal.userVote = voteType;
-    updateProposalsList();
+    
+    // Reset button states and disable after voting
+    voteButtons.forEach(btn => {
+      btn.disabled = true;
+      btn.textContent = btn.textContent.replace(/Voting \w+\.\.\./, btn.textContent.includes('For') ? 'Vote For' : 'Vote Against');
+    });
+    
+    // Show voted state
+    const actionsContainer = document.getElementById(`proposal${proposalId}Actions`);
+    if (actionsContainer) {
+      actionsContainer.innerHTML = `
+        <button class="vote-btn vote-${voteType}" disabled>
+          ✓ Voted ${voteType.charAt(0).toUpperCase() + voteType.slice(1)}
+        </button>
+      `;
+    }
+    
     if (typeof window.showMessage === 'function') {
       window.showMessage(`Successfully voted ${voteType} on "${proposal.title}"!`, 'success');
     }
+    
+    // Update user stats
+    if (governanceState.userData.votesThisMonth !== undefined) {
+      governanceState.userData.votesThisMonth++;
+      updateOverviewCardsForUser();
+    }
+    
   }, 2000);
 }
 
@@ -374,35 +390,81 @@ function handleVote(proposalId, voteType) {
 // ==========================================
 
 function initializeGovernancePage() {
-  console.log('Governance page initialized');
+  console.log('Enhanced governance page initialized');
   
-  // Initialize with default state
-  resetGovernanceData();
+  // Always load global data first
+  loadGlobalGovernanceData();
   
   // Check if wallet is already connected
   if (window.globalWalletState && 
       window.globalWalletState.isConnected && 
       window.globalWalletState.hasUserConnected) {
     
-    console.log('Wallet already connected, setting up governance');
+    console.log('Wallet already connected, loading user governance data');
     governanceState.isWalletConnected = true;
     
-    const walletPrompt = document.getElementById('governanceWalletPrompt');
-    const governanceContent = document.getElementById('governanceContent');
+    // Add wallet connected class
+    document.body.classList.add('wallet-connected');
     
-    if (walletPrompt) walletPrompt.style.display = 'none';
-    if (governanceContent) governanceContent.style.display = 'block';
-    
-    loadGovernanceData();
-  } else {
-    // Show wallet prompt
-    const walletPrompt = document.getElementById('governanceWalletPrompt');
-    const governanceContent = document.getElementById('governanceContent');
-    
-    if (walletPrompt) walletPrompt.style.display = 'block';
-    if (governanceContent) governanceContent.style.display = 'none';
+    // Load user-specific data
+    loadUserGovernanceData();
+    updateUserSpecificHighlighting();
   }
+  
+  // Always update wallet status info
+  updateWalletStatusInfo();
 }
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+
+function getProposalInfo(proposalId) {
+  return governanceProposals.find(p => p.id === proposalId) || null;
+}
+
+function formatVotingPower(power) {
+  if (power >= 1000000) {
+    return `${(power / 1000000).toFixed(1)}M`;
+  }
+  if (power >= 1000) {
+    return `${(power / 1000).toFixed(1)}K`;
+  }
+  return power.toString();
+}
+
+function calculateVotingWeight(tokenBalance, stakedBalance) {
+  // Regular tokens: 1:1 voting power
+  // Staked tokens: 1.5:1 voting power
+  return tokenBalance + (stakedBalance * 1.5);
+}
+
+function getTimeRemaining(endDate) {
+  // Parse different date formats and return readable time remaining
+  if (endDate.includes('days')) {
+    return endDate;
+  }
+  
+  const end = new Date(endDate);
+  const now = new Date();
+  const diff = end - now;
+  
+  if (diff <= 0) {
+    return 'Ended';
+  }
+  
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+  if (days > 0) {
+    return `${days} day${days > 1 ? 's' : ''} ${hours > 0 ? `${hours}h` : ''}`;
+  }
+  return `${hours} hour${hours > 1 ? 's' : ''}`;
+}
+
+// ==========================================
+// AUTO-INITIALIZATION
+// ==========================================
 
 // Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
@@ -411,3 +473,14 @@ if (document.readyState === 'loading') {
   // If already loaded (dynamic loading case)
   setTimeout(initializeGovernancePage, 100);
 }
+
+// Export functions for global access
+window.governancePageFunctions = {
+  handleVote,
+  loadUserGovernanceData,
+  resetUserGovernanceData,
+  updateWalletStatusInfo,
+  getProposalInfo,
+  formatVotingPower,
+  calculateVotingWeight
+};
