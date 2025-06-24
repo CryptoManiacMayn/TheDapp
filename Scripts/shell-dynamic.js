@@ -819,10 +819,7 @@ function restorePortfolioContent(container) {
           </thead>
           <tbody id="assetsTableBody">
             <tr>
-              <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px; font-size: 1.1rem;">
-                <div style="margin-bottom: 10px;">🔒 Connect your wallet to view your portfolio</div>
-                <div style="font-size: 0.9rem; opacity: 0.8;">Your assets and balances will appear here once connected</div>
-              </td>
+
             </tr>
           </tbody>
         </table>
