@@ -1,5 +1,5 @@
 // ==========================================
-// YIELDFI PAGE JAVASCRIPT - FIXED VERSION (NO CONFLICTS)
+// YIELDFI PAGE JAVASCRIPT - NO WALLET PROMPT VERSION
 // ==========================================
 
 // YieldFi state management
@@ -54,15 +54,11 @@ window.addEventListener('globalWalletConnected', function(event) {
   
   yieldFiState.isWalletConnected = true;
   
-  // Hide wallet prompt, show content
-  const walletPrompt = document.getElementById('yieldFiWalletPrompt');
-  const yieldFiContent = document.querySelector('.yieldfi-container');
-  
-  if (walletPrompt) walletPrompt.style.display = 'none';
-  if (yieldFiContent) yieldFiContent.style.display = 'block';
-  
   // Load user balances
   loadUserBalances();
+  
+  // Update UI to show connected state
+  updateConnectedState();
   
   // Initialize chart
   initializePriceChart();
@@ -74,15 +70,11 @@ window.addEventListener('globalWalletDisconnected', function(event) {
   
   yieldFiState.isWalletConnected = false;
   
-  // Show wallet prompt, hide content
-  const walletPrompt = document.getElementById('yieldFiWalletPrompt');
-  const yieldFiContent = document.querySelector('.yieldfi-container');
-  
-  if (walletPrompt) walletPrompt.style.display = 'block';
-  if (yieldFiContent) yieldFiContent.style.display = 'none';
-  
   // Reset balances
   resetUserBalances();
+  
+  // Update UI to show disconnected state
+  updateDisconnectedState();
 });
 
 // ==========================================
@@ -183,6 +175,152 @@ function updateAllBalanceDisplays() {
 }
 
 // ==========================================
+// CONNECTED/DISCONNECTED STATE UPDATES
+// ==========================================
+
+function updateConnectedState() {
+  // Update action buttons to show actual functionality instead of "Connect Wallet"
+  const swapBtn = document.getElementById('swapBtn');
+  const bridgeBtn = document.getElementById('bridgeBtn');
+  const liquidityBtn = document.getElementById('liquidityBtn');
+  
+  if (swapBtn) {
+    const walletText = swapBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Enter Amount';
+      swapBtn.disabled = true; // Will be enabled when amount is entered
+    }
+  }
+  
+  if (bridgeBtn) {
+    const walletText = bridgeBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Enter Amount';
+      bridgeBtn.disabled = true; // Will be enabled when amount is entered
+    }
+  }
+  
+  if (liquidityBtn) {
+    const walletText = liquidityBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Enter Amounts';
+      liquidityBtn.disabled = true; // Will be enabled when amounts are entered
+    }
+  }
+  
+  // Highlight user balances
+  const userBalances = document.querySelectorAll('.user-balance');
+  userBalances.forEach(balance => {
+    balance.classList.add('connected');
+  });
+  
+  // Update liquidity positions
+  updateLiquidityPositions();
+  
+  if (typeof window.showMessage === 'function') {
+    window.showMessage('YieldFi features now available!', 'success');
+  }
+}
+
+function updateDisconnectedState() {
+  // Update action buttons to show "Connect Wallet" text
+  const swapBtn = document.getElementById('swapBtn');
+  const bridgeBtn = document.getElementById('bridgeBtn');
+  const liquidityBtn = document.getElementById('liquidityBtn');
+  
+  if (swapBtn) {
+    const walletText = swapBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Connect Wallet to Swap';
+    }
+  }
+  
+  if (bridgeBtn) {
+    const walletText = bridgeBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Connect Wallet to Bridge';
+    }
+  }
+  
+  if (liquidityBtn) {
+    const walletText = liquidityBtn.querySelector('.wallet-action-text');
+    if (walletText) {
+      walletText.textContent = 'Connect Wallet to Add Liquidity';
+    }
+  }
+  
+  // Remove highlight from user balances
+  const userBalances = document.querySelectorAll('.user-balance');
+  userBalances.forEach(balance => {
+    balance.classList.remove('connected');
+  });
+  
+  // Reset liquidity positions
+  resetLiquidityPositions();
+}
+
+function updateLiquidityPositions() {
+  const positionsContent = document.getElementById('liquidityPositionsContent');
+  if (!positionsContent) return;
+  
+  if (yieldFiState.isWalletConnected) {
+    // Mock user positions - in real app, would fetch from contracts
+    const mockPositions = [
+      {
+        pool: 'ETH/USDC',
+        liquidity: '$2,845.50',
+        tokens: '1.15 ETH + 1,240 USDC',
+        rewards: '$12.45'
+      },
+      {
+        pool: 'USDC/USDT',
+        liquidity: '$850.00',
+        tokens: '425 USDC + 425 USDT',
+        rewards: '$3.20'
+      }
+    ];
+    
+    if (mockPositions.length > 0) {
+      positionsContent.innerHTML = mockPositions.map(position => `
+        <div class="position-item">
+          <div class="position-header">
+            <div class="position-pool">${position.pool}</div>
+            <div class="position-liquidity">${position.liquidity}</div>
+          </div>
+          <div class="position-details">
+            <div class="position-tokens">${position.tokens}</div>
+            <div class="position-rewards">Rewards: ${position.rewards}</div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      positionsContent.innerHTML = `
+        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+          <div style="font-size: 2rem; margin-bottom: 15px;">💧</div>
+          <div style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">No liquidity positions found</div>
+          <div style="font-size: 0.9rem;">Add liquidity to start earning fees</div>
+        </div>
+      `;
+    }
+  } else {
+    resetLiquidityPositions();
+  }
+}
+
+function resetLiquidityPositions() {
+  const positionsContent = document.getElementById('liquidityPositionsContent');
+  if (positionsContent) {
+    positionsContent.innerHTML = `
+      <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+        <div style="font-size: 2rem; margin-bottom: 15px;">💧</div>
+        <div style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">No liquidity positions found</div>
+        <div style="font-size: 0.9rem;">Connect your wallet to view your positions</div>
+      </div>
+    `;
+  }
+}
+
+// ==========================================
 // SWAP FUNCTIONALITY
 // ==========================================
 
@@ -208,11 +346,16 @@ function calculateSwapAmount() {
     
     // Update swap button
     const swapBtn = document.getElementById('swapBtn');
-    if (fromAmount > yieldFiState.tokens.from.balance) {
-      swapBtn.textContent = 'Insufficient Balance';
+    const walletText = swapBtn.querySelector('.wallet-action-text');
+    
+    if (!yieldFiState.isWalletConnected) {
+      if (walletText) walletText.textContent = 'Connect Wallet to Swap';
+      swapBtn.disabled = false;
+    } else if (fromAmount > yieldFiState.tokens.from.balance) {
+      if (walletText) walletText.textContent = 'Insufficient Balance';
       swapBtn.disabled = true;
     } else {
-      swapBtn.textContent = `Swap ${fromToken.symbol} for ${toToken.symbol}`;
+      if (walletText) walletText.textContent = `Swap ${fromToken.symbol} for ${toToken.symbol}`;
       swapBtn.disabled = false;
     }
   } else {
@@ -221,8 +364,16 @@ function calculateSwapAmount() {
     document.getElementById('fromValue').textContent = '0.00';
     document.getElementById('toValue').textContent = '0.00';
     document.getElementById('swapDetails').style.display = 'none';
-    document.getElementById('swapBtn').textContent = 'Enter Amount';
-    document.getElementById('swapBtn').disabled = true;
+    
+    const swapBtn = document.getElementById('swapBtn');
+    const walletText = swapBtn.querySelector('.wallet-action-text');
+    
+    if (!yieldFiState.isWalletConnected) {
+      if (walletText) walletText.textContent = 'Connect Wallet to Swap';
+    } else {
+      if (walletText) walletText.textContent = 'Enter Amount';
+    }
+    swapBtn.disabled = !yieldFiState.isWalletConnected;
   }
 }
 
@@ -238,6 +389,13 @@ function updateSwapDetails(fromAmount, toAmount, rate) {
 }
 
 function setMaxAmount() {
+  if (!yieldFiState.isWalletConnected) {
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Please connect your wallet first', 'error');
+    }
+    return;
+  }
+  
   const maxAmount = yieldFiState.tokens.from.balance;
   document.getElementById('fromAmount').value = maxAmount.toFixed(6);
   calculateSwapAmount();
@@ -271,7 +429,10 @@ function updateTokenDisplay(position, token) {
 
 function executeSwap() {
   if (!yieldFiState.isWalletConnected) {
-    if (typeof window.showMessage === 'function') {
+    // Instead of showing error, trigger wallet connection
+    if (typeof window.globalWalletConnect === 'function') {
+      window.globalWalletConnect();
+    } else {
       window.showMessage('Please connect your wallet first', 'error');
     }
     return;
@@ -364,8 +525,8 @@ function calculateBridgeFee() {
     
     // Update UI
     document.getElementById('bridgeValue').textContent = (bridgeAmount * bridgeToken.price).toFixed(2);
-    document.getElementById('bridgeFee').textContent = `${bridgeFee.toFixed(6)} ${bridgeToken.symbol} (~$${(bridgeFee * bridgeToken.price).toFixed(2)})`;
-    document.getElementById('bridgeNetworkFee').textContent = `~$${networkFee.toFixed(2)}`;
+    document.getElementById('bridgeFee').textContent = `${bridgeFee.toFixed(6)} ${bridgeToken.symbol} (~${(bridgeFee * bridgeToken.price).toFixed(2)})`;
+    document.getElementById('bridgeNetworkFee').textContent = `~${networkFee.toFixed(2)}`;
     document.getElementById('bridgeTime').textContent = '5-10 minutes';
     document.getElementById('bridgeReceive').textContent = `${receiveAmount.toFixed(6)} ${bridgeToken.symbol}`;
     
@@ -373,23 +534,43 @@ function calculateBridgeFee() {
     
     // Update bridge button
     const bridgeBtn = document.getElementById('bridgeBtn');
-    if (bridgeAmount > yieldFiState.tokens.bridge.balance) {
-      bridgeBtn.textContent = 'Insufficient Balance';
+    const walletText = bridgeBtn.querySelector('.wallet-action-text');
+    
+    if (!yieldFiState.isWalletConnected) {
+      if (walletText) walletText.textContent = 'Connect Wallet to Bridge';
+      bridgeBtn.disabled = false;
+    } else if (bridgeAmount > yieldFiState.tokens.bridge.balance) {
+      if (walletText) walletText.textContent = 'Insufficient Balance';
       bridgeBtn.disabled = true;
     } else {
-      bridgeBtn.textContent = `Bridge ${bridgeToken.symbol}`;
+      if (walletText) walletText.textContent = `Bridge ${bridgeToken.symbol}`;
       bridgeBtn.disabled = false;
     }
   } else {
     // Reset UI
     document.getElementById('bridgeValue').textContent = '0.00';
     document.getElementById('bridgeDetails').style.display = 'none';
-    document.getElementById('bridgeBtn').textContent = 'Enter Amount';
-    document.getElementById('bridgeBtn').disabled = true;
+    
+    const bridgeBtn = document.getElementById('bridgeBtn');
+    const walletText = bridgeBtn.querySelector('.wallet-action-text');
+    
+    if (!yieldFiState.isWalletConnected) {
+      if (walletText) walletText.textContent = 'Connect Wallet to Bridge';
+    } else {
+      if (walletText) walletText.textContent = 'Enter Amount';
+    }
+    bridgeBtn.disabled = !yieldFiState.isWalletConnected;
   }
 }
 
 function setBridgeMaxAmount() {
+  if (!yieldFiState.isWalletConnected) {
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Please connect your wallet first', 'error');
+    }
+    return;
+  }
+  
   const maxAmount = yieldFiState.tokens.bridge.balance;
   document.getElementById('bridgeAmount').value = maxAmount.toFixed(6);
   calculateBridgeFee();
@@ -418,7 +599,10 @@ function flipNetworks() {
 
 function executeBridge() {
   if (!yieldFiState.isWalletConnected) {
-    if (typeof window.showMessage === 'function') {
+    // Instead of showing error, trigger wallet connection
+    if (typeof window.globalWalletConnect === 'function') {
+      window.globalWalletConnect();
+    } else {
       window.showMessage('Please connect your wallet first', 'error');
     }
     return;
@@ -491,14 +675,19 @@ function calculateLiquidityRatio() {
       
       // Update liquidity button
       const liquidityBtn = document.getElementById('liquidityBtn');
-      if (amount1 > token1.balance || amount2 > token2.balance) {
-        liquidityBtn.textContent = 'Insufficient Balance';
+      const walletText = liquidityBtn.querySelector('.wallet-action-text');
+      
+      if (!yieldFiState.isWalletConnected) {
+        if (walletText) walletText.textContent = 'Connect Wallet to Add Liquidity';
+        liquidityBtn.disabled = false;
+      } else if (amount1 > token1.balance || amount2 > token2.balance) {
+        if (walletText) walletText.textContent = 'Insufficient Balance';
         liquidityBtn.disabled = true;
       } else if (amount1 > 0 && amount2 > 0) {
-        liquidityBtn.textContent = 'Add Liquidity';
+        if (walletText) walletText.textContent = 'Add Liquidity';
         liquidityBtn.disabled = false;
       } else {
-        liquidityBtn.textContent = 'Enter Amounts';
+        if (walletText) walletText.textContent = 'Enter Amounts';
         liquidityBtn.disabled = true;
       }
     }
@@ -507,12 +696,27 @@ function calculateLiquidityRatio() {
     document.getElementById('liquidityValue1').textContent = '0.00';
     document.getElementById('liquidityValue2').textContent = '0.00';
     document.getElementById('liquidityDetails').style.display = 'none';
-    document.getElementById('liquidityBtn').textContent = 'Enter Amounts';
-    document.getElementById('liquidityBtn').disabled = true;
+    
+    const liquidityBtn = document.getElementById('liquidityBtn');
+    const walletText = liquidityBtn.querySelector('.wallet-action-text');
+    
+    if (!yieldFiState.isWalletConnected) {
+      if (walletText) walletText.textContent = 'Connect Wallet to Add Liquidity';
+    } else {
+      if (walletText) walletText.textContent = 'Enter Amounts';
+    }
+    liquidityBtn.disabled = !yieldFiState.isWalletConnected;
   }
 }
 
 function setLiquidityMaxAmount(tokenNumber) {
+  if (!yieldFiState.isWalletConnected) {
+    if (typeof window.showMessage === 'function') {
+      window.showMessage('Please connect your wallet first', 'error');
+    }
+    return;
+  }
+  
   const token = tokenNumber === 1 ? yieldFiState.tokens.liquidity1 : yieldFiState.tokens.liquidity2;
   const inputId = `liquidityAmount${tokenNumber}`;
   
@@ -522,7 +726,10 @@ function setLiquidityMaxAmount(tokenNumber) {
 
 function addLiquidity() {
   if (!yieldFiState.isWalletConnected) {
-    if (typeof window.showMessage === 'function') {
+    // Instead of showing error, trigger wallet connection
+    if (typeof window.globalWalletConnect === 'function') {
+      window.globalWalletConnect();
+    } else {
       window.showMessage('Please connect your wallet first', 'error');
     }
     return;
@@ -561,6 +768,9 @@ function addLiquidity() {
     document.getElementById('liquidityAmount1').value = '';
     document.getElementById('liquidityAmount2').value = '';
     calculateLiquidityRatio();
+    
+    // Update liquidity positions
+    updateLiquidityPositions();
     
   }, 2500);
 }
@@ -898,35 +1108,32 @@ function setTimeframe(timeframe) {
 }
 
 // ==========================================
-// PAGE INITIALIZATION
+// PAGE INITIALIZATION - NO WALLET PROMPT VERSION
 // ==========================================
 
 function initializeYieldFiPage() {
-  console.log('YieldFi page initialized');
+  console.log('YieldFi page initialized (no wallet prompt version)');
   
-  // Check if wallet is already connected
+  // Always show the page content
+  const yieldFiContainer = document.querySelector('.yieldfi-container');
+  if (yieldFiContainer) {
+    yieldFiContainer.style.display = 'block';
+  }
+  
+  // Check if wallet is already connected and load user data
   if (window.globalWalletState && 
       window.globalWalletState.isConnected && 
       window.globalWalletState.hasUserConnected) {
     
-    console.log('Wallet already connected, setting up YieldFi');
+    console.log('Wallet already connected, loading user data');
     yieldFiState.isWalletConnected = true;
-    
-    const walletPrompt = document.getElementById('yieldFiWalletPrompt');
-    const yieldFiContent = document.querySelector('.yieldfi-container');
-    
-    if (walletPrompt) walletPrompt.style.display = 'none';
-    if (yieldFiContent) yieldFiContent.style.display = 'block';
-    
     loadUserBalances();
+    updateConnectedState();
     initializePriceChart();
   } else {
-    // Show wallet prompt
-    const walletPrompt = document.getElementById('yieldFiWalletPrompt');
-    const yieldFiContent = document.querySelector('.yieldfi-container');
-    
-    if (walletPrompt) walletPrompt.style.display = 'block';
-    if (yieldFiContent) yieldFiContent.style.display = 'none';
+    // Initialize with default disconnected state
+    updateDisconnectedState();
+    initializePriceChart();
   }
   
   // Initialize swap tab by default
@@ -1099,7 +1306,7 @@ if (typeof window.selectNetwork !== 'undefined') {
   window.selectNetwork = originalSelectNetwork;
   
   // Rename our function to avoid conflicts
-  window.selectYieldFiNetwork = selectNetwork;
+  window.selectYieldFiNetwork = selectYieldFiNetwork;
   
   console.log('YieldFi: Preserved global selectNetwork function');
 }
