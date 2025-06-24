@@ -31,10 +31,10 @@
   display: flex;
   justify-content: center;
   gap: 2px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   background: var(--bg-tertiary);
   border-radius: 12px;
-  padding: 4px;
+  padding: 5px;
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -97,8 +97,8 @@
 
 .swap-layout {
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 30px;
+  grid-template-columns: 450px 1fr;
+  gap: 10px;
   align-items: start;
 }
 
@@ -112,8 +112,8 @@
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border: 1px solid var(--glass-border-light);
-  border-radius: 20px;
-  padding: 25px;
+  border-radius: 10px;
+  padding: 5px;
   box-shadow: var(--glass-shadow-light);
 }
 
@@ -136,7 +136,7 @@
   height: 32px;
   border: none;
   background: var(--bg-tertiary);
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -227,9 +227,9 @@
 .token-input-container {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 4px;
+  border-radius: 10px;
+  padding: 5px;
+
   transition: all var(--transition-fast);
 }
 
@@ -241,7 +241,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
   font-size: 0.9rem;
 }
 
@@ -258,16 +258,16 @@
 .token-input {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 5px;
+  margin-bottom: 3px;
 }
 
 .token-select {
   display: flex;
   align-items: center;
   background: var(--bg-tertiary);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 5px;
+  padding: 5px;
   cursor: pointer;
   transition: all var(--transition-fast);
   min-width: 120px;
@@ -378,7 +378,7 @@
 .swap-direction {
   display: flex;
   justify-content: center;
-  margin: -12px 0;
+  margin: -17.5px 0;
   z-index: 1;
   position: relative;
 }
@@ -1558,4 +1558,708 @@
 .yieldfi-token-list::-webkit-scrollbar-thumb:hover,
 .yieldfi-network-list::-webkit-scrollbar-thumb:hover {
   opacity: 1;
+}
+/* ==========================================
+   YIELDFI ENHANCED STYLES - USER HIGHLIGHTING
+   ========================================== */
+
+/* All existing YieldFi styles remain the same, plus these enhancements */
+
+/* ==========================================
+   USER BALANCE HIGHLIGHTING
+   ========================================== */
+
+/* Default balance display */
+.user-balance {
+  transition: all var(--transition-fast);
+  opacity: 0.7;
+}
+
+/* Highlight user balances when wallet is connected */
+.user-balance.connected {
+  color: #10b981;
+  font-weight: 700;
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Enhanced balance display with subtle glow */
+.user-balance.connected span {
+  background: linear-gradient(135deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* ==========================================
+   WALLET ACTION BUTTONS ENHANCEMENT
+   ========================================== */
+
+/* Default state - encouraging connection */
+.wallet-action-text {
+  transition: all var(--transition-fast);
+}
+
+/* When wallet is connected, make buttons more prominent */
+body[data-wallet-connected="true"] .swap-btn:not(:disabled),
+body[data-wallet-connected="true"] .bridge-btn:not(:disabled),
+body[data-wallet-connected="true"] .liquidity-btn:not(:disabled) {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+body[data-wallet-connected="true"] .swap-btn:not(:disabled):hover,
+body[data-wallet-connected="true"] .bridge-btn:not(:disabled):hover,
+body[data-wallet-connected="true"] .liquidity-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* ==========================================
+   CONNECTED USER INDICATORS
+   ========================================== */
+
+/* Add subtle indicators for connected users */
+.yieldfi-container[data-wallet-connected="true"] .token-input-container {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .bridge-token-container {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ==========================================
+   LIQUIDITY POSITIONS ENHANCEMENT
+   ========================================== */
+
+/* Style for actual user positions when loaded */
+.position-item {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: all var(--transition-fast);
+}
+
+.position-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.position-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.position-pool {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.position-liquidity {
+  font-weight: 700;
+  color: #10b981;
+  font-size: 1.1rem;
+}
+
+.position-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.position-tokens {
+  color: var(--text-secondary);
+}
+
+.position-rewards {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* ==========================================
+   MAX BUTTON ENHANCEMENTS
+   ========================================== */
+
+/* Enhanced MAX buttons when wallet is connected */
+.yieldfi-container[data-wallet-connected="true"] .max-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .max-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================
+   TOKEN SELECTOR ENHANCEMENTS
+   ========================================== */
+
+/* Highlight user's token balances in selector */
+.yieldfi-token-item .yieldfi-token-balance.has-balance {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Add indicator for tokens with balance */
+.yieldfi-token-item.has-balance {
+  background: rgba(16, 185, 129, 0.05);
+  border-left: 3px solid #10b981;
+}
+
+.yieldfi-token-item.has-balance:hover {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* ==========================================
+   SWAP DETAILS ENHANCEMENT
+   ========================================== */
+
+/* Make swap details more prominent for connected users */
+.yieldfi-container[data-wallet-connected="true"] .swap-details,
+.yieldfi-container[data-wallet-connected="true"] .bridge-details,
+.yieldfi-container[data-wallet-connected="true"] .liquidity-details {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ==========================================
+   CHART ENHANCEMENTS FOR CONNECTED USERS
+   ========================================== */
+
+/* Add subtle glow to chart when user is connected */
+.yieldfi-container[data-wallet-connected="true"] .chart-container {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* ==========================================
+   ANIMATED UPDATES FOR USER VALUES
+   ========================================== */
+
+/* Animation for when user balances update */
+@keyframes balanceUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.user-balance.updating {
+  animation: balanceUpdate 0.5s ease;
+}
+
+/* Animation for successful transactions */
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.yieldfi-container .success-animation {
+  animation: successPulse 0.6s ease-out;
+}
+
+/* ==========================================
+   CONNECTION STATUS INDICATORS
+   ========================================== */
+
+/* Add subtle connection indicators to main containers */
+.yieldfi-container[data-wallet-connected="true"]::before {
+  content: "🟢";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.yieldfi-container:not([data-wallet-connected="true"])::before {
+  content: "🔴";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE ENHANCEMENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+  .position-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .position-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .user-balance.connected span {
+    font-size: 0.9rem;
+  }
+  
+  .yieldfi-container::before {
+    top: 10px;
+    right: 10px;
+    font-size: 0.7rem;
+  }
+}
+
+/* ==========================================
+   DARK THEME ENHANCEMENTS
+   ========================================== */
+
+[data-theme="dark"] .position-item {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .position-item:hover {
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .yieldfi-container[data-wallet-connected="true"] .token-input-container,
+[data-theme="dark"] .yieldfi-container[data-wallet-connected="true"] .bridge-token-container {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .yieldfi-container[data-wallet-connected="true"] .swap-details,
+[data-theme="dark"] .yieldfi-container[data-wallet-connected="true"] .bridge-details,
+[data-theme="dark"] .yieldfi-container[data-wallet-connected="true"] .liquidity-details {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .yieldfi-token-item.has-balance {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+[data-theme="dark"] .yieldfi-token-item.has-balance:hover {
+  background: rgba(16, 185, 129, 0.15);
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .user-balance.connected {
+    border: 2px solid #10b981;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .position-item {
+    border-width: 2px;
+  }
+  
+  .yieldfi-container[data-wallet-connected="true"] .token-input-container,
+  .yieldfi-container[data-wallet-connected="true"] .bridge-token-container {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .user-balance,
+  .position-item,
+  .wallet-action-text,
+  .max-btn {
+    transition: none;
+  }
+  
+  .balanceUpdate,
+  .successPulse {
+    animation: none;
+  }
+}
+
+/* ==========================================
+   FOCUS INDICATORS FOR CONNECTED STATE
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .token-select:focus,
+.yieldfi-container[data-wallet-connected="true"] .bridge-network-select:focus,
+.yieldfi-container[data-wallet-connected="true"] .pool-select:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================
+   LOADING STATES FOR USER DATA
+   ========================================== */
+
+.user-balance.loading {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ==========================================
+   SUCCESS/ERROR STATE STYLING
+   ========================================== */
+
+/* Success state for completed transactions */
+.transaction-success {
+  border: 2px solid #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  animation: successPulse 0.6s ease-out;
+}
+
+/* Error state for failed transactions */
+.transaction-error {
+  border: 2px solid #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ==========================================
+   TOOLTIP ENHANCEMENTS FOR CONNECTED USERS
+   ========================================== */
+
+.user-balance.connected::after {
+  content: "✓";
+  margin-left: 4px;
+  color: #10b981;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+/* Hover tooltips for enhanced UX */
+.user-balance.connected {
+  position: relative;
+  cursor: help;
+}
+
+.user-balance.connected:hover::before {
+  content: "Live wallet balance";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ==========================================
+   ENHANCED BUTTON STATES
+   ========================================== */
+
+/* Progressive enhancement for action buttons */
+.swap-btn, .bridge-btn, .liquidity-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.swap-btn::before, .bridge-btn::before, .liquidity-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .swap-btn:hover::before,
+.yieldfi-container[data-wallet-connected="true"] .bridge-btn:hover::before,
+.yieldfi-container[data-wallet-connected="true"] .liquidity-btn:hover::before {
+  left: 100%;
+}
+
+/* ==========================================
+   ENHANCED MODAL STYLES FOR CONNECTED USERS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-token-selector,
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-network-selector {
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-selector-header {
+  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ==========================================
+   ENHANCED TAB NAVIGATION FOR CONNECTED USERS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .nav-tab.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .nav-tab:not(.active):hover {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+/* ==========================================
+   ENHANCED STATISTICS DISPLAY
+   ========================================== */
+
+/* Make market stats more prominent for connected users */
+.yieldfi-container[data-wallet-connected="true"] .stat-card {
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .stat-value {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* ==========================================
+   SLIPPAGE PANEL ENHANCEMENTS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .slippage-panel {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .slippage-btn.active {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .slippage-btn:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+/* ==========================================
+   ENHANCED PRICE CHART FOR CONNECTED USERS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .chart-price span:first-child {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .timeframe-btn.active {
+  background: #10b981;
+  color: white;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .timeframe-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+/* ==========================================
+   ENHANCED NETWORK SELECTION
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .bridge-network-select {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .bridge-network-select:hover {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* ==========================================
+   ENHANCED POOL SELECTION
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .pool-select {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .pool-select:hover {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .pool-apy {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ==========================================
+   ENHANCED FORM INPUTS FOR CONNECTED USERS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] input[type="number"]:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.yieldfi-container[data-wallet-connected="true"] .custom-slippage input:focus {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ==========================================
+   ENHANCED FLIP BUTTONS
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .swap-flip-btn,
+.yieldfi-container[data-wallet-connected="true"] .bridge-flip-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #059669;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .swap-flip-btn:hover,
+.yieldfi-container[data-wallet-connected="true"] .bridge-flip-btn:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  transform: rotate(180deg) scale(1.1);
+}
+
+/* ==========================================
+   USER ACTIVITY INDICATORS
+   ========================================== */
+
+/* Add subtle pulse animation for active elements */
+@keyframes userActivePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.yieldfi-container[data-wallet-connected="true"] .user-balance.active {
+  animation: userActivePulse 2s infinite;
+}
+
+/* ==========================================
+   ENHANCED SCROLLBAR FOR CONNECTED STATE
+   ========================================== */
+
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-token-list::-webkit-scrollbar-thumb,
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-network-list::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 3px;
+}
+
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-token-list::-webkit-scrollbar-thumb:hover,
+.yieldfi-container[data-wallet-connected="true"] .yieldfi-network-list::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* ==========================================
+   TRANSACTION HISTORY ENHANCEMENTS
+   ========================================== */
+
+/* Style for transaction history when implemented */
+.transaction-history-item {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: all var(--transition-fast);
+}
+
+.transaction-history-item:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateX(4px);
+}
+
+.transaction-status.success {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.transaction-status.pending {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.transaction-status.failed {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* ==========================================
+   RESPONSIVE ENHANCEMENTS FOR MOBILE
+   ========================================== */
+
+@media (max-width: 480px) {
+  .yieldfi-container[data-wallet-connected="true"]::before {
+    display: none; /* Hide connection indicator on very small screens */
+  }
+  
+  .user-balance.connected::after {
+    margin-left: 2px;
+    font-size: 0.7rem;
+  }
+  
+  .position-item {
+    padding: 12px;
+  }
+  
+  .position-liquidity {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================
+   PRINT STYLES (for screenshots/sharing)
+   ========================================== */
+
+@media print {
+  .yieldfi-container[data-wallet-connected="true"] {
+    border: 2px solid #10b981;
+  }
+  
+  .user-balance.connected {
+    color: #000 !important;
+    font-weight: 700 !important;
+  }
+  
+  .position-item {
+    border: 1px solid #000;
+    background: none;
+  }
 }
