@@ -1,14 +1,5 @@
-<!-- Wallet Connection Prompt -->
-<div id="yieldFiWalletPrompt" class="connect-wallet-prompt glass-card">
-  <h2>🚀 Connect Your Wallet</h2>
-  <p>Connect your Web3 wallet to access swap, bridge, and liquidity features.</p>
-  <button id="yieldFiConnectBtn" class="connect-btn" onclick="window.globalWalletConnect()">
-    Connect Wallet
-  </button>
-</div>
-
-<!-- Main YieldFi Content (hidden by default) -->
-<div class="yieldfi-container" style="display: none;">
+<!-- Main YieldFi Content (visible by default, no wallet prompt) -->
+<div class="yieldfi-container">
   
   <!-- Navigation Tabs -->
   <div class="yieldfi-nav">
@@ -64,7 +55,7 @@
           <div class="token-input-container">
             <div class="token-input-header">
               <span>From</span>
-              <span class="balance">Balance: <span id="fromBalance">0.0000</span></span>
+              <span class="balance user-balance">Balance: <span id="fromBalance">0.0000</span></span>
             </div>
             <div class="token-input">
               <div class="token-select" onclick="openTokenSelector('from')">
@@ -100,7 +91,7 @@
           <div class="token-input-container">
             <div class="token-input-header">
               <span>To</span>
-              <span class="balance">Balance: <span id="toBalance">0.0000</span></span>
+              <span class="balance user-balance">Balance: <span id="toBalance">0.0000</span></span>
             </div>
             <div class="token-input">
               <div class="token-select" onclick="openTokenSelector('to')">
@@ -130,7 +121,7 @@
             </div>
             <div class="detail-row">
               <span>Price Impact</span>
-              <span id="priceImpact">< 0.01%</span>
+              <span id="priceImpact"> 0.01%</span>
             </div>
             <div class="detail-row">
               <span>Minimum Received</span>
@@ -144,8 +135,8 @@
 
           <!-- Swap Actions -->
           <div class="swap-actions">
-            <button class="swap-btn" id="swapBtn" onclick="executeSwap()" disabled>
-              Enter Amount
+            <button class="swap-btn" id="swapBtn" onclick="executeSwap()">
+              <span class="wallet-action-text">Connect Wallet to Swap</span>
             </button>
           </div>
         </div>
@@ -247,7 +238,7 @@
         <div class="bridge-token-container">
           <div class="token-input-header">
             <span>Amount to Bridge</span>
-            <span class="balance">Balance: <span id="bridgeBalance">0.0000</span></span>
+            <span class="balance user-balance">Balance: <span id="bridgeBalance">0.0000</span></span>
           </div>
           <div class="token-input">
             <div class="token-select" onclick="openTokenSelector('bridge')">
@@ -292,8 +283,8 @@
 
         <!-- Bridge Actions -->
         <div class="bridge-actions">
-          <button class="bridge-btn" id="bridgeBtn" onclick="executeBridge()" disabled>
-            Enter Amount
+          <button class="bridge-btn" id="bridgeBtn" onclick="executeBridge()">
+            <span class="wallet-action-text">Connect Wallet to Bridge</span>
           </button>
         </div>
       </div>
@@ -334,7 +325,7 @@
           <div class="token-input-container">
             <div class="token-input-header">
               <span id="liquidityToken1Label">ETH</span>
-              <span class="balance">Balance: <span id="liquidityBalance1">0.0000</span></span>
+              <span class="balance user-balance">Balance: <span id="liquidityBalance1">0.0000</span></span>
             </div>
             <div class="token-input">
               <div class="token-display">
@@ -356,7 +347,7 @@
           <div class="token-input-container">
             <div class="token-input-header">
               <span id="liquidityToken2Label">USDC</span>
-              <span class="balance">Balance: <span id="liquidityBalance2">0.0000</span></span>
+              <span class="balance user-balance">Balance: <span id="liquidityBalance2">0.0000</span></span>
             </div>
             <div class="token-input">
               <div class="token-display">
@@ -394,8 +385,8 @@
 
         <!-- Liquidity Actions -->
         <div class="liquidity-actions">
-          <button class="liquidity-btn" id="liquidityBtn" onclick="addLiquidity()" disabled>
-            Enter Amounts
+          <button class="liquidity-btn" id="liquidityBtn" onclick="addLiquidity()">
+            <span class="wallet-action-text">Connect Wallet to Add Liquidity</span>
           </button>
         </div>
       </div>
@@ -406,9 +397,12 @@
           <h3>Your Liquidity Positions</h3>
         </div>
         <div class="liquidity-positions">
-          <div class="no-positions">
-            <p>No liquidity positions found</p>
-            <p>Add liquidity to start earning fees</p>
+          <div class="no-positions" id="liquidityPositionsContent">
+            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+              <div style="font-size: 2rem; margin-bottom: 15px;">💧</div>
+              <div style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">No liquidity positions found</div>
+              <div style="font-size: 0.9rem;">Connect your wallet to view your positions</div>
+            </div>
           </div>
         </div>
       </div>
