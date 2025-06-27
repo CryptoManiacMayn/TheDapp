@@ -1,0 +1,174 @@
+/* OEC Coin Stats Sidebar */
+.oec-sidebar {
+  position: fixed;
+  top: 120px;
+  right: 30px;
+  width: 280px;
+  background: rgba(15, 15, 30, 0.25);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  z-index: 999;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.oec-sidebar.hidden {
+  opacity: 0;
+  transform: translateX(100px);
+  pointer-events: none;
+}
+
+.oec-sidebar-header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.oec-coin-logo {
+  margin-bottom: 12px;
+}
+
+.oec-logo-circle {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  margin: 0 auto;
+  box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+  animation: oecPulse 3s ease-in-out infinite;
+}
+
+.oec-coin-name {
+  color: white;
+  font-size: 1.1rem;
+  margin: 8px 0 4px 0;
+  font-weight: bold;
+}
+
+.oec-coin-symbol {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.oec-stats-container {
+  space-y: 16px;
+}
+
+.oec-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.oec-stat-item:last-child {
+  border-bottom: none;
+}
+
+.oec-stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.oec-stat-value {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.oec-stat-value.oec-positive {
+  color: #00ff88;
+}
+
+.oec-stat-value.oec-negative {
+  color: #ff4757;
+}
+
+.oec-sidebar-footer {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.oec-live-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+.oec-pulse {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: oecPulseIndicator 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes oecPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 212, 255, 0.5);
+  }
+}
+
+@keyframes oecPulseIndicator {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .oec-sidebar {
+    right: 15px;
+    width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .oec-sidebar {
+    display: none;
+  }
+}
+
+/* Hover effects */
+.oec-stat-item:hover {
+  background: rgba(0, 212, 255, 0.05);
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  transition: all 0.2s ease;
+}
+
+.oec-sidebar:hover {
+
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
