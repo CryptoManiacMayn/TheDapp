@@ -1,0 +1,61 @@
+/* Back to Top Button Styles */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #00d4ff, #ff00ff);
+    color: white;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100px);
+    transition: all 0.3s ease;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-top-btn:hover {
+    transform: translateY(0) scale(1.1);
+    box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+    background: linear-gradient(45deg, #ff00ff, #00d4ff);
+}
+
+.scroll-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-top-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
