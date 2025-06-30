@@ -1,0 +1,19 @@
+https://dash.cloudflare.com/fa6c1327ecb56748a74f3a47bae7ef20/r2/default/buckets/thedapp/objects/OEC%20Logo%20Gradient.png/details
+https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=categories%23storage&trk=0108a42a-5191-42fa-9075-57140894852b&sc_channel=ps&ef_id=CjwKCAjwmenCBhA4EiwAtVjzmoDuZjEpqah8h4sp1670PQRKIA4YiD8jmPlO2bADtJRgTdwCluCFshoCkXoQAvD_BwE:G:s&s_kwcid=AL!4422!3!679413813100!p!!g!!storing%20data%20online!19852661930!145019238457&gad_campaignid=19852661930&gbraid=0AAAAADjHtp-jxSeOiEKwCubztv0hr5-rf&gclid=CjwKCAjwmenCBhA4EiwAtVjzmoDuZjEpqah8h4sp1670PQRKIA4YiD8jmPlO2bADtJRgTdwCluCFshoCkXoQAvD_BwE
+https://tokenicons.io/?type=exchange&variant=mono
+
+
+DAO 
+Required:
+Governor Contract
+Timelock Contract
+Token Contract
+
+Tally for DAOs: https://www.tally.xyz/explore
+Tally Docs: https://docs.tally.xyz/set-up-and-technical-documentation/tally-architecture
+Governor Contracts OZ: https://docs.openzeppelin.com/contracts/4.x/api/governance
+
+
+Discord
+Commonwealth
+https://www.discourse.org/

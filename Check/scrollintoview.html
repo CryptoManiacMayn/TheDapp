@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Scroll Sections</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Container for scroll snapping */
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y proximity; /* Looser snapping - less jerky */
+            scroll-behavior: smooth;
+            
+            /* Slower, smoother scrolling */
+            scroll-padding: 0;
+            -webkit-overflow-scrolling: touch; /* Smoother on mobile */
+        }
+        
+        /* Add CSS for smoother scroll timing */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        @media (prefers-reduced-motion: no-preference) {
+            .scroll-container {
+                /* Custom scroll timing for supported browsers */
+                scroll-timeline: --scroll-timeline block;
+                animation-timeline: --scroll-timeline;
+            }
+        }
+
+        /* Each section takes full viewport height */
+        .section {
+            height: 100vh;
+            scroll-snap-align: center; /* Center alignment for smoother snapping */
+            scroll-snap-stop: normal; /* Allow smoother scrolling through sections */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Section styling */
+        #section1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        #section2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        #section3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        #section4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        #section5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        /* Content styling */
+        .section-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow {
+            width: 20px;
+            height: 20px;
+            border: 2px solid currentColor;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Floating elements for visual interest */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-delay: -2s;
+        }
+
+        .floating-element:nth-child(even) {
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-dots {
+                right: 1rem;
+            }
+            
+            .section-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <!-- Section 1 -->
+        <section id="section1" class="section">
+            <div class="floating-element" style="top: 10%; left: 10%; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            <div class="floating-element" style="top: 70%; right: 15%; width: 30px; height: 30px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            
+            <div class="section-content">
+                <h1>Welcome</h1>
+                <p>Experience smooth scrolling between full-height sections. Each section snaps perfectly into view as you scroll.</p>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="section2" class="section">
+            <div class="floating-element" style="top: 20%; right: 20%; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 10px;"></div>
+            <div class="floating-element" style="bottom: 30%; left: 10%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            
+            <div class="section-content">
+                <h1>Discover</h1>
+                <p>Scroll-snap technology ensures each section perfectly aligns with your viewport, creating a seamless browsing experience.</p>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="section3" class="section">
+            <div class="floating-element" style="top: 15%; left: 20%; width: 35px; height: 35px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            <div class="floating-element" style="bottom: 20%; right: 10%; width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 10px;"></div>
+            
+            <div class="section-content">
+                <h1>Explore</h1>
+                <p>Beautiful gradients and smooth animations enhance the visual experience while maintaining perfect functionality.</p>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="section4" class="section">
+            <div class="floating-element" style="top: 25%; right: 25%; width: 55px; height: 55px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            <div class="floating-element" style="bottom: 15%; left: 15%; width: 25px; height: 25px; background: rgba(255,255,255,0.1); border-radius: 10px;"></div>
+            
+            <div class="section-content">
+                <h1>Navigate</h1>
+                <p>Use your mouse wheel to effortlessly move between sections. Each scroll action takes you to the next section smoothly.</p>
+            </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="section5" class="section">
+            <div class="floating-element" style="top: 30%; left: 25%; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            <div class="floating-element" style="bottom: 25%; right: 20%; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 10px;"></div>
+            
+            <div class="section-content">
+                <h1>Complete</h1>
+                <p>This is the final section. Try scrolling back up or use the navigation dots to jump to any section instantly.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation dots -->
+    <nav class="nav-dots">
+        <div class="nav-dot active" data-section="section1"></div>
+        <div class="nav-dot" data-section="section2"></div>
+        <div class="nav-dot" data-section="section3"></div>
+        <div class="nav-dot" data-section="section4"></div>
+        <div class="nav-dot" data-section="section5"></div>
+    </nav>
+
+    <script>
+        // Navigation dots functionality
+        const navDots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('.section');
+        const scrollContainer = document.querySelector('.scroll-container');
+
+        // Handle navigation dot clicks with browser's smooth scroll
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetSection = document.getElementById(dot.dataset.section);
+                // Use browser's native smooth scroll - it's smoother and respects user preferences
+                targetSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center' // Center the section in view
+                });
+            });
+        });
+
+        // Update active dot based on scroll position
+        function updateActiveDot() {
+            const scrollTop = scrollContainer.scrollTop;
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                // Check if section is in view (accounting for scroll snap)
+                if (scrollTop >= sectionTop - windowHeight/2 && scrollTop < sectionBottom - windowHeight/2) {
+                    // Remove active class from all dots
+                    navDots.forEach(dot => dot.classList.remove('active'));
+                    // Add active class to current dot
+                    navDots[index].classList.add('active');
+                }
+            });
+        }
+
+        // Listen for scroll events with throttling for performance
+        let scrollTimeout;
+        scrollContainer.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(updateActiveDot, 50);
+        });
+
+        // Hide scroll indicator after first scroll
+        let hasScrolled = false;
+        scrollContainer.addEventListener('scroll', () => {
+            if (!hasScrolled) {
+                document.querySelector('.scroll-indicator').style.opacity = '0';
+                hasScrolled = true;
+            }
+        }, { once: true });
+
+        // Keyboard navigation (optional enhancement)
+        document.addEventListener('keydown', (e) => {
+            const currentActive = document.querySelector('.nav-dot.active');
+            const currentIndex = Array.from(navDots).indexOf(currentActive);
+            
+            if (e.key === 'ArrowDown' && currentIndex < navDots.length - 1) {
+                e.preventDefault();
+                navDots[currentIndex + 1].click();
+            } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+                e.preventDefault();
+                navDots[currentIndex - 1].click();
+            }
+        });
+    </script>
+</body>
+</html>

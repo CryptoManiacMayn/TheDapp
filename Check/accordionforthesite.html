@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Swap DApp</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.8.0/umd/Recharts.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Lucide icons styles */
+        .lucide {
+            width: 1em;
+            height: 1em;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Simple Lucide icons as React components
+        const ArrowDownUp = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <path d="m21 16-4 4-4-4"/>
+                <path d="M17 20V4"/>
+                <path d="m3 8 4-4 4 4"/>
+                <path d="M7 4v16"/>
+            </svg>
+        );
+
+        const Plus = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <path d="M5 12h14"/>
+                <path d="M12 5v14"/>
+            </svg>
+        );
+
+        const Wallet = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
+            </svg>
+        );
+
+        const Settings = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.39a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        );
+
+        const ChevronDown = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        );
+
+        const TrendingUp = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
+                <polyline points="16,7 22,7 22,13"/>
+            </svg>
+        );
+
+        const Layers = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <polygon points="12,2 2,7 12,12 22,7"/>
+                <polyline points="2,17 12,22 22,17"/>
+                <polyline points="2,12 12,17 22,12"/>
+            </svg>
+        );
+
+        const Shuffle = () => (
+            <svg className="lucide" viewBox="0 0 24 24">
+                <polyline points="16,3 21,3 21,8"/>
+                <line x1="4" x2="21" y1="20" y2="3"/>
+                <polyline points="21,16 21,21 16,21"/>
+                <line x1="15" x2="21" y1="15" y2="21"/>
+                <line x1="4" x2="9" y1="4" y2="9"/>
+            </svg>
+        );
+
+        // Your React component (simplified version without Recharts for now)
+        const TokenSwapDApp = () => {
+            const [activeTab, setActiveTab] = React.useState('swap');
+            const [fromToken, setFromToken] = React.useState('ETH');
+            const [toToken, setToToken] = React.useState('USDC');
+            const [fromAmount, setFromAmount] = React.useState('');
+            const [toAmount, setToAmount] = React.useState('');
+            const [isConnected, setIsConnected] = React.useState(false);
+            const [slippage, setSlippage] = React.useState('0.5');
+
+            const tokens = ['ETH', 'USDC', 'USDT', 'DAI', 'WBTC', 'UNI', 'LINK', 'AAVE'];
+
+            const exchangeRates = {
+                'ETH-USDC': 2485.32,
+                'ETH-USDT': 2483.45,
+                'ETH-DAI': 2486.78,
+                'USDC-USDT': 0.9998,
+                'USDC-DAI': 1.0002
+            };
+
+            const getExchangeRate = (from, to) => {
+                if (from === to) return 1;
+                const key = `${from}-${to}`;
+                const reverseKey = `${to}-${from}`;
+                return exchangeRates[key] || (1 / (exchangeRates[reverseKey] || 1));
+            };
+
+            React.useEffect(() => {
+                if (fromAmount && fromToken !== toToken) {
+                    const rate = getExchangeRate(fromToken, toToken);
+                    setToAmount((parseFloat(fromAmount) * rate).toFixed(6));
+                }
+            }, [fromAmount, fromToken, toToken]);
+
+            const handleSwapTokens = () => {
+                setFromToken(toToken);
+                setToToken(fromToken);
+                setFromAmount(toAmount);
+                setToAmount(fromAmount);
+            };
+
+            const TokenSelect = ({ value, onChange, label }) => (
+                <div className="relative">
+                    <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+                    <select 
+                        value={value} 
+                        onChange={(e) => onChange(e.target.value)}
+                        className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
+                    >
+                        {tokens.map(token => (
+                            <option key={token} value={token}>{token}</option>
+                        ))}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-8 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+                    <div className="max-w-6xl mx-auto">
+                        {/* Header */}
+                        <div className="flex justify-between items-center mb-6">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                    <ArrowDownUp className="h-5 w-5 text-white" />
+                                </div>
+                                <h1 className="text-2xl font-bold text-gray-900">SwapDEX</h1>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                                <button className="flex items-center space-x-2 px-3 py-2 text-sm bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                                    <Settings className="h-4 w-4" />
+                                    <span>Settings</span>
+                                </button>
+                                <button 
+                                    onClick={() => setIsConnected(!isConnected)}
+                                    className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-lg transition-colors ${
+                                        isConnected 
+                                            ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                                            : 'bg-blue-500 text-white hover:bg-blue-600'
+                                    }`}
+                                >
+                                    <Wallet className="h-4 w-4" />
+                                    <span>{isConnected ? 'Connected' : 'Connect Wallet'}</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Main Trading Interface */}
+                            <div className="lg:col-span-2">
+                                {/* Tab Navigation */}
+                                <div className="flex space-x-1 mb-4 bg-gray-100 p-1 rounded-lg">
+                                    {[
+                                        { id: 'swap', label: 'Swap', icon: ArrowDownUp },
+                                        { id: 'liquidity', label: 'Liquidity', icon: Layers },
+                                        { id: 'bridge', label: 'Bridge', icon: Shuffle }
+                                    ].map(tab => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveTab(tab.id)}
+                                            className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-md transition-colors flex-1 justify-center ${
+                                                activeTab === tab.id
+                                                    ? 'bg-white text-blue-600 shadow-sm'
+                                                    : 'text-gray-600 hover:text-gray-900'
+                                            }`}
+                                        >
+                                            <tab.icon className="h-4 w-4" />
+                                            <span>{tab.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Swap Interface */}
+                                {activeTab === 'swap' && (
+                                    <div className="bg-white rounded-xl shadow-lg p-5">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h2 className="text-lg font-semibold text-gray-900">Swap Tokens</h2>
+                                            <div className="flex items-center space-x-2 text-xs text-gray-500">
+                                                <span>Slippage: {slippage}%</span>
+                                                <input
+                                                    type="range"
+                                                    min="0.1"
+                                                    max="5"
+                                                    step="0.1"
+                                                    value={slippage}
+                                                    onChange={(e) => setSlippage(e.target.value)}
+                                                    className="w-12 h-1"
+                                                />
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            <div className="bg-gray-50 rounded-lg p-4">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-xs font-medium text-gray-600">From</span>
+                                                    <span className="text-xs text-gray-500">Balance: 2.45 {fromToken}</span>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <input
+                                                        type="number"
+                                                        value={fromAmount}
+                                                        onChange={(e) => setFromAmount(e.target.value)}
+                                                        placeholder="0.0"
+                                                        className="flex-1 text-xl font-semibold bg-transparent border-none outline-none"
+                                                    />
+                                                    <TokenSelect value={fromToken} onChange={setFromToken} label="" />
+                                                </div>
+                                            </div>
+
+                                            <div className="flex justify-center">
+                                                <button
+                                                    onClick={handleSwapTokens}
+                                                    className="p-2 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
+                                                >
+                                                    <ArrowDownUp className="h-4 w-4 text-blue-600" />
+                                                </button>
+                                            </div>
+
+                                            <div className="bg-gray-50 rounded-lg p-4">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-xs font-medium text-gray-600">To</span>
+                                                    <span className="text-xs text-gray-500">Balance: 1,250.32 {toToken}</span>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <input
+                                                        type="number"
+                                                        value={toAmount}
+                                                        placeholder="0.0"
+                                                        className="flex-1 text-xl font-semibold bg-transparent border-none outline-none"
+                                                        readOnly
+                                                    />
+                                                    <TokenSelect value={toToken} onChange={setToToken} label="" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {fromAmount && (
+                                            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                                                <div className="flex justify-between text-xs text-gray-600 mb-1">
+                                                    <span>Exchange Rate</span>
+                                                    <span>1 {fromToken} = {getExchangeRate(fromToken, toToken).toFixed(4)} {toToken}</span>
+                                                </div>
+                                                <div className="flex justify-between text-xs text-gray-600 mb-1">
+                                                    <span>Price Impact</span>
+                                                    <span className="text-green-600">0.12%</span>
+                                                </div>
+                                                <div className="flex justify-between text-xs text-gray-600">
+                                                    <span>Fee</span>
+                                                    <span>0.3%</span>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <button
+                                            disabled={!isConnected || !fromAmount}
+                                            className="w-full mt-4 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                                        >
+                                            {!isConnected ? 'Connect Wallet' : !fromAmount ? 'Enter Amount' : 'Swap Tokens'}
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Placeholder for other tabs */}
+                                {activeTab === 'liquidity' && (
+                                    <div className="bg-white rounded-xl shadow-lg p-5">
+                                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Liquidity</h2>
+                                        <p className="text-gray-600">Liquidity features coming soon...</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'bridge' && (
+                                    <div className="bg-white rounded-xl shadow-lg p-5">
+                                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Cross-Chain Bridge</h2>
+                                        <p className="text-gray-600">Bridge features coming soon...</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Sidebar */}
+                            <div className="space-y-6">
+                                {/* Price Info */}
+                                <div className="bg-white rounded-xl shadow-lg p-4">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <h3 className="text-md font-semibold text-gray-900">ETH/USD</h3>
+                                        <div className="flex items-center space-x-2">
+                                            <TrendingUp className="h-4 w-4 text-green-500" />
+                                            <span className="text-sm font-medium text-green-600">+2.34%</span>
+                                        </div>
+                                    </div>
+                                    <div className="text-2xl font-bold text-gray-900 mb-1">$2,485.32</div>
+                                    <div className="text-sm text-gray-500">24h Volume: $45.2M</div>
+                                </div>
+
+                                {/* Market Stats */}
+                                <div className="bg-white rounded-xl shadow-lg p-4">
+                                    <h3 className="text-md font-semibold text-gray-900 mb-3">Market Stats</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-gray-600">Total Liquidity</span>
+                                            <span className="text-sm font-medium">$892.4M</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-gray-600">Active Pairs</span>
+                                            <span className="text-sm font-medium">1,247</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-gray-600">Fees (24h)</span>
+                                            <span className="text-sm font-medium text-green-600">$135.6K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the component
+        ReactDOM.render(<TokenSwapDApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

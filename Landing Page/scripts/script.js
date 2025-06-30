@@ -1,5 +1,3 @@
-
-
         // Animated counter for stats
         function animateCounter(element, target, duration = 2000) {
             let start = 0;
@@ -169,6 +167,25 @@
 // Blockchain Networks Section JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const dropdown = document.getElementById('productsDropdown');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    if (dropdown) {
+        dropdown.addEventListener('click', (event) => {
+            if (window.innerWidth <= 768) {
+                event.preventDefault();
+                dropdown.classList.toggle('active');
+            }
+        });
+    }
+
     initializeBlockchainSection();
 });
 

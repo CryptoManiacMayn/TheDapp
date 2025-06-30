@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoVault Pro - Advanced Crypto Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            transition: all 0.3s ease;
+        }
+
+        body.dark {
+            background-color: #111827;
+            color: #f9fafb;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        body.dark .header {
+            background-color: rgba(31, 41, 55, 0.9);
+            border-bottom-color: #374151;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+
+        .nav-btn:hover {
+            color: #111827;
+        }
+
+        body.dark .nav-btn {
+            color: #d1d5db;
+        }
+
+        body.dark .nav-btn:hover {
+            color: white;
+        }
+
+        .nav-btn.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        body.dark .nav-btn.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+        }
+
+        .theme-btn {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: #e5e7eb;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover {
+            background-color: #d1d5db;
+        }
+
+        body.dark .theme-btn {
+            background-color: #374151;
+        }
+
+        body.dark .theme-btn:hover {
+            background-color: #4b5563;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        body.dark .card {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card-large {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        body.dark .card-large {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        body.dark .card-header {
+            border-bottom-color: #374151;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Crypto Item Styles */
+        .crypto-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .crypto-item:hover {
+            transform: scale(1.02);
+            background-color: #f3f4f6;
+        }
+
+        body.dark .crypto-item {
+            background-color: #374151;
+        }
+
+        body.dark .crypto-item:hover {
+            background-color: #4b5563;
+        }
+
+        .crypto-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .crypto-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .crypto-details h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .crypto-details p {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        body.dark .crypto-details p {
+            color: #d1d5db;
+        }
+
+        .crypto-stats {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stat {
+            text-align: right;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+        }
+
+        .change-positive {
+            color: #10b981;
+        }
+
+        .change-negative {
+            color: #ef4444;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        body.dark .stat-label {
+            color: #9ca3af;
+        }
+
+        /* DApp Category Styles */
+        .dapp-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dapp-card:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark .dapp-card {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .dapp-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .dapp-icon {
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 0.5rem;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .dapp-count {
+            text-align: right;
+        }
+
+        .dapp-count-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .dapp-count-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        body.dark .dapp-count-label {
+            color: #9ca3af;
+        }
+
+        .dapp-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .dapp-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        body.dark .dapp-description {
+            color: #d1d5db;
+        }
+
+        /* Learning Card Styles */
+        .learning-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .learning-card:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark .learning-card {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .learning-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .learning-icon {
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #8b5cf6, #ec4899);
+            border-radius: 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .level-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .level-beginner {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        body.dark .level-beginner {
+            background-color: #166534;
+            color: #dcfce7;
+        }
+
+        .level-intermediate {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        body.dark .level-intermediate {
+            background-color: #92400e;
+            color: #fef3c7;
+        }
+
+        .level-advanced {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        body.dark .level-advanced {
+            background-color: #991b1b;
+            color: #fee2e2;
+        }
+
+        .learning-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .learning-duration {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        body.dark .learning-duration {
+            color: #9ca3af;
+        }
+
+        .topics {
+            margin-bottom: 1.5rem;
+        }
+
+        .topics-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark .topics-label {
+            color: #d1d5db;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .topic-tag {
+            padding: 0.25rem 0.5rem;
+            background-color: #f3f4f6;
+            color: #374151;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        body.dark .topic-tag {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #2563eb, #7c3aed);
+        }
+
+        /* Tool Card Styles */
+        .tool-card {
+            padding: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: #6b7280;
+        }
+
+        body.dark .tool-card {
+            border-color: #4b5563;
+        }
+
+        body.dark .tool-card:hover {
+            border-color: #6b7280;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-name {
+            font-weight: 600;
+        }
+
+        .tool-type {
+            padding: 0.125rem 0.5rem;
+            background-color: #f3f4f6;
+            color: #6b7280;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        body.dark .tool-type {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+
+        .tool-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        body.dark .tool-description {
+            color: #d1d5db;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        body.dark .subtitle {
+            color: #d1d5db;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        body.dark .text-gray-500 {
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .crypto-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="dark">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">💰</div>
+                    <span class="logo-text">CryptoVault Pro</span>
+                </div>
+                
+                <nav class="nav">
+                    <button onclick="showTab('dashboard')" id="tab-dashboard" class="nav-btn active">
+                        Dashboard
+                    </button>
+                    <button onclick="showTab('dapps')" id="tab-dapps" class="nav-btn">
+                        DApps
+                    </button>
+                    <button onclick="showTab('learn')" id="tab-learn" class="nav-btn">
+                        Learn
+                    </button>
+                </nav>
+
+                <button onclick="toggleDarkMode()" id="darkModeBtn" class="theme-btn">
+                    ☀️
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-content">
+                <!-- Market Overview -->
+                <div class="section">
+                    <div class="grid grid-4">
+                        <div class="card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-gray-500 mb-1">Total Market Cap</h3>
+                                    <p class="text-2xl font-bold">$2.1T</p>
+                                    <div class="flex items-center">
+                                        <span class="change-positive">↗ +2.4%</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 2rem;">🌍</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-gray-500 mb-1">24h Volume</h3>
+                                    <p class="text-2xl font-bold">$89.2B</p>
+                                    <div class="flex items-center">
+                                        <span class="change-negative">↘ -5.1%</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 2rem;">📊</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-gray-500 mb-1">BTC Dominance</h3>
+                                    <p class="text-2xl font-bold">52.3%</p>
+                                    <div class="flex items-center">
+                                        <span class="change-positive">↗ +0.8%</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 2rem;">🛡️</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-gray-500 mb-1">Active DApps</h3>
+                                    <p class="text-2xl font-bold">5,718</p>
+                                    <div class="flex items-center">
+                                        <span class="change-positive">↗ +12.3%</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 2rem;">⚡</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Cryptocurrencies -->
+                <div class="section">
+                    <div class="card-large">
+                        <div class="card-header">
+                            <h2 class="section-title">Top Cryptocurrencies</h2>
+                        </div>
+                        <div class="card-content">
+                            <!-- Bitcoin -->
+                            <div class="crypto-item">
+                                <div class="crypto-info">
+                                    <div class="crypto-icon" style="background: linear-gradient(45deg, #f97316, #ea580c);">₿</div>
+                                    <div class="crypto-details">
+                                        <h3>Bitcoin <span class="text-gray-500">BTC</span></h3>
+                                        <p>The first and largest cryptocurrency by market cap</p>
+                                    </div>
+                                </div>
+                                <div class="crypto-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">$67,542.30</div>
+                                        <div class="stat-change change-positive">↗ 2.45%</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-label">Market Cap</div>
+                                        <div class="stat-value">$1.33T</div>
+                                    </div>
+                                    <div class="stat">
+                                        <svg width="80" height="30">
+                                            <polyline fill="none" stroke="#10B981" stroke-width="2" points="0,25 16,20 32,22 48,15 64,18 80,12"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ethereum -->
+                            <div class="crypto-item">
+                                <div class="crypto-info">
+                                    <div class="crypto-icon" style="background: linear-gradient(45deg, #3b82f6, #8b5cf6);">Ξ</div>
+                                    <div class="crypto-details">
+                                        <h3>Ethereum <span class="text-gray-500">ETH</span></h3>
+                                        <p>Smart contract platform powering DeFi and NFTs</p>
+                                    </div>
+                                </div>
+                                <div class="crypto-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">$3,842.15</div>
+                                        <div class="stat-change change-negative">↘ 1.23%</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-label">Market Cap</div>
+                                        <div class="stat-value">$462B</div>
+                                    </div>
+                                    <div class="stat">
+                                        <svg width="80" height="30">
+                                            <polyline fill="none" stroke="#EF4444" stroke-width="2" points="0,15 16,18 32,12 48,25 64,20 80,22"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Solana -->
+                            <div class="crypto-item">
+                                <div class="crypto-info">
+                                    <div class="crypto-icon" style="background: linear-gradient(45deg, #8b5cf6, #ec4899);">◎</div>
+                                    <div class="crypto-details">
+                                        <h3>Solana <span class="text-gray-500">SOL</span></h3>
+                                        <p>High-performance blockchain for Web3 applications</p>
+                                    </div>
+                                </div>
+                                <div class="crypto-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">$145.67</div>
+                                        <div class="stat-change change-positive">↗ 5.67%</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-label">Market Cap</div>
+                                        <div class="stat-value">$68B</div>
+                                    </div>
+                                    <div class="stat">
+                                        <svg width="80" height="30">
+                                            <polyline fill="none" stroke="#10B981" stroke-width="2" points="0,20 16,18 32,25 48,10 64,15 80,12"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cardano -->
+                            <div class="crypto-item">
+                                <div class="crypto-info">
+                                    <div class="crypto-icon" style="background: linear-gradient(45deg, #3b82f6, #06b6d4);">₳</div>
+                                    <div class="crypto-details">
+                                        <h3>Cardano <span class="text-gray-500">ADA</span></h3>
+                                        <p>Research-driven blockchain with proof-of-stake</p>
+                                    </div>
+                                </div>
+                                <div class="crypto-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">$0.4521</div>
+                                        <div class="stat-change change-positive">↗ 3.21%</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-label">Market Cap</div>
+                                        <div class="stat-value">$15.8B</div>
+                                    </div>
+                                    <div class="stat">
+                                        <svg width="80" height="30">
+                                            <polyline fill="none" stroke="#10B981" stroke-width="2" points="0,25 16,22 32,28 48,18 64,20 80,15"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DApps Tab -->
+            <div id="dapps-content" class="hidden">
+                <div class="section text-center">
+                    <h1 class="title">Decentralized Applications</h1>
+                    <p class="subtitle">Explore the ecosystem of decentralized applications built on various blockchains</p>
+                </div>
+
+                <div class="section">
+                    <div class="grid grid-4">
+                        <div class="dapp-card">
+                            <div class="dapp-header">
+                                <div class="dapp-icon">💰</div>
+                                <div class="dapp-count">
+                                    <div class="dapp-count-value">2,847</div>
+                                    <div class="dapp-count-label">Apps</div>
+                                </div>
+                            </div>
+                            <h3 class="dapp-title">DeFi</h3>
+                            <p class="dapp-description">Decentralized Finance protocols</p>
+                            <div style="font-size: 0.875rem;">
+                                <span class="text-gray-500">TVL: </span>
+                                <span style="color: #10b981; font-weight: 500;">$45.2B</span>
+                            </div>
+                        </div>
+
+                        <div class="dapp-card">
+                            <div class="dapp-header">
+                                <div class="dapp-icon">🎨</div>
+                                <div class="dapp-count">
+                                    <div class="dapp-count-value">1,523</div>
+                                    <div class="dapp-count-label">Apps</div>
+                                </div>
+                            </div>
+                            <h3 class="dapp-title">NFT</h3>
+                            <p class="dapp-description">Non-Fungible Token marketplaces</p>
+                            <div style="font-size: 0.875rem;">
+                                <span class="text-gray-500">Volume: </span>
+                                <span style="color: #3b82f6; font-weight: 500;">$12.8B</span>
+                            </div>
+                        </div>
+
+                        <div class="dapp-card">
+                            <div class="dapp-header">
+                                <div class="dapp-icon">🎮</div>
+                                <div class="dapp-count">
+                                    <div class="dapp-count-value">892</div>
+                                    <div class="dapp-count-label">Apps</div>
+                                </div>
+                            </div>
+                            <h3 class="dapp-title">Gaming</h3>
+                            <p class="dapp-description">Blockchain gaming platforms</p>
+                            <div style="font-size: 0.875rem;">
+                                <span class="text-gray-500">Users: </span>
+                                <span style="color: #8b5cf6; font-weight: 500;">2.1M</span>
+                            </div>
+                        </div>
+
+                        <div class="dapp-card">
+                            <div class="dapp-header">
+                                <div class="dapp-icon">👥</div>
+                                <div class="dapp-count">
+                                    <div class="dapp-count-value">456</div>
+                                    <div class="dapp-count-label">Apps</div>
+                                </div>
+                            </div>
+                            <h3 class="dapp-title">Social</h3>
+                            <p class="dapp-description">Decentralized social networks</p>
+                            <div style="font-size: 0.875rem;">
+                                <span class="text-gray-500">Users: </span>
+                                <span style="color: #8b5cf6; font-weight: 500;">890K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured DApps -->
+                <div class="section">
+                    <div class="card-large">
+                        <div class="card-header">
+                            <div class="flex items-center justify-between">
+                                <h2 class="section-title">Featured DApps</h2>
+                                <span style="font-size: 1.875rem;">📚</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="grid grid-3">
+                                <div style="padding: 1.5rem; border-radius: 0.5rem; border: 2px dashed #d1d5db; cursor: pointer; transition: all 0.3s ease;" 
+                                     onmouseover="this.style.borderColor='#3b82f6'" 
+                                     onmouseout="this.style.borderColor='#d1d5db'">
+                                    <div style="width: 3rem; height: 3rem; background: linear-gradient(45deg, #ec4899, #ef4444); border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+                                    <h3 class="text-lg font-semibold mb-2">Uniswap</h3>
+                                    <p class="text-gray-500">Leading decentralized exchange for token swapping</p>
+                                </div>
+                                <div style="padding: 1.5rem; border-radius: 0.5rem; border: 2px dashed #d1d5db; cursor: pointer; transition: all 0.3s ease;" 
+                                     onmouseover="this.style.borderColor='#3b82f6'" 
+                                     onmouseout="this.style.borderColor='#d1d5db'">
+                                    <div style="width: 3rem; height: 3rem; background: linear-gradient(45deg, #3b82f6, #8b5cf6); border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+                                    <h3 class="text-lg font-semibold mb-2">OpenSea</h3>
+                                    <p class="text-gray-500">The world's largest NFT marketplace</p>
+                                </div>
+                                <div style="padding: 1.5rem; border-radius: 0.5rem; border: 2px dashed #d1d5db; cursor: pointer; transition: all 0.3s ease;" 
+                                     onmouseover="this.style.borderColor='#3b82f6'" 
+                                     onmouseout="this.style.borderColor='#d1d5db'">
+                                    <div style="width: 3rem; height: 3rem; background: linear-gradient(45deg, #10b981, #06b6d4); border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+                                    <h3 class="text-lg font-semibold mb-2">Compound</h3>
+                                    <p class="text-gray-500">Autonomous interest rate protocol for lending</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learn Tab -->
+            <div id="learn-content" class="hidden">
+                <div class="section text-center">
+                    <h1 class="title">Learn Blockchain Development</h1>
+                    <p class="subtitle">Master the skills needed to build the next generation of decentralized applications</p>
+                </div>
+
+                <div class="section">
+                    <div class="grid grid-3">
+                        <div class="learning-card">
+                            <div class="learning-header">
+                                <div class="learning-icon">💻</div>
+                                <span class="level-badge level-intermediate">Intermediate</span>
+                            </div>
+                            <h3 class="learning-title">Smart Contract Development</h3>
+                            <p class="learning-duration">Duration: 6 weeks</p>
+                            <div class="topics">
+                                <p class="topics-label">Topics covered:</p>
+                                <div class="topics-list">
+                                    <span class="topic-tag">Solidity</span>
+                                    <span class="topic-tag">Web3.js</span>
+                                    <span class="topic-tag">Testing</span>
+                                    <span class="topic-tag">Security</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary">Start Learning</button>
+                        </div>
+
+                        <div class="learning-card">
+                            <div class="learning-header">
+                                <div class="learning-icon">📊</div>
+                                <span class="level-badge level-advanced">Advanced</span>
+                            </div>
+                            <h3 class="learning-title">DeFi Protocol Design</h3>
+                            <p class="learning-duration">Duration: 8 weeks</p>
+                            <div class="topics">
+                                <p class="topics-label">Topics covered:</p>
+                                <div class="topics-list">
+                                    <span class="topic-tag">AMMs</span>
+                                    <span class="topic-tag">Lending</span>
+                                    <span class="topic-tag">Yield Farming</span>
+                                    <span class="topic-tag">Governance</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary">Start Learning</button>
+                        </div>
+
+                        <div class="learning-card">
+                            <div class="learning-header">
+                                <div class="learning-icon">🎨</div>
+                                <span class="level-badge level-beginner">Beginner</span>
+                            </div>
+                            <h3 class="learning-title">NFT Marketplace Creation</h3>
+                            <p class="learning-duration">Duration: 4 weeks</p>
+                            <div class="topics">
+                                <p class="topics-label">Topics covered:</p>
+                                <div class="topics-list">
+                                    <span class="topic-tag">ERC-721</span>
+                                    <span class="topic-tag">IPFS</span>
+                                    <span class="topic-tag">Metadata</span>
+                                    <span class="topic-tag">Minting</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary">Start Learning</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Development Tools -->
+                <div class="section">
+                    <div class="card-large">
+                        <div class="card-header">
+                            <div class="flex items-center justify-between">
+                                <h2 class="section-title">Development Tools & Resources</h2>
+                                <span style="font-size: 1.875rem;">📚</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="grid grid-4">
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">Hardhat</h4>
+                                        <span class="tool-type">Framework</span>
+                                    </div>
+                                    <p class="tool-description">Ethereum development environment</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">Truffle</h4>
+                                        <span class="tool-type">Framework</span>
+                                    </div>
+                                    <p class="tool-description">Smart contract development suite</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">Remix IDE</h4>
+                                        <span class="tool-type">IDE</span>
+                                    </div>
+                                    <p class="tool-description">Browser-based Solidity editor</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">MetaMask</h4>
+                                        <span class="tool-type">Wallet</span>
+                                    </div>
+                                    <p class="tool-description">Browser wallet for Web3</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">Web3.js</h4>
+                                        <span class="tool-type">Library</span>
+                                    </div>
+                                    <p class="tool-description">JavaScript Web3 library</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">Ethers.js</h4>
+                                        <span class="tool-type">Library</span>
+                                    </div>
+                                    <p class="tool-description">Modern Web3 library</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">OpenZeppelin</h4>
+                                        <span class="tool-type">Security</span>
+                                    </div>
+                                    <p class="tool-description">Secure smart contract library</p>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-header">
+                                        <h4 class="tool-name">IPFS</h4>
+                                        <span class="tool-type">Storage</span>
+                                    </div>
+                                    <p class="tool-description">Decentralized file storage</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let isDarkMode = true;
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const btn = document.getElementById('darkModeBtn');
+            
+            if (isDarkMode) {
+                body.classList.add('dark');
+                btn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark');
+                btn.textContent = '🌙';
+            }
+        }
+
+        function showTab(tabName) {
+            // Hide all content
+            document.getElementById('dashboard-content').classList.add('hidden');
+            document.getElementById('dapps-content').classList.add('hidden');
+            document.getElementById('learn-content').classList.add('hidden');
+            
+            // Show selected content
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+            
+            // Update tab buttons
+            const tabs = ['dashboard', 'dapps', 'learn'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById('tab-' + tab);
+                if (tab === tabName) {
+                    btn.className = 'nav-btn active';
+                } else {
+                    btn.className = 'nav-btn';
+                }
+            });
+        }
+
+        // Initialize dark mode on load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('dark');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeFi Protocol Icons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Tailwind gray-900 */
+        }
+        .icon-card {
+            background-color: #1F2937; /* Tailwind gray-800 */
+            border: 1px solid #374151; /* Tailwind gray-700 */
+            transition: all 0.2s ease-in-out;
+        }
+        .icon-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #374151; /* gray-700 */
+            color: #D1D5DB; /* gray-300 */
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .icon-card:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+             background-color: #4B5563; /* gray-600 */
+        }
+        .copy-button.copied {
+            background-color: #10B981; /* green-500 */
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-white">DeFi Protocol Icon Suite</h1>
+            <p class="mt-2 text-lg text-gray-400">Clean, minimal icons for your DeFi application.</p>
+        </header>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6">
+
+            <!-- Icon 1: Swap -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-4">
+                    <path d="M16 4H8C5.79086 4 4 5.79086 4 8V16C4 18.2091 5.79086 20 8 20H10" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 14L20 20L14 20" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 20H16C18.2091 20 20 18.2091 20 16V8C20 5.79086 18.2091 4 16 4H14" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10L4 4L10 4" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Swap</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="swap-mono">
+                    <path d="M16 4H8C5.79086 4 4 5.79086 4 8V16C4 18.2091 5.79086 20 8 20H10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 14L20 20L14 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 20H16C18.2091 20 20 18.2091 20 16V8C20 5.79086 18.2091 4 16 4H14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10L4 4L10 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('swap-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 2: Lend/Borrow -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4V20" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 9L12 4L7 9" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 15L12 20L17 15" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 12H20" stroke="#BFDBFE" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Lend/Borrow</h3>
+                <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="lend-mono">
+                    <path d="M12 4V20M17 9L12 4L7 9M7 15L12 20L17 15M4 12H20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('lend-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 3: Stake -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                 <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 20V12M12 12V4M12 12H20M12 12H4" stroke="#34D399" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M18 18H6C4.89543 18 4 17.1046 4 16V8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V16C20 17.1046 19.1046 18 18 18Z" stroke="#6EE7B7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Stake</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="stake-mono">
+                     <path d="M12 20V12M12 12V4M12 12H20M12 12H4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M18 18H6C4.89543 18 4 17.1046 4 16V8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V16C20 17.1046 19.1046 18 18 18Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('stake-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 4: Farm -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 12V8C8 5.79086 9.79086 4 12 4C14.2091 4 16 5.79086 16 8V12" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 16C5 14.8954 5.89543 14 7 14H17C18.1046 14 19 14.8954 19 16V18C19 19.1046 18.1046 20 17 20H7C5.89543 20 5 19.1046 5 18V16Z" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 14V12" stroke="#FCD34D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12H15" stroke="#FDE68A" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Farm</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="farm-mono">
+                    <path d="M8 12V8C8 5.79086 9.79086 4 12 4C14.2091 4 16 5.79086 16 8V12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 16C5 14.8954 5.89543 14 7 14H17C18.1046 14 19 14.8954 19 16V18C19 19.1046 18.1046 20 17 20H7C5.89543 20 5 19.1046 5 18V16Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 14V12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12H15" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('farm-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 5: Bridge -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                   <path d="M9 4H5C4.44772 4 4 4.44772 4 5V9" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M15 4H19C19.5523 4 20 4.44772 20 5V9" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M9 20H5C4.44772 20 4 19.5523 4 19V15" stroke="#F9A8D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M15 20H19C19.5523 20 20 19.5523 20 19V15" stroke="#F9A8D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M4 12H20" stroke="#FCC1DF" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Bridge</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="bridge-mono">
+                   <path d="M9 4H5C4.44772 4 4 4.44772 4 5V9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M15 4H19C19.5523 4 20 4.44772 20 5V9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M9 20H5C4.44772 20 4 19.5523 4 19V15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M15 20H19C19.5523 20 20 19.5523 20 19V15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M4 12H20" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('bridge-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 6: Vault -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 12L12 9L9 12L12 15L15 12Z" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V9" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12H15" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 21V15" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 12H9" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Vault</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="vault-mono">
+                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 12L12 9L9 12L12 15L15 12Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12H15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 21V15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 12H9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('vault-mono', this)">Copy SVG</button>
+            </div>
+
+            <!-- Icon 7: Analytics -->
+            <div class="icon-card rounded-xl p-6 flex flex-col items-center justify-center text-center relative">
+                <!-- Primary Icon -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 20V14" stroke="#5EEAD4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 20V10" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 20V4" stroke="#99F6E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" stroke="#A7F3D0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3 class="font-semibold text-white mb-2">Analytics</h3>
+                 <p class="text-xs text-gray-400 mb-4">Primary</p>
+                <!-- Monochrome Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="analytics-mono">
+                    <path d="M7 20V14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 20V10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 20V4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                 <p class="text-xs text-gray-400 mt-2">Monochrome</p>
+                <button class="copy-button" onclick="copySvg('analytics-mono', this)">Copy SVG</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // This script handles copying the SVG code to the clipboard.
+        function copySvg(elementId, button) {
+            const svgElement = document.getElementById(elementId);
+            const svgCode = svgElement.outerHTML;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = svgCode;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.textContent = 'Copy SVG';
+                button.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

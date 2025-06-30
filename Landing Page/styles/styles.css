@@ -275,86 +275,6 @@ nav {
   animation-delay: 3s;
 }
 */
-/* Features Section */
-.features {
-  height: 100vh;
-  padding: 100px 0;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.features h2 {
-  text-align: center;
-  font-size: 3rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #00d4ff, #ff00ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.features h3 {
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.features p {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.feature-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: .85rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 212, 255, 0.1),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.feature-card:hover::before {
-  left: 100%;
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  border-color: #00d4ff;
-  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
-}
-
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: .01rem;
-  background: linear-gradient(45deg, #00d4ff, #ff00ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 /* Stats Section */
 .stats {
@@ -623,9 +543,6 @@ nav {
     font-size: 1.1rem;
   }
 
-  .nav-links {
-    display: none;
-  }
 
   .hero-buttons {
     flex-direction: column;
@@ -757,6 +674,7 @@ nav {
   color: white;
   font-size: 24px;
   cursor: pointer;
+  z-index: 1001;
 }
 
 @media (max-width: 768px) {
@@ -766,21 +684,27 @@ nav {
 
   .nav-links {
     position: fixed;
-    top: 80px;
+    top: 0;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.95);
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 20px 0;
-    transform: translateY(-150%);
-    transition: transform 0.4s ease;
-    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 1000;
   }
 
   .nav-links.active {
-    transform: translateY(0);
+    transform: translateX(0);
+  }
+
+  .nav-links li {
+    margin: 20px 0;
   }
 
   .dropdown-content {
@@ -807,7 +731,7 @@ nav {
 
 /* Blockchain Networks Section */
 .blockchain-networks {
-  padding: 10px 0;
+  padding: 5px 0;
   background: rgba(0, 0, 0, 1);
   backdrop-filter: blur(10px);
   position: relative;
@@ -816,7 +740,7 @@ nav {
 
 .blockchain-networks h2 {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: .5rem;
   background: linear-gradient(45deg, #00d4ff, #ff00ff);
   -webkit-background-clip: text;
@@ -826,11 +750,11 @@ nav {
 
 .section-subtitle {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.8);
   max-width: 800px;
-  margin: 0 auto 2rem auto;
-  line-height: 1.6;
+  margin: 0 auto 1rem auto;
+  line-height: 1.1;
 }
 
 /* Scrolling Container with Gradient Fade */
@@ -895,7 +819,7 @@ nav {
 
 /* Blockchain Cards */
 .blockchain-card {
-  width: 210px;
+  width: 200px;
   height: 100px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(15px);
@@ -950,7 +874,7 @@ nav {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  gap: 1rem;
+  gap: .1rem;
 }
 
 .blockchain-logo {
@@ -1121,7 +1045,7 @@ nav {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: .2rem;
+  padding: .5rem;
   text-align: center;
   position: relative;
   transition: all 0.3s ease;
@@ -1134,8 +1058,8 @@ nav {
 }
 
 .phase-number {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: linear-gradient(45deg, #00d4ff, #ff00ff);
   color: white;
@@ -1144,19 +1068,19 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto rem auto;
+  margin: 5px auto ;
 }
 
 .phase-card h4 {
   color: white;
   font-size: 1.3rem;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 
 .phase-card p {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .phase-timeline {
@@ -1176,7 +1100,7 @@ nav {
   }
   
   .blockchain-networks h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   
   .section-subtitle {
