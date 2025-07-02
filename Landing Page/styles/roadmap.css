@@ -428,7 +428,7 @@
 .roadmap-navigation {
   position: fixed;
   top: 50%;
-  right: 134px;
+  right: 80px;
   transform: translateY(-50%);
   z-index: 100;
   display: flex;
@@ -532,7 +532,7 @@
 /* Progress indicator */
 .roadmap-progress {
   position: fixed;
-  right: 70px;
+  right: 40px;
   top: 55%;
   transform: translateY(-50%);
   width: 10px;
@@ -561,7 +561,7 @@
 /* Card counter display */
 .roadmap-counter {
   position: fixed;
-  right: 128px;
+  right: 70px;
   bottom: 220px;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);

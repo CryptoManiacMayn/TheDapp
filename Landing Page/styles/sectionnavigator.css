@@ -2,7 +2,7 @@
 .section-nav-buttons {
     position: fixed;
     bottom: 30px;
-    right: 105px;
+    right: 50px;
     display: flex;
     gap: 10px;
     z-index: 1000;

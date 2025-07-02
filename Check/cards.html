@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDEX - AI-Powered Decentralized Finance Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        :root {
+            --primary: #6e45e2;
+            --secondary: #88d3ce;
+            --dark: #1a1a2e;
+            --light: #f5f5f7;
+            --accent: #ff6b6b;
+            --ai-blue: #00c8ff;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .ai-dex-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .section-header h2 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, var(--primary), var(--ai-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-header p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .platform-description {
+            background: rgba(0, 200, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            backdrop-filter: blur(5px);
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 350px;
+            z-index: 2;
+        }
+        
+        .platform-description h3 {
+            color: var(--ai-blue);
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .ai-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 420px;
+        }
+        
+        .ai-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--ai-blue);
+        }
+        
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--ai-blue));
+        }
+        
+        .ai-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .ai-card .card-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--ai-blue);
+            font-weight: 500;
+        }
+        
+        .ai-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .ai-card .card-footer {
+            font-style: italic;
+            color: var(--ai-blue);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            background: rgba(0, 200, 255, 0.15);
+            color: var(--ai-blue);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+        }
+        
+        .tech-tags {
+            margin: 1.5rem 0;
+        }
+        
+        .card-3d-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 1;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 2;
+            margin-top: 100px;
+        }
+        
+        .ai-pill {
+            display: inline-block;
+            background: rgba(0, 200, 255, 0.15);
+            color: var(--ai-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+        }
+
+        @media (max-width: 1200px) {
+            .platform-description {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: auto;
+                margin: 2rem auto;
+                max-width: 800px;
+            }
+            
+            .cards-container {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="ai-dex-section">
+        <div class="section-header">
+            <h2>AI-Optimized Decentralized Finance</h2>
+            <p>NeuroDEX combines advanced AI with decentralized architecture to deliver intelligent trading, automated portfolio management, and secure network participation.</p>
+        </div>
+        
+        <div class="platform-description">
+            <h3>AI-Powered DeFi Infrastructure</h3>
+            <p>Access decentralized finance tools enhanced with neural networks. Our non-custodial platform enables intelligent crypto trading, optimized network participation, and AI-driven portfolio management while maintaining full user control.</p>
+            <span class="ai-pill">AI Liquidity Routing</span>
+            <span class="ai-pill">Predictive Risk Analysis</span>
+            <span class="ai-pill">Neural Order Matching</span>
+            <span class="ai-pill">Smart Portfolio Rebalancing</span>
+        </div>
+        
+        <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="ai-card">
+                <div id="card1-3d" class="card-3d-container"></div>
+                <div class="card-content">
+                    <h3>Neural Exchange</h3>
+                    <div class="card-subtitle">AI-Optimized Trading</div>
+                    <p>Our deep learning algorithms analyze market patterns in real-time to execute trades at optimal moments, automatically adjusting slippage tolerance and routing through the most efficient liquidity pools.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Reinforcement Learning</span>
+                        <span class="tech-tag">LSTM Networks</span>
+                        <span class="tech-tag">MEV Protection</span>
+                    </div>
+                    <div class="card-footer">AI that learns market microstructure to your advantage</div>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="ai-card">
+                <div id="card2-3d" class="card-3d-container"></div>
+                <div class="card-content">
+                    <h3>Autonomous Vaults</h3>
+                    <div class="card-subtitle">Self-Optimizing Yield</div>
+                    <p>AI-managed vaults that continuously rebalance across DeFi protocols based on real-time risk/reward analysis, automatically shifting strategies as market conditions change.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Genetic Algorithms</span>
+                        <span class="tech-tag">Risk Oracles</span>
+                        <span class="tech-tag">Auto-Compounding</span>
+                    </div>
+                    <div class="card-footer">Set your financial goals and let the AI do the work</div>
+                </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="ai-card">
+                <div id="card3-3d" class="card-3d-container"></div>
+                <div class="card-content">
+                    <h3>Sentinel Network</h3>
+                    <div class="card-subtitle">AI-Powered Security</div>
+                    <p>Neural networks monitor all transactions for anomalous patterns, predicting and preventing exploits before they occur while maintaining complete decentralization.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Anomaly Detection</span>
+                        <span class="tech-tag">Graph Neural Nets</span>
+                        <span class="tech-tag">ZK Proofs</span>
+                    </div>
+                    <div class="card-footer">Security that evolves faster than threats emerge</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize all 3D scenes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Card 1 - Neural Network visualization
+            init3DScene('card1-3d', {
+                type: 'neural',
+                color: 0x00c8ff,
+                wireframe: true,
+                rotationSpeed: 0.005,
+                pulsate: true
+            });
+            
+            // Card 2 - DNA-like structure for autonomous systems
+            init3DScene('card2-3d', {
+                type: 'dna',
+                color: 0x6e45e2,
+                wireframe: false,
+                rotationSpeed: -0.003,
+                pulsate: false
+            });
+            
+            // Card 3 - Shield/security visualization
+            init3DScene('card3-3d', {
+                type: 'shield',
+                color: 0xff6b6b,
+                wireframe: false,
+                rotationSpeed: 0.004,
+                pulsate: true
+            });
+        });
+
+        function init3DScene(containerId, options) {
+            const container = document.getElementById(containerId);
+            
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Create geometry based on type
+            let mesh;
+            switch(options.type) {
+                case 'neural':
+                    const sphereGeometry = new THREE.SphereGeometry(1.3, 12, 12);
+                    const sphereMaterial = new THREE.MeshBasicMaterial({ 
+                        color: options.color,
+                        wireframe: true,
+                        transparent: true,
+                        opacity: 0.7
+                    });
+                    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                    
+                    const lineMaterial = new THREE.LineBasicMaterial({ color: options.color, transparent: true, opacity: 0.4 });
+                    const nodes = [];
+                    for (let i = 0; i < 20; i++) {
+                        nodes.push(new THREE.Vector3(
+                            (Math.random() - 0.5) * 2.5,
+                            (Math.random() - 0.5) * 2.5,
+                            (Math.random() - 0.5) * 2.5
+                        ));
+                    }
+                    
+                    for (let i = 0; i < nodes.length; i++) {
+                        for (let j = 0; j < 3; j++) {
+                            const targetIndex = Math.floor(Math.random() * nodes.length);
+                            if (targetIndex !== i) {
+                                const lineGeometry = new THREE.BufferGeometry().setFromPoints([nodes[i], nodes[targetIndex]]);
+                                const line = new THREE.Line(lineGeometry, lineMaterial);
+                                sphere.add(line);
+                            }
+                        }
+                    }
+                    
+                    mesh = sphere;
+                    scene.add(mesh);
+                    break;
+                    
+                case 'dna':
+                    const curve = new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(0, 1, 0),
+                        new THREE.Vector3(0.5, 0.5, 0.5),
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(-0.5, -0.5, 0.5),
+                        new THREE.Vector3(0, -1, 0)
+                    ]);
+                    
+                    const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.05, 8, false);
+                    const tubeMaterial = new THREE.MeshBasicMaterial({ 
+                        color: options.color,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    const tube1 = new THREE.Mesh(tubeGeometry, tubeMaterial);
+                    const tube2 = tube1.clone();
+                    tube2.rotation.y = Math.PI;
+                    
+                    const dnaGroup = new THREE.Group();
+                    dnaGroup.add(tube1);
+                    dnaGroup.add(tube2);
+                    
+                    const rungMaterial = new THREE.MeshBasicMaterial({ color: 0x88d3ce });
+                    for (let i = -1; i <= 1; i += 0.1) {
+                        const rungGeometry = new THREE.BoxGeometry(0.05, 0.05, 0.8);
+                        const rung = new THREE.Mesh(rungGeometry, rungMaterial);
+                        rung.position.y = i;
+                        dnaGroup.add(rung);
+                    }
+                    
+                    mesh = dnaGroup;
+                    scene.add(mesh);
+                    break;
+                    
+                case 'shield':
+                    const shieldGeometry = new THREE.DodecahedronGeometry(1.3, 0);
+                    const shieldMaterial = new THREE.MeshBasicMaterial({ 
+                        color: options.color,
+                        wireframe: false,
+                        transparent: true,
+                        opacity: 0.7
+                    });
+                    const shield = new THREE.Mesh(shieldGeometry, shieldMaterial);
+                    
+                    const ringGeometry = new THREE.TorusGeometry(1.5, 0.03, 16, 32);
+                    const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+                    for (let i = 0; i < 3; i++) {
+                        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                        ring.rotation.x = Math.PI / 2;
+                        ring.position.y = i * 0.5 - 0.5;
+                        shield.add(ring);
+                    }
+                    
+                    mesh = shield;
+                    scene.add(mesh);
+                    break;
+            }
+            
+            camera.position.z = 4;
+            
+            let pulseDirection = 1;
+            let scale = 1;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                mesh.rotation.x += options.rotationSpeed;
+                mesh.rotation.y += options.rotationSpeed;
+                
+                if (options.pulsate) {
+                    scale += 0.005 * pulseDirection;
+                    if (scale > 1.2) pulseDirection = -1;
+                    if (scale < 0.8) pulseDirection = 1;
+                    mesh.scale.set(scale, scale, scale);
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            window.addEventListener('resize', function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+            
+            animate();
+        }
+    </script>
+</body>
+</html>

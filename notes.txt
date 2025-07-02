@@ -17,3 +17,59 @@ Governor Contracts OZ: https://docs.openzeppelin.com/contracts/4.x/api/governanc
 Discord
 Commonwealth
 https://www.discourse.org/
+
+
+DeepSeek
+AI-Integrated DEX with MEV Protection
+
+
+
+    <!-- Add this sidebar HTML right after the opening <body> tag -->
+    <div id="oec-stats-sidebar" class="oec-sidebar">
+      <div class="oec-sidebar-header">
+        <div class="oec-coin-logo">
+          <div class="oec-logo-circle">OEC</div>
+        </div>
+        <h3 class="oec-coin-name"></h3>
+        <span class="oec-coin-symbol"></span>
+      </div>
+
+      <div class="oec-stats-container">
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">Price</div>
+          <div class="oec-stat-value" id="oec-price">$24.87</div>
+        </div>
+
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">24h Change</div>
+          <div class="oec-stat-value oec-positive" id="oec-change">+12.4%</div>
+        </div>
+
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">Total Value Locked</div>
+          <div class="oec-stat-value" id="oec-tvl">$847.2M</div>
+        </div>
+
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">Circulating Supply</div>
+          <div class="oec-stat-value" id="oec-supply">158.7M OEC</div>
+        </div>
+
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">Staking Rewards</div>
+          <div class="oec-stat-value" id="oec-rewards">$12.8M</div>
+        </div>
+
+        <div class="oec-stat-item">
+          <div class="oec-stat-label">Market Cap</div>
+          <div class="oec-stat-value" id="oec-marketcap">$3.95B</div>
+        </div>
+      </div>
+
+      <div class="oec-sidebar-footer">
+        <div class="oec-live-indicator">
+          <div class="oec-pulse"></div>
+          <span>Live Data</span>
+        </div>
+      </div>
+    </div>

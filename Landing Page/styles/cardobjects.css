@@ -1,88 +1,114 @@
-    /* Updated CSS for your features section with 3D objects */
-        .features {
-            min-height: 100vh;
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
+/* Updated CSS for your features section with 3D objects */
+.features {
+  min-height: 100vh;
+  padding: 100px 0;
+  background: linear-gradient(45deg, #000000, #221053);
+  backdrop-filter: blur(10px);
+}
 
-        .features h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+.features h1 {
+  font-size: 2rem;
+  text-align: center; 
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #88d3ce, #6e45e2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-        .features h3 {
-            color: white;
-            margin-bottom: 1rem;
-        }
+.features h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #88d3ce, #6e45e2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-        .features p {
-            color: rgba(255, 255, 255, 0.8);
-        }
+.features h3 {
+  color: white;
+  margin-bottom: 0.8rem;
+}
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
+.features p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: .85rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
 
-        .feature-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 212, 255, 0.1),
-                transparent
-            );
-            transition: left 0.5s ease;
-        }
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
 
-        .feature-card:hover::before {
-            left: 100%;
-        }
+  border-radius: 16px;
+  padding: 0.75rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: #00d4ff;
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
-        }
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
 
-        /* NEW: 3D Service Icon Container */
-        .service-3d-icon {
-            width: 100%;
-            height: 120px;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
+.feature-card:hover::before {
+  left: 100%;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: #00d4ff;
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+}
 
-        }
+/* NEW: 3D Service Icon Container */
+.service-3d-icon {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 0.55rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tech-tag {
+  display: inline-block;
+  background-color: #ff00fb;
+  color: var(--secondary);
+  padding: 0.3rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.2rem;
+  opacity: 0.8; 
+}
+
+.tech-tags {
+  margin: 1rem 0;
+}

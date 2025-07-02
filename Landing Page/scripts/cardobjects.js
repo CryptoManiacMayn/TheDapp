@@ -68,16 +68,16 @@ function createServiceObject(config) {
   let geometry;
   switch (objectType) {
     case "icosahedron":
-      geometry = new THREE.IcosahedronGeometry(1.0, 0);
+      geometry = new THREE.IcosahedronGeometry(2, 0);
       break;
     case "torusKnot":
-      geometry = new THREE.TorusKnotGeometry(0.6, 0.25, 64, 16);
+      geometry = new THREE.TorusKnotGeometry(2, 0.25, 64, 16);
       break;
     case "dodecahedron":
       geometry = new THREE.DodecahedronGeometry(0.9, 0);
       break;
     case "octahedron":
-      geometry = new THREE.OctahedronGeometry(1.1, 0);
+      geometry = new THREE.OctahedronGeometry(2, 0);
       break;
     case "tetrahedron":
       geometry = new THREE.TetrahedronGeometry(1.2, 0);
@@ -139,13 +139,13 @@ const serviceConfigs = [
   {
     containerId: "service-security-icon",
     objectType: "octahedron", // Sharp, protective form
-    color: 0x00ff88, // Green for security
+    color: 0xff6b9d, // Green for security
     rotationSpeed: { x: 0.004, y: 0.006, z: 0.003 },
   },
   {
     containerId: "service-speed-icon",
     objectType: "icosahedron", // Dynamic multi-faceted form
-    color: 0x00d4ff, // Cyan for speed
+    color: 0xff6b9d, // Cyan for speed
     rotationSpeed: { x: 0.008, y: 0.012, z: 0.005 }, // Faster rotation
   },
   {

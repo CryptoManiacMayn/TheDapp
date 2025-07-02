@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Protocol Dashboard</title>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --positive: #38a169;
+            --negative: #e53e3e;
+            --warning: #dd6b20;
+            --health-good: #f0fff4;
+            --health-warning: #fffaf0;
+            --health-danger: #fff5f5;
+            --proxy-bg: #ebf8ff;
+        }
+
+        .dark-mode {
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --border-color: #4a5568;
+            --health-good: #22543d;
+            --health-warning: #7b341e;
+            --health-danger: #742a2a;
+            --proxy-bg: #2c5282;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .header-info h1 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .header-info p {
+            margin: 5px 0 0;
+            color: var(--text-secondary);
+        }
+
+        .tvl {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .tvl-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .tvl-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select, button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-box {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Portfolio Items */
+        .portfolio-section {
+            margin-bottom: 30px;
+        }
+
+        .portfolio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .portfolio-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .portfolio-value {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .portfolio-item {
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .item-stats {
+            text-align: right;
+        }
+
+        .stat-value {
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Token Lists */
+        .token-list {
+            margin-top: 15px;
+        }
+
+        .token-list-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .token-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .token-logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .token-info {
+            flex-grow: 1;
+        }
+
+        .token-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .token-symbol {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .token-amount {
+            text-align: right;
+        }
+
+        .token-value {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .token-price {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Health Rate */
+        .health-rate {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .health-rate.good {
+            background-color: var(--health-good);
+            color: var(--positive);
+        }
+
+        .health-rate.warning {
+            background-color: var(--health-warning);
+            color: var(--warning);
+        }
+
+        .health-rate.danger {
+            background-color: var(--health-danger);
+            color: var(--negative);
+        }
+
+        /* Proxy Info */
+        .proxy-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--proxy-bg);
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .proxy-logo {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .proxy-text {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        /* Color Classes */
+        .net-positive {
+            color: var(--positive);
+        }
+
+        .net-negative {
+            color: var(--negative);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tvl {
+                margin-left: 0;
+                margin-top: 15px;
+                text-align: left;
+            }
+
+            .chart-box {
+                min-width: 100%;
+            }
+
+            .item-stats {
+                text-align: left;
+                margin-top: 10px;
+            }
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://static.debank.com/image/project/logo_url/compound/0b792243f1f68e9ed082f5a49ee6f21d.png" alt="Compound Logo" class="logo">
+        <div class="header-info">
+            <h1>Compound</h1>
+            <p>Ethereum • <a href="https://app.compound.finance" target="_blank">app.compound.finance</a></p>
+        </div>
+        <div class="tvl">
+            <div class="tvl-value">$12.76B</div>
+            <div class="tvl-label">Total Value Locked</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <div class="filter-group">
+            <select id="filter-type">
+                <option value="all">All Types</option>
+                <option value="lending">Lending</option>
+                <option value="reward">Rewards</option>
+            </select>
+            <select id="filter-status">
+                <option value="all">All Statuses</option>
+                <option value="positive">Positive Balance</option>
+                <option value="negative">Negative Balance</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <button id="sort-value">
+                <i class="fas fa-sort-amount-down"></i> Sort by Value
+            </button>
+            <button id="sort-name">
+                <i class="fas fa-sort-alpha-down"></i> Sort by Name
+            </button>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-container">
+        <h2>Portfolio Overview</h2>
+        <div class="chart-row">
+            <div class="chart-box">
+                <canvas id="assetDebtChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="tokenDistributionChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-box">
+                <canvas id="netValueChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="healthRateChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Section -->
+    <div class="portfolio-section">
+        <div class="portfolio-header">
+            <div class="portfolio-title">Your Positions</div>
+            <div class="portfolio-value">$9.55</div>
+        </div>
+
+        <div id="portfolio-items">
+            <!-- Portfolio items will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <script>
+        const data = {
+            "id": "compound",
+            "chain": "eth",
+            "name": "Compound",
+            "site_url": "https://app.compound.finance",
+            "logo_url": "https://static.debank.com/image/project/logo_url/compound/0b792243f1f68e9ed082f5a49ee6f21d.png",
+            "has_supported_portfolio": true,
+            "tvl": 12763095483.420198,
+            "portfolio_item_list": [
+                {
+                    "stats": {
+                        "asset_usd_value": 3.1936420758652284,
+                        "debt_usd_value": 0.0000030267553188504803,
+                        "net_usd_value": 3.1936390491099096
+                    },
+                    "update_at": 1639643327.1661053,
+                    "name": "Lending",
+                    "detail_types": ["lending"],
+                    "detail": {
+                        "supply_token_list": [
+                            {
+                                "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                                "chain": "eth",
+                                "name": "Dai Stablecoin",
+                                "symbol": "DAI",
+                                "display_symbol": null,
+                                "optimized_symbol": "DAI",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0x6b175474e89094c44da98b954eedeac495271d0f/549c4205dbb199f1b8b03af783f35e71.png",
+                                "protocol_id": "makerdao",
+                                "price": 1,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1573672677,
+                                "amount": 2.1778000124879227,
+                                "is_collateral": true
+                            },
+                            {
+                                "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                                "chain": "eth",
+                                "name": "USD Coin",
+                                "symbol": "USDC",
+                                "display_symbol": null,
+                                "optimized_symbol": "USDC",
+                                "decimals": 6,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48/adee072b10b0db7c5bd7a28dd4fbe96f.png",
+                                "protocol_id": "",
+                                "price": 1,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1533324504,
+                                "amount": 1.0158420633773058,
+                                "is_collateral": true
+                            }
+                        ],
+                        "borrow_token_list": [
+                            {
+                                "id": "eth",
+                                "chain": "eth",
+                                "name": "ETH",
+                                "symbol": "ETH",
+                                "display_symbol": null,
+                                "optimized_symbol": "ETH",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/token/logo_url/eth/935ae4e4d1d12d59a99717a24f2540b5.png",
+                                "protocol_id": "",
+                                "price": 4021.66,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1483200000,
+                                "amount": 7.52613428e-10
+                            }
+                        ],
+                        "health_rate": 844109.745105694
+                    },
+                    "proxy_detail": {}
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 0.20412694047971483,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 0.20412694047971483
+                    },
+                    "update_at": 1639643327.1773217,
+                    "name": "Rewards",
+                    "detail_types": ["reward"],
+                    "detail": {
+                        "token_list": [
+                            {
+                                "id": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+                                "chain": "eth",
+                                "name": "Compound",
+                                "symbol": "COMP",
+                                "display_symbol": null,
+                                "optimized_symbol": "COMP",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0xc00e94cb662c3520282e6f5717214004a7f26888/dd174d3d7083fa027a433dc50edaf0bc.png",
+                                "protocol_id": "compound",
+                                "price": 194.64263022881642,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1583280535,
+                                "amount": 0.001048726788369788
+                            }
+                        ]
+                    },
+                    "proxy_detail": {}
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 4.0234347279462925,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 4.0234347279462925
+                    },
+                    "update_at": 1639643326.9171333,
+                    "name": "Lending",
+                    "detail_types": ["lending"],
+                    "detail": {
+                        "supply_token_list": [
+                            {
+                                "id": "eth",
+                                "chain": "eth",
+                                "name": "ETH",
+                                "symbol": "ETH",
+                                "display_symbol": null,
+                                "optimized_symbol": "ETH",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/token/logo_url/eth/935ae4e4d1d12d59a99717a24f2540b5.png",
+                                "protocol_id": "",
+                                "price": 4021.66,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1483200000,
+                                "amount": 0.0010004412923882906,
+                                "is_collateral": true
+                            }
+                        ],
+                        "borrow_token_list": [],
+                        "health_rate": null
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "instadapp",
+                            "name": "Instadapp",
+                            "site_url": "https://instadapp.io",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/instadapp/0f6a25368dce3552364b43a29cbc1586.png"
+                        },
+                        "proxy_contract_id": "0x45593df3bfa53ee18baec198b9954f0b918cfc40"
+                    }
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 0.0011735055758092564,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 0.0011735055758092564
+                    },
+                    "update_at": 1639643326.9288304,
+                    "name": "Rewards",
+                    "detail_types": ["reward"],
+                    "detail": {
+                        "token_list": [
+                            {
+                                "id": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+                                "chain": "eth",
+                                "name": "Compound",
+                                "symbol": "COMP",
+                                "display_symbol": null,
+                                "optimized_symbol": "COMP",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0xc00e94cb662c3520282e6f5717214004a7f26888/dd174d3d7083fa027a433dc50edaf0bc.png",
+                                "protocol_id": "compound",
+                                "price": 194.64263022881642,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1583280535,
+                                "amount": 0.000006029026500668
+                            }
+                        ]
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "instadapp",
+                            "name": "Instadapp",
+                            "site_url": "https://instadapp.io",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/instadapp/0f6a25368dce3552364b43a29cbc1586.png"
+                        },
+                        "proxy_contract_id": "0x45593df3bfa53ee18baec198b9954f0b918cfc40"
+                    }
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 2.1289871979769353,
+                        "debt_usd_value": 1.3024714991314075,
+                        "net_usd_value": 0.8265156988455278
+                    },
+                    "update_at": 1639643327.0022216,
+                    "name": "Lending",
+                    "detail_types": ["lending"],
+                    "detail": {
+                        "supply_token_list": [
+                            {
+                                "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                                "chain": "eth",
+                                "name": "Dai Stablecoin",
+                                "symbol": "DAI",
+                                "display_symbol": null,
+                                "optimized_symbol": "DAI",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0x6b175474e89094c44da98b954eedeac495271d0f/549c4205dbb199f1b8b03af783f35e71.png",
+                                "protocol_id": "makerdao",
+                                "price": 1,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1573672677,
+                                "amount": 2.1289871979769353,
+                                "is_collateral": true
+                            }
+                        ],
+                        "borrow_token_list": [
+                            {
+                                "id": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+                                "chain": "eth",
+                                "name": "Basic Attention Token",
+                                "symbol": "BAT",
+                                "display_symbol": null,
+                                "optimized_symbol": "BAT",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0x0d8775f648430679a709e98d2b0cb6250d2887ef/c5913bbde8a620ce2a47d8c4694e7dbb.png",
+                                "protocol_id": "",
+                                "price": 1.1651,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1496083510,
+                                "amount": 1.117905329269082
+                            }
+                        ],
+                        "health_rate": 1.3076599061993848
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "instadapp",
+                            "name": "Instadapp",
+                            "site_url": "https://instadapp.io",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/instadapp/0f6a25368dce3552364b43a29cbc1586.png"
+                        },
+                        "proxy_contract_id": "0xecfcdfc4cf022e6e2cf390ae06bd1eee9ccb965d"
+                    }
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 0.09909788513640833,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 0.09909788513640833
+                    },
+                    "update_at": 1639643327.0104644,
+                    "name": "Rewards",
+                    "detail_types": ["reward"],
+                    "detail": {
+                        "token_list": [
+                            {
+                                "id": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+                                "chain": "eth",
+                                "name": "Compound",
+                                "symbol": "COMP",
+                                "display_symbol": null,
+                                "optimized_symbol": "COMP",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0xc00e94cb662c3520282e6f5717214004a7f26888/dd174d3d7083fa027a433dc50edaf0bc.png",
+                                "protocol_id": "compound",
+                                "price": 194.64263022881642,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1583280535,
+                                "amount": 0.000509127342863748
+                            }
+                        ]
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "instadapp",
+                            "name": "Instadapp",
+                            "site_url": "https://instadapp.io",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/instadapp/0f6a25368dce3552364b43a29cbc1586.png"
+                        },
+                        "proxy_contract_id": "0xecfcdfc4cf022e6e2cf390ae06bd1eee9ccb965d"
+                    }
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 1.0768181423571452,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 1.0768181423571452
+                    },
+                    "update_at": 1639643327.0933123,
+                    "name": "Lending",
+                    "detail_types": ["lending"],
+                    "detail": {
+                        "supply_token_list": [
+                            {
+                                "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                                "chain": "eth",
+                                "name": "Dai Stablecoin",
+                                "symbol": "DAI",
+                                "display_symbol": null,
+                                "optimized_symbol": "DAI",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0x6b175474e89094c44da98b954eedeac495271d0f/549c4205dbb199f1b8b03af783f35e71.png",
+                                "protocol_id": "makerdao",
+                                "price": 1,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1573672677,
+                                "amount": 1.0768181423571452,
+                                "is_collateral": false
+                            }
+                        ],
+                        "borrow_token_list": [],
+                        "health_rate": null
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "makerdao",
+                            "name": "Maker",
+                            "site_url": "https://oasis.app",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/makerdao/3821328c7c6d5ac4fc87e2c2e4d1c684.png"
+                        },
+                        "proxy_contract_id": "0x47b9a12e33ea26d583f56e7b53cabe89cc2a1212"
+                    }
+                },
+                {
+                    "stats": {
+                        "asset_usd_value": 0.04932694529757137,
+                        "debt_usd_value": 0,
+                        "net_usd_value": 0.04932694529757137
+                    },
+                    "update_at": 1639643327.1036785,
+                    "name": "Rewards",
+                    "detail_types": ["reward"],
+                    "detail": {
+                        "token_list": [
+                            {
+                                "id": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+                                "chain": "eth",
+                                "name": "Compound",
+                                "symbol": "COMP",
+                                "display_symbol": null,
+                                "optimized_symbol": "COMP",
+                                "decimals": 18,
+                                "logo_url": "https://static.debank.com/image/eth_token/logo_url/0xc00e94cb662c3520282e6f5717214004a7f26888/dd174d3d7083fa027a433dc50edaf0bc.png",
+                                "protocol_id": "compound",
+                                "price": 194.64263022881642,
+                                "is_verified": true,
+                                "is_core": true,
+                                "is_wallet": true,
+                                "time_at": 1583280535,
+                                "amount": 0.00025342313366596
+                            }
+                        ]
+                    },
+                    "proxy_detail": {
+                        "project": {
+                            "id": "makerdao",
+                            "name": "Maker",
+                            "site_url": "https://oasis.app",
+                            "logo_url": "https://static.debank.com/image/project/logo_url/makerdao/3821328c7c6d5ac4fc87e2c2e4d1c684.png"
+                        },
+                        "proxy_contract_id": "0x47b9a12e33ea26d583f56e7b53cabe89cc2a1212"
+                    }
+                }
+            ]
+        };
+
+        // Utility Functions
+        function formatUSD(value) {
+            return '$' + value.toFixed(2);
+        }
+
+        function formatLargeNumber(value) {
+            if (value >= 1000000000) {
+                return '$' + (value / 1000000000).toFixed(2) + 'B';
+            }
+            if (value >= 1000000) {
+                return '$' + (value / 1000000).toFixed(2) + 'M';
+            }
+            if (value >= 1000) {
+                return '$' + (value / 1000).toFixed(2) + 'K';
+            }
+            return '$' + value.toFixed(2);
+        }
+
+        function formatTokenAmount(amount, decimals) {
+            if (amount < 0.0001 && amount > 0) {
+                return '<0.0001';
+            }
+            return amount.toFixed(4);
+        }
+
+        function getHealthRateClass(healthRate) {
+            if (!healthRate) return '';
+            if (healthRate > 2) return 'good';
+            if (healthRate > 1.5) return 'warning';
+            return 'danger';
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#darkModeToggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+            updateChartThemes();
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('#darkModeToggle i').classList.remove('fa-moon');
+            document.querySelector('#darkModeToggle i').classList.add('fa-sun');
+        }
+
+        // Initialize Charts
+        let assetDebtChart, tokenDistributionChart, netValueChart, healthRateChart;
+
+        function updateChartThemes() {
+            const isDark = document.body.classList.contains('dark-mode');
+            const textColor = isDark ? '#f7fafc' : '#2d3748';
+            const gridColor = isDark ? '#4a5568' : '#e2e8f0';
+            const bgColor = isDark ? '#2d3748' : '#ffffff';
+
+            const charts = [assetDebtChart, tokenDistributionChart, netValueChart, healthRateChart];
+            charts.forEach(chart => {
+                if (chart) {
+                    chart.options.scales.x.grid.color = gridColor;
+                    chart.options.scales.x.ticks.color = textColor;
+                    chart.options.scales.y.grid.color = gridColor;
+                    chart.options.scales.y.ticks.color = textColor;
+                    chart.options.plugins.legend.labels.color = textColor;
+                    chart.update();
+                }
+            });
+        }
+
+        function renderCharts() {
+            // Prepare data for charts
+            const assets = data.portfolio_item_list.reduce((sum, item) => sum + item.stats.asset_usd_value, 0);
+            const debts = data.portfolio_item_list.reduce((sum, item) => sum + item.stats.debt_usd_value, 0);
+            const netValues = data.portfolio_item_list.map(item => item.stats.net_usd_value);
+            const itemNames = data.portfolio_item_list.map(item => item.name);
+            const healthRates = data.portfolio_item_list.filter(item => item.detail.health_rate).map(item => item.detail.health_rate);
+            const healthRateItems = data.portfolio_item_list.filter(item => item.detail.health_rate).map(item => item.name);
+
+            // Token distribution data
+            const tokenMap = new Map();
+            data.portfolio_item_list.forEach(item => {
+                if (item.detail.supply_token_list) {
+                    item.detail.supply_token_list.forEach(token => {
+                        const value = token.amount * token.price;
+                        if (tokenMap.has(token.symbol)) {
+                            tokenMap.set(token.symbol, tokenMap.get(token.symbol) + value);
+                        } else {
+                            tokenMap.set(token.symbol, value);
+                        }
+                    });
+                }
+                if (item.detail.borrow_token_list) {
+                    item.detail.borrow_token_list.forEach(token => {
+                        const value = token.amount * token.price;
+                        if (tokenMap.has(token.symbol)) {
+                            tokenMap.set(token.symbol, tokenMap.get(token.symbol) + value);
+                        } else {
+                            tokenMap.set(token.symbol, value);
+                        }
+                    });
+                }
+                if (item.detail.token_list) {
+                    item.detail.token_list.forEach(token => {
+                        const value = token.amount * token.price;
+                        if (tokenMap.has(token.symbol)) {
+                            tokenMap.set(token.symbol, tokenMap.get(token.symbol) + value);
+                        } else {
+                            tokenMap.set(token.symbol, value);
+                        }
+                    });
+                }
+            });
+
+            const tokenLabels = Array.from(tokenMap.keys());
+            const tokenValues = Array.from(tokenMap.values());
+
+            // Asset vs Debt Chart
+            const assetDebtCtx = document.getElementById('assetDebtChart').getContext('2d');
+            assetDebtChart = new Chart(assetDebtCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Assets', 'Debt'],
+                    datasets: [{
+                        data: [assets, debts],
+                        backgroundColor: ['#38a169', '#e53e3e'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Assets vs Debt',
+                            color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Token Distribution Chart
+            const tokenDistCtx = document.getElementById('tokenDistributionChart').getContext('2d');
+            tokenDistributionChart = new Chart(tokenDistCtx, {
+                type: 'pie',
+                data: {
+                    labels: tokenLabels,
+                    datasets: [{
+                        data: tokenValues,
+                        backgroundColor: [
+                            '#4299e1', '#9f7aea', '#ed64a6', '#f56565', 
+                            '#f6ad55', '#68d391', '#4fd1c5', '#63b3ed'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Token Distribution',
+                            color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Net Value Chart
+            const netValueCtx = document.getElementById('netValueChart').getContext('2d');
+            netValueChart = new Chart(netValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: itemNames,
+                    datasets: [{
+                        label: 'Net Value',
+                        data: netValues,
+                        backgroundColor: netValues.map(value => 
+                            value >= 0 ? 'rgba(56, 161, 105, 0.7)' : 'rgba(229, 62, 62, 0.7)'
+                        ),
+                        borderColor: netValues.map(value => 
+                            value >= 0 ? 'rgba(56, 161, 105, 1)' : 'rgba(229, 62, 62, 1)'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Net Value by Position',
+                            color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary'),
+                                callback: function(value) {
+                                    return formatUSD(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Health Rate Chart
+            if (healthRates.length > 0) {
+                const healthRateCtx = document.getElementById('healthRateChart').getContext('2d');
+                healthRateChart = new Chart(healthRateCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: healthRateItems,
+                        datasets: [{
+                            label: 'Health Rate',
+                            data: healthRates,
+                            backgroundColor: healthRates.map(rate => {
+                                if (rate > 2) return 'rgba(56, 161, 105, 0.7)';
+                                if (rate > 1.5) return 'rgba(221, 107, 32, 0.7)';
+                                return 'rgba(229, 62, 62, 0.7)';
+                            }),
+                            borderColor: healthRates.map(rate => {
+                                if (rate > 2) return 'rgba(56, 161, 105, 1)';
+                                if (rate > 1.5) return 'rgba(221, 107, 32, 1)';
+                                return 'rgba(229, 62, 62, 1)';
+                            }),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Health Rates',
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                                },
+                                ticks: {
+                                    color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                                },
+                                ticks: {
+                                    color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Filter and Sort Functionality
+        function filterAndSortPortfolio() {
+            const typeFilter = document.getElementById('filter-type').value;
+            const statusFilter = document.getElementById('filter-status').value;
+            const sortBy = document.querySelector('.sort-active')?.id || 'sort-value';
+            const ascending = document.querySelector('.sort-active')?.dataset.asc === 'true';
+
+            let filteredItems = [...data.portfolio_item_list];
+
+            // Apply type filter
+            if (typeFilter !== 'all') {
+                filteredItems = filteredItems.filter(item => 
+                    item.detail_types.includes(typeFilter)
+                );
+            }
+
+            // Apply status filter
+            if (statusFilter !== 'all') {
+                filteredItems = filteredItems.filter(item => 
+                    statusFilter === 'positive' ? item.stats.net_usd_value >= 0 : item.stats.net_usd_value < 0
+                );
+            }
+
+            // Apply sorting
+            if (sortBy === 'sort-value') {
+                filteredItems.sort((a, b) => 
+                    ascending ? 
+                    a.stats.net_usd_value - b.stats.net_usd_value : 
+                    b.stats.net_usd_value - a.stats.net_usd_value
+                );
+            } else {
+                filteredItems.sort((a, b) => {
+                    const nameA = a.name.toUpperCase();
+                    const nameB = b.name.toUpperCase();
+                    return ascending ? 
+                        (nameA < nameB ? -1 : 1) : 
+                        (nameA > nameB ? -1 : 1);
+                });
+            }
+
+            // Render filtered items
+            renderPortfolioItems(filteredItems);
+        }
+
+        // Portfolio Item Rendering
+        function renderPortfolioItems(items = data.portfolio_item_list) {
+            const container = document.getElementById('portfolio-items');
+            container.innerHTML = '';
+            
+            let totalNetValue = 0;
+            
+            items.forEach(item => {
+                totalNetValue += item.stats.net_usd_value;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'portfolio-item';
+                
+                // Item header
+                let headerHTML = `
+                    <div class="item-header">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-stats">
+                            <div class="stat-value ${item.stats.net_usd_value >= 0 ? 'net-positive' : 'net-negative'}">
+                                ${formatUSD(item.stats.net_usd_value)}
+                            </div>
+                            <div class="stat-label">
+                                ${formatUSD(item.stats.asset_usd_value)} Assets • 
+                                ${formatUSD(item.stats.debt_usd_value)} Debt
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Token lists
+                let tokenListsHTML = '';
+                
+                if (item.detail.supply_token_list && item.detail.supply_token_list.length > 0) {
+                    tokenListsHTML += `
+                        <div class="token-list">
+                            <div class="token-list-title">Supplied Tokens</div>
+                            ${item.detail.supply_token_list.map(token => `
+                                <div class="token-item">
+                                    <img src="${token.logo_url}" alt="${token.name}" class="token-logo">
+                                    <div class="token-info">
+                                        <div class="token-name">${token.name}</div>
+                                        <div class="token-symbol">${token.symbol}</div>
+                                    </div>
+                                    <div class="token-amount">
+                                        <div class="token-value">${formatTokenAmount(token.amount, token.decimals)}</div>
+                                        <div class="token-price">${formatUSD(token.amount * token.price)}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                if (item.detail.borrow_token_list && item.detail.borrow_token_list.length > 0) {
+                    tokenListsHTML += `
+                        <div class="token-list">
+                            <div class="token-list-title">Borrowed Tokens</div>
+                            ${item.detail.borrow_token_list.map(token => `
+                                <div class="token-item">
+                                    <img src="${token.logo_url}" alt="${token.name}" class="token-logo">
+                                    <div class="token-info">
+                                        <div class="token-name">${token.name}</div>
+                                        <div class="token-symbol">${token.symbol}</div>
+                                    </div>
+                                    <div class="token-amount">
+                                        <div class="token-value">${formatTokenAmount(token.amount, token.decimals)}</div>
+                                        <div class="token-price">${formatUSD(token.amount * token.price)}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                if (item.detail.token_list && item.detail.token_list.length > 0) {
+                    tokenListsHTML += `
+                        <div class="token-list">
+                            <div class="token-list-title">Reward Tokens</div>
+                            ${item.detail.token_list.map(token => `
+                                <div class="token-item">
+                                    <img src="${token.logo_url}" alt="${token.name}" class="token-logo">
+                                    <div class="token-info">
+                                        <div class="token-name">${token.name}</div>
+                                        <div class="token-symbol">${token.symbol}</div>
+                                    </div>
+                                    <div class="token-amount">
+                                        <div class="token-value">${formatTokenAmount(token.amount, token.decimals)}</div>
+                                        <div class="token-price">${formatUSD(token.amount * token.price)}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                // Health rate
+                let healthRateHTML = '';
+                if (item.detail.health_rate) {
+                    healthRateHTML = `
+                        <div class="health-rate ${getHealthRateClass(item.detail.health_rate)}">
+                            Health Rate: ${item.detail.health_rate.toFixed(2)}
+                        </div>
+                    `;
+                }
+                
+                // Proxy info
+                let proxyHTML = '';
+                if (item.proxy_detail && item.proxy_detail.project) {
+                    proxyHTML = `
+                        <div class="proxy-info">
+                            <img src="${item.proxy_detail.project.logo_url}" alt="${item.proxy_detail.project.name}" class="proxy-logo">
+                            <div class="proxy-text">
+                                Via ${item.proxy_detail.project.name} (${item.proxy_detail.proxy_contract_id.slice(0, 6)}...${item.proxy_detail.proxy_contract_id.slice(-4)})
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                itemElement.innerHTML = headerHTML + tokenListsHTML + healthRateHTML + proxyHTML;
+                container.appendChild(itemElement);
+            });
+            
+            // Update total portfolio value
+            document.querySelector('.portfolio-value').textContent = formatUSD(totalNetValue);
+        }
+
+        // Initialize the page when loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tvl-value').textContent = formatLargeNumber(data.tvl);
+            
+            // Set up event listeners
+            document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+            document.getElementById('filter-type').addEventListener('change', filterAndSortPortfolio);
+            document.getElementById('filter-status').addEventListener('change', filterAndSortPortfolio);
+            
+            document.getElementById('sort-value').addEventListener('click', function() {
+                const isAsc = this.classList.contains('sort-active') && this.dataset.asc === 'true';
+                document.querySelectorAll('.sort-active').forEach(el => el.classList.remove('sort-active'));
+                this.classList.add('sort-active');
+                this.dataset.asc = !isAsc;
+                this.innerHTML = `<i class="fas ${isAsc ? 'fa-sort-amount-down' : 'fa-sort-amount-up'}"></i> Sort by Value`;
+                filterAndSortPortfolio();
+            });
+            
+            document.getElementById('sort-name').addEventListener('click', function() {
+                const isAsc = this.classList.contains('sort-active') && this.dataset.asc === 'true';
+                document.querySelectorAll('.sort-active').forEach(el => el.classList.remove('sort-active'));
+                this.classList.add('sort-active');
+                this.dataset.asc = !isAsc;
+                this.innerHTML = `<i class="fas ${isAsc ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'}"></i> Sort by Name`;
+                filterAndSortPortfolio();
+            });
+            
+            // Initial render
+            renderCharts();
+            renderPortfolioItems();
+            
+            // Set default sort
+            document.getElementById('sort-value').classList.add('sort-active');
+            document.getElementById('sort-value').dataset.asc = 'false';
+        });
+    </script>
+</body>
+</html>
