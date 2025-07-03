@@ -17,10 +17,16 @@ Governor Contracts OZ: https://docs.openzeppelin.com/contracts/4.x/api/governanc
 Discord
 Commonwealth
 https://www.discourse.org/
+https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-to-change-dns-for-a-domain/
 
 
 DeepSeek
 AI-Integrated DEX with MEV Protection
+
+DNS
+https://youtu.be/YbJr7YPmDsQ
+
+
 
 
 

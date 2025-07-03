@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "date": "Q3 2025",
+    "title": "Foundation & Governance",
+    "description": "Establish core governance framework and launch OEC token with Guardian staking mechanism. Deploy foundational smart contracts for cross-protocol coordination.",
+    "status": "in-progress",
+    "protocols": [
+      "Oeconomia Gov"
+    ],
+    "milestones": [
+      "OEC token deployment",
+      "Guardian staking system",
+      "Governance voting mechanism",
+      "Treasury management setup"
+    ]
+  },
+  {
+    "id": 2,
+    "date": "Q4 2025",
+    "title": "Alluria Protocol Launch",
+    "description": "Deploy Alluria lending protocol with ALUD stablecoin, ETH collateral vaults, and community-driven liquidation system. Achieve capital efficiency with 110% collateral ratio.",
+    "status": "in-progress",
+    "protocols": [
+      "Alluria",
+      "Oeconomia Gov"
+    ],
+    "milestones": [
+      "Smart contract audit completion",
+      "ALUD stablecoin deployment",
+      "Vault system implementation",
+      "Stability pool launch",
+      "Mainnet deployment"
+    ]
+  },
+  {
+    "id": 3,
+    "date": "Q3 2025",
+    "title": "Eloqura AMM & Cross-Chain",
+    "description": "Launch Eloqura's automated market making with multi-curve support and cross-chain infrastructure. Enable concentrated liquidity and MEV protection.",
+    "status": "in-progress",
+    "protocols": [
+      "Eloqura",
+      "Alluria"
+    ],
+    "milestones": [
+      "AMM pools deployment",
+      "Cross-chain bridge testing",
+      "Validator network setup",
+      "ALUD liquidity pools",
+      "MEV protection implementation"
+    ]
+  },
+  {
+    "id": 4,
+    "date": "Q1 2026",
+    "title": "Protocol Optimization Network",
+    "description": "Deploy Eloqura's Protocol Optimization Network with AI-driven strategies, automated yield farming, and sophisticated risk management.",
+    "status": "planned",
+    "protocols": [
+      "Eloqura"
+    ],
+    "milestones": [
+      "Strategy engine deployment",
+      "Risk assessment module",
+      "Yield optimization algorithms",
+      "Cross-protocol integration",
+      "Performance monitoring"
+    ]
+  },
+  {
+    "id": 5,
+    "date": "Q1 2026",
+    "title": "Artivya Exchange Platform",
+    "description": "Launch Artivya's hybrid order book and AMM trading platform with professional features, NFT marketplace, and advanced analytics.",
+    "status": "planned",
+    "protocols": [
+      "Artivya",
+      "Eloqura"
+    ],
+    "milestones": [
+      "Order book engine development",
+      "NFT marketplace integration",
+      "Professional trading tools",
+      "Market maker incentives",
+      "Mobile application"
+    ]
+  },
+  {
+    "id": 6,
+    "date": "Q2 2025",
+    "title": "Iridescia Development Infrastructure",
+    "description": "Deploy Iridescia's smart contract development platform with template engine, security framework, and multi-chain deployment tools.",
+    "status": "planned",
+    "protocols": [
+      "Iridescia"
+    ],
+    "milestones": [
+      "Template library creation",
+      "Security analysis tools",
+      "IDE development",
+      "Multi-chain deployment",
+      "Developer onboarding"
+    ]
+  },
+  {
+    "id": 7,
+    "date": "Q3 2025",
+    "title": "Cross-Protocol Integration",
+    "description": "Complete deep integration between all protocols, enabling unified user experiences and cross-protocol yield strategies.",
+    "status": "planned",
+    "protocols": [
+      "All Protocols"
+    ],
+    "milestones": [
+      "Unified governance implementation",
+      "Cross-protocol fee optimization",
+      "Shared security model",
+      "Advanced yield strategies",
+      "Institutional onboarding"
+    ]
+  },
+  {
+    "id": 8,
+    "date": "Q4 2025",
+    "title": "Ecosystem Expansion",
+    "description": "Scale ecosystem across multiple chains, launch institutional services, and establish Oeconomia as leading DeFi infrastructure.",
+    "status": "planned",
+    "protocols": [
+      "All Protocols"
+    ],
+    "milestones": [
+      "Multi-chain deployment",
+      "Institutional partnerships",
+      "Enterprise solutions",
+      "Developer ecosystem growth",
+      "Global expansion"
+    ]
+  }
+]
