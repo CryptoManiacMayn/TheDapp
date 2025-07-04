@@ -1,9 +1,50 @@
-/* Updated CSS for your features section with 3D objects */
+/* Updated CSS for your features section with video background */
 .features {
   min-height: 100vh;
   padding: 100px 0;
-  background: linear-gradient(45deg, #000000, #221053);
-  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  /* Remove the gradient background */
+  /* background: linear-gradient(45deg, #000000, #221053); */
+  /* backdrop-filter: blur(10px); */
+}
+
+/* Video Background Container */
+.features-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.features-video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Overlay for better text readability */
+.features-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(1px);
+  z-index: 1;
+}
+
+/* Ensure content is above the video */
+.features .container {
+  position: relative;
+  z-index: 10;
 }
 
 .features h1 {
@@ -14,6 +55,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  z-index: 11;
 }
 
 .features h2 {
@@ -31,7 +74,7 @@
 }
 
 .features p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
 }
 
@@ -40,15 +83,17 @@
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   gap: 0.5rem;
   margin-top: 2rem;
+  position: relative;
+  z-index: 11;
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.05);
-
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 0.75rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(125px);
+  backdrop-filter: blur(125px);
+  border: 1px solid rgba(255, 255, 255, 1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -81,7 +126,7 @@
   box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
 }
 
-/* NEW: 3D Service Icon Container */
+/* 3D Service Icon Container */
 .service-3d-icon {
   width: 100%;
   height: 120px;
@@ -100,7 +145,7 @@
 .tech-tag {
   display: inline-block;
   background-color: #ff00fb;
-  color: var(--secondary);
+  color: white;
   padding: 0.3rem 0.5rem;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -111,4 +156,58 @@
 
 .tech-tags {
   margin: 1rem 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .features-video-background video {
+    object-position: center;
+  }
+  
+  .features {
+    padding: 80px 0;
+  }
+  
+  .features h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 0.75rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: staggeredFadeIn 0.8s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.feature-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.feature-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.feature-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes staggeredFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

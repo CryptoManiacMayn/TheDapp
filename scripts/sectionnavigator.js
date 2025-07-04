@@ -70,7 +70,7 @@ class SectionNavigator {
         // Different offsets for different sections
         const sectionOffsets = {
             'home': 20,              // No offset for hero section
-            'features': -5,        // Medium offset for features
+            'features': 30,        // Medium offset for features
             'products': -10,        // More offset for products
             'blockchain-networks': 80,        // More offset for products
             'roadmap-section': -20, // Less offset for roadmap
@@ -147,7 +147,7 @@ class SectionNavigator {
             // Different offsets for different sections
             const sectionOffsets = {
                 'home': 20,              // No offset for hero section
-                'features': -5,        // Medium offset for features
+                'features': 30,        // Medium offset for features
                 'products': -10,        // More offset for products
                 'blockchain-networks': 80,        // More offset for products
                 'roadmap-section': -20, // Less offset for roadmap
