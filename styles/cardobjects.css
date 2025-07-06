@@ -1,15 +1,15 @@
-/* Updated CSS for your features section with video background */
+/* Updated CSS for repeatable features section animations */
+
+/* Features Section - Updated for repeatable animations */
 .features {
   min-height: 100vh;
   padding: 100px 0;
   position: relative;
   overflow: hidden;
-  /* Remove the gradient background */
-  /* background: linear-gradient(45deg, #000000, #221053); */
-  /* backdrop-filter: blur(10px); */
+  opacity: 1;
 }
 
-/* Video Background Container */
+/* Video Background Container - Preload and stabilize */
 .features-video-background {
   position: absolute;
   top: 0;
@@ -18,6 +18,7 @@
   height: 100%;
   z-index: 0;
   overflow: hidden;
+  background-color: #000;
 }
 
 .features-video-background video {
@@ -27,6 +28,12 @@
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.features-video-background video.loaded {
+  opacity: 1;
 }
 
 /* Overlay for better text readability */
@@ -57,6 +64,7 @@
   background-clip: text;
   position: relative;
   z-index: 11;
+  opacity: 1;
 }
 
 .features h2 {
@@ -66,16 +74,19 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  opacity: 1;
 }
 
 .features h3 {
   color: white;
   margin-bottom: 0.8rem;
+  opacity: 1;
 }
 
 .features p {
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
+  opacity: 1;
 }
 
 .features-grid {
@@ -87,17 +98,46 @@
   z-index: 11;
 }
 
+/* Updated Feature Cards - Repeatable Animation States */
 .feature-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 0.75rem;
-  -webkit-backdrop-filter: blur(125px);
-  backdrop-filter: blur(125px);
-  border: 1px solid rgba(255, 255, 255, 1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
   min-height: 200px;
+  /* Default state - visible but ready for animation */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation states */
+.feature-card.preparing-animation {
+  opacity: 0.3;
+  transform: translateY(20px) scale(0.98);
+  transition: none; /* Remove transition during preparation */
+}
+
+.feature-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.8s ease-out;
+}
+
+/* Staggered animation delays */
+.feature-card.animate-in:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.feature-card.animate-in:nth-child(2) {
+  transition-delay: 0.3s;
+}
+
+.feature-card.animate-in:nth-child(3) {
+  transition-delay: 0.5s;
 }
 
 .feature-card::before {
@@ -126,7 +166,7 @@
   box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
 }
 
-/* 3D Service Icon Container */
+/* 3D Service Icon Container - Prevent layout shift */
 .service-3d-icon {
   width: 100%;
   height: 120px;
@@ -135,6 +175,7 @@
   overflow: hidden;
   background: rgba(0, 0, 0, 0.2);
   position: relative;
+  min-height: 120px;
 }
 
 .container {
@@ -170,44 +211,5 @@
   
   .features h1 {
     font-size: 1.8rem;
-  }
-}
-
-.feature-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 0.75rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
-  position: relative;
-  overflow: hidden;
-  min-height: 200px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: staggeredFadeIn 0.8s ease-out forwards;
-}
-
-/* Staggered animation delays */
-.feature-card:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.feature-card:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.feature-card:nth-child(3) {
-  animation-delay: 0.5s;
-}
-
-@keyframes staggeredFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }

@@ -1,0 +1,649 @@
+/* Blockchain Networks Section */
+.blockchain-networks {
+  padding:75px 0;
+  min-height: 100vh; /* Changed from height: 100vh to min-height: 100vh */
+  background: rgba(0, 0, 0, 1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: visible; /* Changed from overflow: hidden to overflow: visible */
+  /* Remove any container constraints */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.blockchain-networks h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 800px;
+  margin: 0 auto 1rem auto;
+  line-height: 1.1;
+}
+
+/* Scrolling Container with Gradient Fade */
+.blockchain-scroll-container {
+  min-width: 150%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+/* Gradient fade edges */
+.blockchain-scroll-container::before,
+.blockchain-scroll-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.blockchain-scroll-container::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+.blockchain-scroll-container::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+.blockchain-cards-wrapper {
+  display: flex;
+  gap: 0.25rem;
+  animation: infiniteScroll 90s linear infinite;
+  width: fit-content;
+}
+
+.blockchain-cards-wrapper:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infiniteScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Blockchain Cards */
+.blockchain-card {
+  width: 200px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem;
+  position: relative;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.blockchain-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(0, 212, 255, 0.1),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.blockchain-card:hover::before {
+  opacity: 1;
+}
+
+.blockchain-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 10px 10px rgba(0, 212, 255, 0.2);
+}
+
+/* Primary Launch Cards */
+.blockchain-card.primary-launch {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.blockchain-card.primary-launch::before {
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(0, 255, 136, 0.15),
+    transparent
+  );
+}
+
+.blockchain-card.primary-launch:hover {
+  border-color: rgba(0, 255, 136, 0.5);
+  box-shadow: 0 10px 10px rgba(0, 255, 136, 0.3);
+}
+
+/* Card Header */
+.blockchain-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.1rem;
+}
+
+.blockchain-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.blockchain-logo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  opacity: 0.8;
+}
+
+.blockchain-logo.ethereum::before {
+  background: linear-gradient(135deg, #627eea, #4f5b92);
+}
+
+.blockchain-logo.base::before {
+  background: linear-gradient(135deg, #0052ff, #0041cc);
+}
+
+.blockchain-logo.zksync::before {
+  background: linear-gradient(135deg, #8c8dfc, #6b7ef9);
+}
+
+.blockchain-logo.polygon::before {
+  background: linear-gradient(135deg, #8247e5, #6635c4);
+}
+
+.blockchain-logo.optimism::before {
+  background: linear-gradient(135deg, #ff0420, #cc0319);
+}
+
+.blockchain-logo.arbitrum::before {
+  background: linear-gradient(135deg, #213147, #12202e);
+}
+
+.blockchain-logo.loopring::before {
+  background: linear-gradient(135deg, #1c42ff, #1538d1);
+}
+
+.blockchain-logo.bsc::before {
+  background: linear-gradient(135deg, #f3ba2f, #c9961e);
+}
+
+.blockchain-logo.opbnb::before {
+  background: linear-gradient(135deg, #f3ba2f, #1c42ff);
+}
+
+.blockchain-logo.starknet::before {
+  background: linear-gradient(135deg, #0c0c4f, #0a0a3d);
+}
+
+.blockchain-info h3 {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 0.1rem;
+  font-weight: 600;
+}
+
+.launch-status {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.launch-status.primary {
+  background: linear-gradient(45deg, #00ff88, #00d4ff);
+  color: #000;
+}
+
+.launch-status.expansion {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+/* Features */
+.blockchain-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.primary-launch .feature {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.2);
+}
+
+/* Timeline */
+.deployment-timeline {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.timeline-status {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Deployment Strategy */
+.deployment-strategy {
+  max-width: 80%;
+  margin: 1.2rem auto 2rem auto; /* Added bottom margin for spacing */
+  padding: 1rem;
+  position: static; /* Changed from relative to static for proper document flow */
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1; /* Ensure it's above background elements */
+}
+
+.strategy-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.strategy-header h3 {
+  color: white;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.strategy-header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.strategy-phases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.phase-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 0.5rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.phase-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+}
+
+.phase-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto;
+}
+
+.phase-card h4 {
+  color: white;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.phase-card p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.phase-timeline {
+  display: inline-block;
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .blockchain-networks {
+    padding: 60px 0;
+  }
+
+  .blockchain-networks h2 {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .blockchain-scroll-container::before,
+  .blockchain-scroll-container::after {
+    width: 80px;
+  }
+
+  .blockchain-card {
+    min-width: 260px;
+    max-width: 260px;
+    padding: 1.2rem;
+  }
+
+  .blockchain-header {
+    gap: 0.75rem;
+  }
+
+  .blockchain-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .blockchain-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .deployment-strategy {
+    margin-top: 4rem;
+    padding: 2rem;
+  }
+
+  .strategy-header h3 {
+    font-size: 1.8rem;
+  }
+
+  .strategy-phases {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .phase-card {
+    padding: 1.5rem;
+  }
+
+  .phase-number {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blockchain-card {
+    min-width: 240px;
+    max-width: 240px;
+    padding: 1rem;
+  }
+
+  .blockchain-features {
+    gap: 0.3rem;
+  }
+
+  .feature {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .blockchain-cards-wrapper {
+    animation: none;
+  }
+
+  .blockchain-card {
+    transition: none;
+  }
+}
+
+.blockchain-networks {
+  position: relative; /* Important for video background positioning */
+  overflow: hidden;
+}
+
+.blockchain-networks .container {
+  max-width: none;
+  width: 100%;
+  position: relative;
+
+  z-index: 10; /* Above video background */
+}
+
+/* Video Background Container */
+.blockchain-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.blockchain-video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.blockchain-video-background video.loaded {
+  opacity: 1;
+}
+
+.blockchain-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  z-index: 1;
+}
+
+/* Card Animation States */
+.blockchain-card.preparing-animation {
+  opacity: 0.2;
+  transform: translateY(40px) scale(0.9);
+  transition: none;
+}
+
+.blockchain-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Staggered delays for each card */
+.blockchain-card.animate-in:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.blockchain-card.animate-in:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.blockchain-card.animate-in:nth-child(3) {
+  transition-delay: 0.3s;
+}
+.blockchain-card.animate-in:nth-child(4) {
+  transition-delay: 0.4s;
+}
+.blockchain-card.animate-in:nth-child(5) {
+  transition-delay: 0.5s;
+}
+.blockchain-card.animate-in:nth-child(6) {
+  transition-delay: 0.6s;
+}
+.blockchain-card.animate-in:nth-child(7) {
+  transition-delay: 0.7s;
+}
+.blockchain-card.animate-in:nth-child(8) {
+  transition-delay: 0.8s;
+}
+.blockchain-card.animate-in:nth-child(9) {
+  transition-delay: 0.9s;
+}
+.blockchain-card.animate-in:nth-child(10) {
+  transition-delay: 1s;
+}
+
+/* Add this to your blockchain-networks section */
+.blockchain-networks {
+  position: relative;
+  z-index: 0; /* Lower z-index than deployment-strategy */
+}
+
+/* Ensure the container inside blockchain-networks doesn't interfere */
+.blockchain-networks .container {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+ /* Animated Background */
+      .animated-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(45deg, #000, #0a0a0a, #1a1a1a);
+        overflow: hidden;
+      }
+
+      .animated-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+        animation: backgroundMove 20s ease-in-out infinite;
+      }
+
+      @keyframes backgroundMove {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        33% { transform: translate(-50px, -50px) rotate(120deg); }
+        66% { transform: translate(50px, 50px) rotate(240deg); }
+      }
+
+ /* Floating particles */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: rgba(0, 212, 255, 0.6);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+        50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+      }
