@@ -107,6 +107,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  padding: 5px;
   z-index: 1;
 }
 
@@ -591,4 +592,154 @@
     transform: translateY(-100px) rotate(180deg);
     opacity: 1;
   }
+}
+
+/* Additional enhancements for blockchain networks animation */
+
+/* Improved card transitions */
+.blockchain-card {
+    will-change: transform, opacity, filter;
+    transform-style: preserve-3d;
+}
+
+/* Enhanced scrolling container effects */
+.blockchain-scroll-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* Smooth animation pause on hover */
+.blockchain-cards-wrapper:hover .blockchain-card {
+    animation-play-state: paused;
+}
+
+/* Enhanced primary launch card animations */
+.blockchain-card.primary-launch {
+    position: relative;
+    overflow: hidden;
+}
+
+.blockchain-card.primary-launch::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(0, 255, 136, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.blockchain-card.primary-launch.glow-effect::after {
+    opacity: 1;
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: rotate(45deg) translateX(-100%);
+    }
+    50% {
+        transform: rotate(45deg) translateX(0%);
+    }
+    100% {
+        transform: rotate(45deg) translateX(100%);
+    }
+}
+
+/* Enhanced logo animations */
+.blockchain-logo .image {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blockchain-card.animate-in .blockchain-logo .image {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.blockchain-card:hover .blockchain-logo .image {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+/* Improved status badge animations */
+.launch-status {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.launch-status::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.blockchain-card.animate-in .launch-status::before {
+    left: 100%;
+}
+
+/* Deployment strategy animation enhancements */
+.deployment-strategy {
+    transition: all 0.6s ease;
+}
+
+.blockchain-networks.section-animated .deployment-strategy {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.phase-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blockchain-networks.section-animated .phase-card {
+    transform: translateY(-5px);
+}
+
+.phase-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Responsive animation adjustments */
+@media (max-width: 768px) {
+    .blockchain-card {
+        transform-origin: center center;
+    }
+    
+    .blockchain-card.animate-in:hover {
+        transform: translateY(-10px) scale(1.02);
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .blockchain-card,
+    .floating-particle,
+    .screen-flash {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .blockchain-card {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
 }

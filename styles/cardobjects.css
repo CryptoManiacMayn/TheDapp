@@ -1,5 +1,4 @@
 /* Updated CSS for repeatable features section animations */
-
 /* Features Section - Updated for repeatable animations */
 /* Features Section - Add flexbox centering */
 .features {
@@ -60,9 +59,10 @@
 }
 
 .features h1 {
-  font-size: 2rem;
+  /* Use viewport width units to maintain consistent visual size across zoom levels */
+  font-size: clamp(2rem, 5vw, 3.2rem);
   text-align: center; 
-  margin-bottom: 1rem;
+  margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
   background: linear-gradient(45deg, #88d3ce, #6e45e2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -70,11 +70,14 @@
   position: relative;
   z-index: 11;
   opacity: 1;
+  font-weight: bold;
+  /* Prevent text from being too small on very small screens */
+  min-height: 2rem;
 }
 
 .features h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 3.2vw, 2rem);
+  margin-bottom: clamp(0.5rem, 1vw, 0.8rem);
   background: linear-gradient(45deg, #88d3ce, #6e45e2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -84,26 +87,35 @@
 
 .features h3 {
   color: white;
-  margin-bottom: 0.8rem;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  margin-bottom: clamp(0.4rem, 0.8vw, 0.6rem);
+  opacity: 1;
+}
+
+.features h4 {
+  color: white;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  margin-bottom: clamp(0.4rem, 0.8vw, 0.6rem);
   opacity: 1;
 }
 
 .features p {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 1.6vw, 1rem);
   opacity: 1;
+  line-height: 1.4;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(314px, 1fr));
   gap: 0.5rem;
   margin-top: 2rem;
   position: relative;
   z-index: 11;
 }
 
-/* Updated Feature Cards - Repeatable Animation States */
+/* Updated Feature Cards - Repeatable Animation States with alignment */
 .feature-card {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
@@ -114,10 +126,46 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  min-height: 200px;
+  min-height: 320px;
   /* Default state - visible but ready for animation */
   opacity: 1;
   transform: translateY(0);
+  /* Flexbox for consistent alignment */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure consistent spacing for card headers */
+.feature-card h2 {
+  min-height: 4rem; /* Reserve space for potential 2-line headers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card h3 {
+  min-height: 3.2rem; /* Reserve space for potential 2-line subheaders */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+/* Card content section */
+.feature-card p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Tech tags section - push to bottom */
+.tech-tags {
+  margin-top: auto;
+  margin-bottom: 0;
 }
 
 /* Animation states */
@@ -202,10 +250,65 @@
 }
 
 .tech-tags {
-  margin: 1rem 0;
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 0.5rem;
 }
 
-/* Mobile responsiveness */
+/* Centered feature heading (subtitle) */
+.centered-feature-heading {
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+  opacity: 0.9;
+  max-width: min(90vw, 800px);
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Zoom-level specific adjustments for features section */
+@media screen and (min-resolution: 192dpi) and (max-resolution: 249dpi) {
+  /* 200% zoom / 175% scale */
+  .features h1 {
+    font-size: clamp(2.2rem, 4.5vw, 2.9rem);
+  }
+  .features h2 {
+    font-size: clamp(1.3rem, 2.9vw, 1.8rem);
+  }
+}
+
+@media screen and (min-resolution: 144dpi) and (max-resolution: 191dpi) {
+  /* 150% zoom / 125% scale */
+  .features h1 {
+    font-size: clamp(2.1rem, 4.7vw, 3.1rem);
+  }
+  .features h2 {
+    font-size: clamp(1.25rem, 3.1vw, 1.9rem);
+  }
+}
+
+@media screen and (min-resolution: 120dpi) and (max-resolution: 143dpi) {
+  /* 125% zoom / 100% scale */
+  .features h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+  }
+  .features h2 {
+    font-size: clamp(1.2rem, 3.2vw, 2rem);
+  }
+}
+
+@media screen and (max-resolution: 119dpi) {
+  /* 100% zoom */
+  .features h1 {
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+  }
+  .features h2 {
+    font-size: clamp(1.2rem, 3.4vw, 2.2rem);
+  }
+}
+
+/* Enhanced mobile responsiveness for zoom consistency */
 @media (max-width: 768px) {
   .features-video-background video {
     object-position: center;
@@ -216,6 +319,46 @@
   }
   
   .features h1 {
-    font-size: 1.8rem;
+    font-size: clamp(1.5rem, 8vw, 2.3rem);
+    line-height: 1.1;
+  }
+  
+  .features h2 {
+    font-size: clamp(1rem, 4.2vw, 1.6rem);
+  }
+  
+  .features h3 {
+    font-size: clamp(0.85rem, 3vw, 1.1rem);
+  }
+  
+  .features p {
+    font-size: clamp(0.75rem, 2.6vw, 0.95rem);
+    padding: 0 1rem;
+  }
+  
+  .centered-feature-heading {
+    font-size: clamp(0.75rem, 2.8vw, 1rem);
+    padding: 0 1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .features h1 {
+    font-size: clamp(1.3rem, 10vw, 2rem);
+  }
+  
+  .features h2 {
+    font-size: clamp(0.9rem, 4.5vw, 1.4rem);
+  }
+  
+  .feature-card {
+    padding: 1rem;
+    min-height: 280px;
   }
 }

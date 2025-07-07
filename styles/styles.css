@@ -77,6 +77,20 @@ nav {
   transition: all 0.3s ease;
 }
 
+/* Updated logo styles with hover effect - Add this to your styles.css file */
+
+.logo {
+  height: 50px;
+  width: auto;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3)); /* Initial glow */
+}
+
+.logo:hover {
+  transform: scale(1.05); /* Slight enlargement on hover */
+  filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5)); /* Enhanced glow on hover */
+}
+
 .nav-links {
   display: flex;
   list-style: none;
@@ -172,7 +186,9 @@ nav {
 .hero-content {
   text-align: center;
   z-index: 2;
-  animation: fadeInUp 1s ease;
+  /* Animation now controlled by JavaScript */
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* MAIN FIX: Use viewport width units and clamp for zoom consistency */

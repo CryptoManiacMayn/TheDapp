@@ -1,4 +1,4 @@
-// Enhanced cube-manager.js - Shiny metallic cube with improved mouse effects
+// Enhanced cube-manager.js - Single color cube that changes with sections
 
 class CubeManager {
   constructor(containerId) {
@@ -13,8 +13,21 @@ class CubeManager {
     this.hasTargetRotation = false;
     this.mouseX = 0;
     this.mouseY = 0;
-    this.mouseInfluence = 5; // Strength of mouse effect
-    this.lastMouseMoveTime = Date.now(); // Track mouse movement for auto-rotation
+    this.prevMouseX = 0;
+    this.prevMouseY = 0;
+    this.mouseVelocityX = 0;
+    this.mouseVelocityY = 0;
+    
+    // Enhanced mouse settings for much better responsiveness
+    this.mouseInfluence = 5;
+    this.hoverInfluence = .12;
+    this.baseInfluence = 2.5;
+    this.targetInfluence = 0.5;
+    this.interpolationSpeed = 0.15;
+    this.velocityDamping = 0.95;
+    this.maxRotationSpeed = 0.1;
+    
+    this.lastMouseMoveTime = Date.now();
     
     // Define rotations for each accordion section
     this.sectionRotations = {
@@ -25,12 +38,23 @@ class CubeManager {
       'eloqura': { x: -Math.PI / 2, y: 0 } // Top face (+Y)
     };
     
+    // Define colors for each section
+    this.sectionColors = {
+      'oeconomia': '#09CBFB',   // Cyan/blue
+      'alluria': '#5090FD',     // Blue
+      'iridescia': '#F00AFE',   // Pink/magenta
+      'artivya': '#BC36FE',     // Purple
+      'eloqura': '#8D5DFE'      // Purple/blue
+    };
+    
+    this.currentColor = this.sectionColors.oeconomia; // Default to oeconomia color
+    
     this.init();
   }
   
   enableMouseControl() {
     this.hasTargetRotation = false;
-    console.log('Mouse control enabled');
+    console.log('Mouse control enabled - Free rotation mode');
   }
   
   init() {
@@ -57,17 +81,17 @@ class CubeManager {
     // Create geometry with more segments for smoother surfaces
     const geometry = new THREE.BoxGeometry(3, 3, 3, 8, 8, 8);
     
-    // Apply rounded corners effect through materials and lighting
+    // Apply rounded corners effect
     this.applyRoundedEffect(geometry);
     
-    // Create metallic materials for each face
+    // Create materials for each face with the same initial color
     const materials = [
-      this.createMetallicFaceMaterial('#58647e', 'Alluria\nProtocol\nLending\n\nClick for\nFlow Chart'),    // Right (+X)
-      this.createMetallicFaceMaterial('#58647e', 'Artivya\nProtocol\nNFTs\n\nClick for\nFlow Chart'),       // Left (-X)
-      this.createMetallicFaceMaterial('#58647e', 'Iridescia\nProtocol\nTools\n\nClick for\nFlow Chart'),    // Top (+Y)
-      this.createMetallicFaceMaterial('#58647e', 'Eloqura\nProtocol\nLiquidity\n\nClick for\nFlow Chart'),  // Bottom (-Y)
-      this.createMetallicFaceMaterial('#58647e', 'Oeconomia\nProtocol\nPantheon\n\nClick for\nFlow Chart'), // Front (+Z)
-      this.createMetallicFaceMaterial('#58647e', 'Future\nReserved\nSpace\n\nClick for\nFlow Chart')        // Back (-Z)
+      this.createMetallicFaceMaterial(this.currentColor, 'Alluria\nProtocol\nLending\n\nClick for\nFlow Chart'),
+      this.createMetallicFaceMaterial(this.currentColor, 'Artivya\nProtocol\nNFTs\n\nClick for\nFlow Chart'),
+      this.createMetallicFaceMaterial(this.currentColor, 'Iridescia\nProtocol\nTools\n\nClick for\nFlow Chart'),
+      this.createMetallicFaceMaterial(this.currentColor, 'Eloqura\nProtocol\nLiquidity\n\nClick for\nFlow Chart'),
+      this.createMetallicFaceMaterial(this.currentColor, 'Oeconomia\nProtocol\nPantheon\n\nClick for\nFlow Chart'),
+      this.createMetallicFaceMaterial(this.currentColor, 'Future\nReserved\nSpace\n\nClick for\nFlow Chart')
     ];
     
     // Create cube with materials
@@ -79,6 +103,39 @@ class CubeManager {
     
     // Add mouse effects
     this.addMouseEffects();
+  }
+  
+  // New method to change the cube color
+  changeCubeColor(newColor) {
+    if (!this.cube || !this.cube.material) return;
+    
+    this.currentColor = newColor;
+    
+    // Update all face materials with the new color
+    const faceTexts = [
+      'Alluria\nProtocol\nLending\n\nClick for\nFlow Chart',
+      'Artivya\nProtocol\nNFTs\n\nClick for\nFlow Chart',
+      'Iridescia\nProtocol\nTools\n\nClick for\nFlow Chart',
+      'Eloqura\nProtocol\nLiquidity\n\nClick for\nFlow Chart',
+      'Oeconomia\nProtocol\nPantheon\n\nClick for\nFlow Chart',
+      'Future\nReserved\nSpace\n\nClick for\nFlow Chart'
+    ];
+    
+    // Create new materials with the new color
+    const newMaterials = faceTexts.map(text => 
+      this.createMetallicFaceMaterial(newColor, text)
+    );
+    
+    // Dispose old materials
+    if (Array.isArray(this.cube.material)) {
+      this.cube.material.forEach(material => {
+        if (material.map) material.map.dispose();
+        material.dispose();
+      });
+    }
+    
+    // Apply new materials
+    this.cube.material = newMaterials;
   }
   
   applyRoundedEffect(geometry) {
@@ -294,12 +351,21 @@ class CubeManager {
   }
   
   addMouseEffects() {
-    // Global mouse tracking - works anywhere on the page
+    // Enhanced global mouse tracking with velocity calculation
     document.addEventListener('mousemove', (event) => {
+      // Store previous mouse position for velocity calculation
+      this.prevMouseX = this.mouseX;
+      this.prevMouseY = this.mouseY;
+      
       // Convert mouse position to normalized coordinates relative to viewport
-      this.mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      this.mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-      this.lastMouseMoveTime = Date.now(); // Update last mouse move time
+      this.mouseX = (event.clientX / window.innerWidth) * 4 - 2;
+      this.mouseY = -(event.clientY / window.innerHeight) * 4 + 2;
+      
+      // Calculate mouse velocity for momentum effect
+      this.mouseVelocityX = this.mouseX - this.prevMouseX;
+      this.mouseVelocityY = this.mouseY - this.prevMouseY;
+      
+      this.lastMouseMoveTime = Date.now();
     });
     
     // Container-specific effects for cursor and tooltips
@@ -309,17 +375,23 @@ class CubeManager {
     
     // Enhanced mouse effects when entering/leaving the container
     this.container.addEventListener('mouseenter', () => {
-      this.mouseInfluence = 0.7; // Increase mouse effect on hover
+      this.mouseInfluence = this.hoverInfluence;
       this.container.classList.add('interactive');
     });
     
     this.container.addEventListener('mouseleave', () => {
-      this.mouseInfluence = 0.4; // Maintain some effect even when not directly hovering
+      this.mouseInfluence = this.baseInfluence;
       this.container.classList.remove('interactive');
     });
     
     // Double-click to enable free rotation
     this.container.addEventListener('dblclick', () => {
+      this.enableMouseControl();
+    });
+    
+    // Right-click for instant free mode
+    this.container.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
       this.enableMouseControl();
     });
   }
@@ -350,11 +422,11 @@ class CubeManager {
         }
       } else {
         this.container.style.cursor = 'grab';
-        this.container.title = 'Drag to rotate, click faces to view flowcharts';
+        this.container.title = 'Move mouse to rotate, double-click for free rotation';
       }
     } else {
       this.container.style.cursor = 'grab';
-      this.container.title = 'Move mouse to rotate cube, click faces to view flowcharts';
+      this.container.title = 'Free rotation mode - Move mouse anywhere to rotate cube';
     }
   }
   
@@ -455,12 +527,17 @@ class CubeManager {
       return;
     }
     
+    // Change cube color to match the section
+    if (this.sectionColors[sectionName]) {
+      this.changeCubeColor(this.sectionColors[sectionName]);
+    }
+    
     this.targetRotation = { ...this.sectionRotations[sectionName] };
     this.isAnimating = true;
     this.hasTargetRotation = true;
     
     const animateRotation = () => {
-      const lerpFactor = 0.08;
+      const lerpFactor = 0.12;
       
       let deltaX = this.targetRotation.x - this.cube.rotation.x;
       let deltaY = this.targetRotation.y - this.cube.rotation.y;
@@ -488,32 +565,53 @@ class CubeManager {
   animate() {
     requestAnimationFrame(() => this.animate());
     
-    // Enhanced mouse following effect - now works from anywhere on screen
+    // Much more responsive mouse following effect
     if (!this.isAnimating) {
-      const targetRotationX = this.mouseY * this.mouseInfluence;
-      const targetRotationY = this.mouseX * this.mouseInfluence;
+      // Calculate target rotation with higher sensitivity
+      const sensitivity = this.mouseInfluence * 0.2;
+      const targetRotationX = this.mouseY * sensitivity;
+      const targetRotationY = this.mouseX * sensitivity;
       
-      // If we have a target rotation, blend with mouse movement
+      // Apply momentum for more natural movement
+      const momentum = 0.02;
+      const velocityInfluence = Math.min(Math.abs(this.mouseVelocityX) + Math.abs(this.mouseVelocityY), 0.1);
+      const currentSensitivity = sensitivity + (velocityInfluence * momentum);
+      
       if (this.hasTargetRotation) {
-        // Add subtle mouse influence even when locked to section
-        this.cube.rotation.x = this.targetRotation.x + targetRotationX * 0.15;
-        this.cube.rotation.y = this.targetRotation.y + targetRotationY * 0.15;
+        // More mouse freedom even when locked to section
+        const influenceFactor = this.targetInfluence;
+        this.cube.rotation.x = this.targetRotation.x + targetRotationX * influenceFactor;
+        this.cube.rotation.y = this.targetRotation.y + targetRotationY * influenceFactor;
       } else {
-        // Free mouse movement with smooth interpolation
-        this.cube.rotation.x += (targetRotationX - this.cube.rotation.x) * 0.08;
-        this.cube.rotation.y += (targetRotationY - this.cube.rotation.y) * 0.08;
+        // Free mouse movement with enhanced responsiveness
+        const targetX = targetRotationX;
+        const targetY = targetRotationY;
+        
+        // Apply rotation limits for smooth experience
+        const maxRotation = 6;
+        const clampedTargetX = Math.max(-maxRotation, Math.min(maxRotation, targetX));
+        const clampedTargetY = Math.max(-maxRotation, Math.min(maxRotation, targetY));
+        
+        // Much faster interpolation for immediate response
+        this.cube.rotation.x += (clampedTargetX - this.cube.rotation.x) * this.interpolationSpeed;
+        this.cube.rotation.y += (clampedTargetY - this.cube.rotation.y) * this.interpolationSpeed;
       }
+      
+      // Apply velocity damping for momentum effect
+      this.mouseVelocityX *= this.velocityDamping;
+      this.mouseVelocityY *= this.velocityDamping;
     }
     
-    // Floating animation
+    // Enhanced floating animation
     if (!this.isAnimating && !this.hasTargetRotation) {
-      this.cube.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+      const floatStrength = Math.max(0.02, 0.1 - (Math.abs(this.mouseVelocityX) + Math.abs(this.mouseVelocityY)) * 5);
+      this.cube.position.y = Math.sin(Date.now() * 0.001) * floatStrength;
     }
     
-    // Add subtle continuous rotation when no mouse movement
+    // Auto-rotation
     const timeSinceLastMouseMove = Date.now() - (this.lastMouseMoveTime || Date.now());
-    if (timeSinceLastMouseMove > 3000 && !this.hasTargetRotation && !this.isAnimating) {
-      this.cube.rotation.y += 0.002; // Very slow auto-rotation
+    if (timeSinceLastMouseMove > 5000 && !this.hasTargetRotation && !this.isAnimating) {
+      this.cube.rotation.y += 0.001;
     }
     
     this.renderer.render(this.scene, this.camera);
@@ -536,10 +634,12 @@ class CubeManager {
     
     if (this.cube) {
       this.cube.geometry.dispose();
-      this.cube.material.forEach(material => {
-        if (material.map) material.map.dispose();
-        material.dispose();
-      });
+      if (Array.isArray(this.cube.material)) {
+        this.cube.material.forEach(material => {
+          if (material.map) material.map.dispose();
+          material.dispose();
+        });
+      }
     }
   }
 }

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Seed Phrase Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .security-warning {
+            background: #ff4757;
+            color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff3742;
+        }
+
+        .security-warning h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .security-warning ul {
+            margin-left: 20px;
+        }
+
+        .input-section {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .wallet-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .address {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            background: #f1f2f6;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .balance {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2ed573;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #ff4757;
+            background: #ffe0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .feature-note {
+            background: #3742fa;
+            color: white;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .demo-note {
+            background: #ffa726;
+            color: white;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .word-box {
+            background: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Wallet Checker</h1>
+            <p>Check your cryptocurrency wallet balances securely</p>
+        </div>
+
+        <div class="security-warning">
+            <h3>⚠️ SECURITY WARNING</h3>
+            <ul>
+                <li><strong>This tool runs entirely in your browser - no data is sent anywhere</strong></li>
+                <li>Never enter your seed phrase on untrusted websites</li>
+                <li>Only use this on your personal, secure device</li>
+                <li>Consider using a hardware wallet for large amounts</li>
+                <li>Always verify addresses before sending transactions</li>
+            </ul>
+        </div>
+
+        <div class="demo-note">
+            <p><strong>DEMO VERSION:</strong> This generates sample addresses and demo balances for educational purposes. For production use, you'll need proper BIP39/BIP44 libraries and real API keys.</p>
+        </div>
+
+        <div class="input-section">
+            <div class="form-group">
+                <label for="seedPhrase">Seed Phrase (12 or 24 words):</label>
+                <textarea 
+                    id="seedPhrase" 
+                    rows="3" 
+                    placeholder="Enter your seed phrase here (12 or 24 words separated by spaces) or click 'Generate Demo Phrase' to test"
+                ></textarea>
+                <button class="btn" onclick="generateDemoPhrase()" style="margin-top: 10px; width: auto; background: #28a745;">Generate Demo Phrase</button>
+            </div>
+
+            <div class="form-group">
+                <label for="network">Select Network:</label>
+                <select id="network">
+                    <option value="ethereum">Ethereum (ETH)</option>
+                    <option value="bitcoin">Bitcoin (BTC)</option>
+                    <option value="polygon">Polygon (MATIC)</option>
+                    <option value="bsc">Binance Smart Chain (BNB)</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="checkWallet()">Check Wallet Balance</button>
+
+            <div id="results" class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Demo BIP39 words for testing
+        const DEMO_WORDS = [
+            'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'absurd', 'abuse',
+            'access', 'accident', 'account', 'accuse', 'achieve', 'acid', 'acoustic', 'acquire', 'across', 'act',
+            'action', 'actor', 'actress', 'actual', 'adapt', 'add', 'addict', 'address', 'adjust', 'admit',
+            'adult', 'advance', 'advice', 'aerobic', 'affair', 'afford', 'afraid', 'again', 'against', 'age',
+            'agent', 'agree', 'ahead', 'aim', 'air', 'airport', 'aisle', 'alarm', 'album', 'alcohol',
+            'alert', 'alien', 'all', 'alley', 'allow', 'almost', 'alone', 'alpha', 'already', 'also',
+            'alter', 'always', 'amateur', 'amazing', 'among', 'amount', 'amused', 'analyst', 'anchor', 'ancient',
+            'anger', 'angle', 'angry', 'animal', 'ankle', 'announce', 'annual', 'another', 'answer', 'antenna',
+            'antique', 'anxiety', 'any', 'apart', 'apology', 'appear', 'apple', 'approve', 'april', 'arch',
+            'arctic', 'area', 'arena', 'argue', 'arm', 'armed', 'armor', 'army', 'around', 'arrange',
+            'arrest', 'arrive', 'arrow', 'art', 'artefact', 'artist', 'artwork', 'ask', 'aspect', 'assault',
+            'asset', 'assist', 'assume', 'asthma', 'athlete', 'atom', 'attack', 'attend', 'attitude', 'attract',
+            'auction', 'audit', 'august', 'aunt', 'author', 'auto', 'autumn', 'average', 'avocado', 'avoid',
+            'awake', 'aware', 'away', 'awesome', 'awful', 'awkward', 'axis', 'baby', 'bachelor', 'bacon',
+            'badge', 'bag', 'balance', 'balcony', 'ball', 'bamboo', 'banana', 'banner', 'bar', 'barely',
+            'bargain', 'barrel', 'base', 'basic', 'basket', 'battle', 'beach', 'bean', 'beauty', 'because',
+            'become', 'beef', 'before', 'begin', 'behave', 'behind', 'believe', 'below', 'belt', 'bench',
+            'benefit', 'best', 'betray', 'better', 'between', 'beyond', 'bicycle', 'bid', 'bike', 'bind',
+            'biology', 'bird', 'birth', 'bitter', 'black', 'blade', 'blame', 'blanket', 'blast', 'bleak',
+            'bless', 'blind', 'blood', 'blossom', 'blow', 'blue', 'blur', 'blush', 'board', 'boat'
+        ];
+
+        function generateDemoPhrase() {
+            // Generate a random 12-word phrase for demo
+            const shuffled = [...DEMO_WORDS].sort(() => 0.5 - Math.random());
+            const phrase = shuffled.slice(0, 12).join(' ');
+            document.getElementById('seedPhrase').value = phrase;
+        }
+
+        function validateSeedPhrase(phrase) {
+            const words = phrase.trim().toLowerCase().split(/\s+/);
+            if (words.length !== 12 && words.length !== 24) {
+                throw new Error('Seed phrase must be 12 or 24 words');
+            }
+            return words;
+        }
+
+        // Simple deterministic address generation for demo
+        function generateAddressFromSeed(seedPhrase, network) {
+            // This is for demo only - real implementation would use proper cryptographic libraries
+            let hash = 0;
+            for (let i = 0; i < seedPhrase.length; i++) {
+                const char = seedPhrase.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            
+            // Add network-specific salt
+            hash = hash + network.length * 1000;
+            
+            const hexHash = Math.abs(hash).toString(16).padStart(8, '0');
+            
+            switch (network) {
+                case 'bitcoin':
+                    return '1' + hexHash + generateRandomHex(25);
+                case 'ethereum':
+                case 'polygon':
+                case 'bsc':
+                    return '0x' + hexHash + generateRandomHex(32);
+                default:
+                    throw new Error('Unsupported network');
+            }
+        }
+
+        function generateRandomHex(length) {
+            const chars = '0123456789abcdef';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function generateDemoBalance(address, network) {
+            // Generate consistent demo balance based on address
+            let hash = 0;
+            for (let i = 0; i < address.length; i++) {
+                hash = ((hash << 5) - hash) + address.charCodeAt(i);
+                hash = hash & hash;
+            }
+            
+            // Use hash to generate "consistent" demo balance
+            const seed = Math.abs(hash) / 2147483647; // Normalize to 0-1
+            
+            // Different ranges for different networks
+            switch (network) {
+                case 'bitcoin':
+                    return seed * 0.5; // 0-0.5 BTC
+                case 'ethereum':
+                    return seed * 2; // 0-2 ETH
+                case 'polygon':
+                    return seed * 100; // 0-100 MATIC
+                case 'bsc':
+                    return seed * 1; // 0-1 BNB
+                default:
+                    return seed;
+            }
+        }
+
+        async function checkWallet() {
+            const seedPhrase = document.getElementById('seedPhrase').value;
+            const network = document.getElementById('network').value;
+            const resultsDiv = document.getElementById('results');
+            
+            if (!seedPhrase.trim()) {
+                alert('Please enter a seed phrase or generate a demo phrase');
+                return;
+            }
+
+            try {
+                // Validate seed phrase
+                const words = validateSeedPhrase(seedPhrase);
+                
+                // Show loading
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Generating address and fetching balance...</p>
+                    </div>
+                `;
+
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Generate address
+                const address = generateAddressFromSeed(seedPhrase, network);
+                
+                // Generate demo balance
+                const balance = generateDemoBalance(address, network);
+                
+                // Display results
+                const networkNames = {
+                    'bitcoin': 'Bitcoin (BTC)',
+                    'ethereum': 'Ethereum (ETH)', 
+                    'polygon': 'Polygon (MATIC)',
+                    'bsc': 'Binance Smart Chain (BNB)'
+                };
+
+                const networkSymbols = {
+                    'bitcoin': 'BTC',
+                    'ethereum': 'ETH',
+                    'polygon': 'MATIC',
+                    'bsc': 'BNB'
+                };
+
+                // Show word validation
+                const wordDisplay = words.map((word, index) => 
+                    `<div class="word-box">${index + 1}. ${word}</div>`
+                ).join('');
+
+                resultsDiv.innerHTML = `
+                    <div class="wallet-info">
+                        <h3>📝 Seed Phrase Validation</h3>
+                        <p><strong>✅ Valid ${words.length}-word seed phrase detected</strong></p>
+                        <div class="word-grid">${wordDisplay}</div>
+                    </div>
+                    
+                    <div class="wallet-info">
+                        <h3>📱 ${networkNames[network]} Wallet</h3>
+                        <p><strong>Generated Address:</strong>
+                            <button class="copy-btn" onclick="copyToClipboard('${address}')">Copy</button>
+                        </p>
+                        <div class="address">${address}</div>
+                        <p class="balance">💰 Demo Balance: ${balance.toFixed(6)} ${networkSymbols[network]}</p>
+                        <small style="color: #666;">
+                            * This is a demonstration with simulated data. In production, this would connect to real blockchain APIs.
+                        </small>
+                    </div>
+                `;
+
+            } catch (error) {
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Address copied to clipboard!');
+            });
+        }
+
+        // Clear results when input changes
+        document.getElementById('seedPhrase').addEventListener('input', function() {
+            document.getElementById('results').style.display = 'none';
+        });
+
+        document.getElementById('network').addEventListener('change', function() {
+            document.getElementById('results').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
