@@ -58,6 +58,7 @@ nav {
   top: 0;
   width: 100%;
   background: rgba(10, 10, 10, 0.9);
+    -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   z-index: 1000;
   transition: all 0.3s ease;
@@ -243,6 +244,7 @@ nav {
   border-radius: 5px;
   padding: 1rem;
   margin-top: 1rem;
+    -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   display: flex;
   flex-direction: row;
@@ -326,6 +328,7 @@ nav {
     rgba(50, 10, 84, 1) 30%,
     rgba(11, 11, 88, 1) 100%
   );
+    -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 
@@ -348,6 +351,7 @@ nav {
     rgba(10, 10, 10, 0.9) 0%,
     rgba(26, 26, 46, 0.9) 100%
   );
+    -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 60px 0 0;
@@ -417,6 +421,7 @@ nav {
   border-radius: 50%;
   color: rgba(255, 255, 255, 0.7);
   transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -439,6 +444,7 @@ nav {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   color: white;
+    -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -620,6 +626,7 @@ nav {
   top: 100%;
   left: -75px;
   background: rgba(15, 15, 30, 0.95);
+    -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   min-width: 230px;
   border-radius: 8px;
@@ -692,6 +699,7 @@ nav {
     width: 100%;
     height: 100vh;
     background: rgba(10, 10, 10, 0.98);
+      -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: center;
@@ -737,6 +745,7 @@ nav {
   padding: 5px 0;
   height: 100vh;
   background: rgba(0, 0, 0, 1);
+    -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
@@ -828,6 +837,7 @@ nav {
   width: 200px;
   height: 100px;
   background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;

@@ -1,11 +1,25 @@
+// accordion-updated.js - Updated accordion with Three.js cube integration
+
 document.addEventListener('DOMContentLoaded', function() {
   const accordionItems = document.querySelectorAll('.accordion-item');
+  let cubeManager = null;
+  
+  // Initialize cube manager
+  function initializeCube() {
+    try {
+      cubeManager = new CubeManager('dynamic-cube-container');
+      // Start with the first section (Oeconomia)
+      cubeManager.rotateTo('oeconomia');
+    } catch (error) {
+      console.error('Failed to initialize cube:', error);
+    }
+  }
   
   // Set the first item to be open by default
   accordionItems[0].classList.add('active');
   
-  // Initialize with first image
-  changeDynamicImage('oeconomia');
+  // Initialize cube after a short delay to ensure DOM is ready
+  setTimeout(initializeCube, 100);
   
   accordionItems.forEach(item => {
     const header = item.querySelector('.accordion-header');
@@ -26,12 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
         item.classList.add('active');
         content.style.maxHeight = content.scrollHeight + "px";
         
-        // Change the dynamic image
-        const imageKey = item.getAttribute('data-dynamic-image');
-        changeDynamicImage(imageKey);
+        // Rotate cube to corresponding section
+        const sectionKey = item.getAttribute('data-dynamic-image');
+        if (cubeManager && sectionKey) {
+          cubeManager.rotateTo(sectionKey);
+        }
       } else {
-        // Show default image when all are closed
-        changeDynamicImage('default');
+        // When all are closed, show default rotation (Oeconomia)
+        if (cubeManager) {
+          cubeManager.rotateTo('oeconomia');
+        }
       }
     });
   });
@@ -42,33 +60,15 @@ document.addEventListener('DOMContentLoaded', function() {
     activeContent.style.maxHeight = activeContent.scrollHeight + "px";
   }
   
-  function changeDynamicImage(imageKey) {
-    // Hide all dynamic images
-    const allDynamicImages = document.querySelectorAll('.dynamic-image-display');
-    allDynamicImages.forEach(img => {
-      img.classList.remove('active');
-    });
-    
-    // Show the target image
-    if (imageKey === 'default') {
-      const defaultImage = document.querySelector('.default-dynamic-display');
-      if (defaultImage) {
-        setTimeout(() => {
-          defaultImage.classList.add('active');
-        }, 50);
-      }
-    } else {
-      const targetImage = document.querySelector(`.dynamic-image-display[data-dynamic-image="${imageKey}"]`);
-      if (targetImage) {
-        setTimeout(() => {
-          targetImage.classList.add('active');
-        }, 50);
-      }
+  // Clean up on page unload
+  window.addEventListener('beforeunload', () => {
+    if (cubeManager) {
+      cubeManager.dispose();
     }
-  }
+  });
 });
 
-// Add this function to your accordion.js or in a script tag
+// Keep the scrollToRoadmap function for compatibility
 function scrollToRoadmap() {
   const roadmapSection = document.getElementById('roadmap-section');
   if (roadmapSection) {
@@ -77,7 +77,6 @@ function scrollToRoadmap() {
       block: 'start'
     });
   } else {
-    // Fallback if roadmap section hasn't been created yet
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         const roadmapSection = document.getElementById('roadmap-section');

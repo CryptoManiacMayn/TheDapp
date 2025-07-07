@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protocol Flowcharts - Oeconomia</title>
+    <style>
+      /* Complete CSS matching documentation style */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #000000;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Animated background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+        animation: gradientShift 20s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .nav-logo {
+        height: 40px;
+        width: auto;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+      }
+
+      .nav-logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+      }
+
+      .nav-content h1 {
+        margin: 0; /* Add this to remove default margin */
+      }
+
+      /* For flowcharts.html only - add this for the multiple nav links */
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      /* Update responsive CSS */
+      @media (max-width: 768px) {
+        .nav-brand {
+          gap: 0.5rem;
+        }
+
+        .nav-logo {
+          height: 35px;
+        }
+
+        .nav-links {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-logo {
+          height: 30px;
+        }
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.9);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-content h1 {
+        font-size: 1.5rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .back-link {
+        color: #00d4ff;
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #00d4ff;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: #00d4ff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      /* Table of Contents Sidebar */
+      .toc-sidebar {
+        position: fixed;
+        top: 80px;
+        left: -300px;
+        width: 300px;
+        height: calc(100vh - 80px);
+        background: rgba(10, 10, 10, 0.95);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 999;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+      }
+
+      .toc-sidebar.open {
+        left: 0;
+      }
+
+      .toc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .toc-header h3 {
+        color: #00d4ff;
+        font-size: 1.2rem;
+      }
+
+      .toc-toggle {
+        background: none;
+        border: none;
+        color: #ff00ff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .toc-toggle:hover {
+        background: rgba(255, 0, 255, 0.1);
+      }
+
+      .toc-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .toc-list li {
+        margin: 0;
+      }
+
+      .toc-list a {
+        display: block;
+        padding: 0.8rem 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+      }
+
+      .toc-list a:hover {
+        background: rgba(0, 212, 255, 0.1);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+        padding-left: 1.5rem;
+      }
+
+      .toc-list a.active {
+        background: rgba(0, 212, 255, 0.15);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+      }
+
+      /* Container with smooth transform */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 100px 20px 50px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .sidebar-open .container {
+        transform: translateX(150px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: textGlow 3s ease-in-out infinite alternate;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+      }
+
+      .last-updated {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      @keyframes textGlow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+        }
+      }
+
+      /* Content Sections */
+      .section {
+        background: rgba(255, 255, 255, 0.03);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        transition: all 0.3s ease;
+        scroll-margin-top: 100px;
+      }
+
+      .section:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.05),
+          rgba(255, 0, 255, 0.05)
+        );
+        border-color: rgba(0, 212, 255, 0.2);
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #00d4ff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      h2::before {
+        content: "▸";
+        color: #ff00ff;
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        color: #00ff88;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+      }
+
+      /* Protocol-specific styling */
+      .protocol-oeconomia {
+        border-color: rgba(0, 212, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.05),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
+
+      .protocol-alluria {
+        border-color: rgba(255, 136, 0, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 136, 0, 0.05),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
+
+      .protocol-eloqura {
+        border-color: rgba(255, 0, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 0, 255, 0.05),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
+
+      .protocol-artivya {
+        border-color: rgba(0, 255, 136, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.05),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
+
+      .protocol-iridescia {
+        border-color: rgba(136, 0, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(136, 0, 255, 0.05),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
+
+      /* Flowchart container */
+      .flowchart-container {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        text-align: center;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      .flowchart-placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .flowchart-instructions {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.9rem;
+        font-style: italic;
+      }
+
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        transition: all 0.3s ease;
+        z-index: 998;
+      }
+
+      .fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+      }
+
+      /* Scroll Progress Indicator */
+      .scroll-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d4ff, #ff00ff);
+        transition: width 0.3s ease;
+        z-index: 1001;
+      }
+
+      /* Footer */
+      .footer {
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.9),
+          rgba(26, 26, 46, 0.9)
+        );
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem 0;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #00d4ff;
+      }
+
+      .footer p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+      }
+
+      .disclaimer {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .sidebar-open .container {
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 100px 15px 50px;
+        }
+
+        .header h1 {
+          font-size: 2.5rem;
+        }
+
+        .section {
+          padding: 1.5rem;
+        }
+
+        .nav-content {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .toc-sidebar {
+          width: 280px;
+          left: -280px;
+        }
+
+        .fab {
+          bottom: 20px;
+          right: 20px;
+          width: 50px;
+          height: 50px;
+          font-size: 1.2rem;
+        }
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        padding: 0.5rem 1.5rem;
+        max-width: 195px;
+
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .section {
+          padding: 1.5rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <nav>
+      <div class="nav-content">
+        <div class="nav-brand">
+          <img
+            src="../images/OEC Logo.png"
+            alt="Oeconomia Logo"
+            class="nav-logo"
+          />
+          <h1>OECONOMIA</h1>
+        </div>
+        <div class="nav-links">
+          <a href="../index.html#products" class="btn-primary"
+            >← Back to Services</a
+          >
+          <a href="../content/tokenomics.html" class="back-link"
+            >Tokenomics</a
+          >
+
+          <a href="../content/documentation.html" class="back-link"
+            >Documentation</a
+          >
+          <a href="../content/privacypolicy.html" class="back-link"
+            >Privacy Policy</a
+          >
+          <a href="../index.html" class="btn-primary">← Back Home</a>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Table of Contents Sidebar -->
+    <div class="toc-sidebar" id="tocSidebar">
+      <div class="toc-header">
+        <h3>Protocols</h3>
+        <button class="toc-toggle" id="tocToggle">×</button>
+      </div>
+      <ul class="toc-list">
+        <li><a href="#oeconomia">Oeconomia Protocol Pantheon</a></li>
+        <li><a href="#alluria">Alluria Protocol</a></li>
+        <li><a href="#eloqura">Eloqura Protocol</a></li>
+        <li><a href="#artivya">Artivya Protocol</a></li>
+        <li><a href="#iridescia">Iridescia Protocol</a></li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <h1>Protocol Flowcharts</h1>
+        <p class="subtitle">
+          Interactive diagrams and process flows for the Oeconomia ecosystem
+        </p>
+        <p class="last-updated">Last Updated: January 2025</p>
+      </div>
+
+      <!-- Oeconomia Protocol Pantheon -->
+      <section class="section protocol-oeconomia hero-section" id="oeconomia">
+        <h2>Oeconomia Protocol Pantheon</h2>
+        <p>
+          The foundational governance layer that coordinates and secures the
+          entire network of specialized protocols. This flowchart illustrates
+          the cross-protocol integration, shared security models, and unified
+          governance mechanisms.
+        </p>
+
+        <div class="flowchart-container">
+          <div class="flowchart-placeholder">
+            📊 Oeconomia Protocol Pantheon Flowchart
+          </div>
+          <div class="flowchart-instructions">
+            Insert Lucidchart diagram here showing the overall ecosystem
+            architecture and protocol interactions
+          </div>
+        </div>
+
+        <h3>Key Components</h3>
+        <p>
+          OECgrd Guardian Staking, Cross-Protocol Coordination, Emergency
+          Response Systems, and Unified Treasury Management work together to
+          provide comprehensive oversight and security for all protocols in the
+          ecosystem.
+        </p>
+      </section>
+
+      <!-- Alluria Protocol -->
+      <section class="section protocol-alluria" id="alluria">
+        <h2>Alluria Protocol</h2>
+        <p>
+          The lending protocol that enables users to mint ALUD stablecoin using
+          ETH collateral with industry-leading 110% minimum collateral ratio.
+          This flowchart demonstrates the vault system, liquidation mechanisms,
+          and stability pool operations.
+        </p>
+
+        <div class="flowchart-container">
+          <div class="flowchart-placeholder">💰 Alluria Protocol Flowchart</div>
+          <div class="flowchart-instructions">
+            Insert Lucidchart diagram here showing the lending process,
+            collateral management, and ALUD minting flow
+          </div>
+        </div>
+
+        <h3>Process Flow</h3>
+        <p>
+          From initial ETH deposit to ALUD minting, collateral monitoring,
+          potential liquidations, and stability pool interactions - this diagram
+          shows how users maintain their positions and how the protocol ensures
+          system stability through decentralized liquidation mechanisms.
+        </p>
+      </section>
+
+      <!-- Eloqura Protocol -->
+      <section class="section protocol-eloqura" id="eloqura">
+        <h2>Eloqura Protocol</h2>
+        <p>
+          The tri-component protocol combining Automated Market Making,
+          Cross-Chain Infrastructure, and Protocol Optimization. This flowchart
+          illustrates how these three components work together to maximize
+          capital efficiency across multiple networks.
+        </p>
+
+        <div class="flowchart-container">
+          <div class="flowchart-placeholder">🌉 Eloqura Protocol Flowchart</div>
+          <div class="flowchart-instructions">
+            Insert Lucidchart diagram here showing AMM operations, bridge
+            mechanics, and AI-driven optimization strategies
+          </div>
+        </div>
+
+        <h3>Integration Flow</h3>
+        <p>
+          Multi-curve AMM technology, hybrid bridge architecture with optimistic
+          and ZK proofs, and AI-driven yield optimization work in concert to
+          provide seamless cross-chain liquidity and enhanced returns for users
+          across the supported blockchain networks.
+        </p>
+      </section>
+
+      <!-- Artivya Protocol -->
+      <section class="section protocol-artivya" id="artivya">
+        <h2>Artivya Protocol</h2>
+        <p>
+          The hybrid trading architecture that combines order book efficiency
+          with AMM liquidity for both fungible and non-fungible digital assets.
+          This flowchart shows the professional-grade trading infrastructure and
+          creator tools.
+        </p>
+
+        <div class="flowchart-container">
+          <div class="flowchart-placeholder">🎨 Artivya Protocol Flowchart</div>
+          <div class="flowchart-instructions">
+            Insert Lucidchart diagram here showing order book mechanics, NFT
+            marketplace operations, and creator revenue flows
+          </div>
+        </div>
+
+        <h3>Trading Mechanics</h3>
+        <p>
+          Advanced order types, fair ordering mechanisms, MEV protection,
+          multi-tier NFT verification, royalty management, and creator analytics
+          combine to provide a comprehensive trading platform that serves both
+          professional traders and digital creators.
+        </p>
+      </section>
+
+      <!-- Iridescia Protocol -->
+      <section class="section protocol-iridescia" id="iridescia">
+        <h2>Iridescia Protocol</h2>
+        <p>
+          The development infrastructure backbone providing smart contract
+          deployment tools, security frameworks, and developer resources. This
+          flowchart demonstrates the template engine, security scanning, and
+          multi-chain deployment processes.
+        </p>
+
+        <div class="flowchart-container">
+          <div class="flowchart-placeholder">
+            🛠️ Iridescia Protocol Flowchart
+          </div>
+          <div class="flowchart-instructions">
+            Insert Lucidchart diagram here showing development workflow,
+            security analysis, and deployment pipeline
+          </div>
+        </div>
+
+        <h3>Development Pipeline</h3>
+        <p>
+          From template selection through security analysis, formal
+          verification, multi-network deployment, and ongoing upgrade management
+          - this diagram shows how developers can rapidly build, test, and
+          deploy secure protocols across 25+ blockchain networks.
+        </p>
+      </section>
+
+      <div class="footer">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#features">Features</a>
+            <a href="content/documentation.html">Documentation</a>
+            <a href="content/privacypolicy.html">Privacy Policy</a>
+          </div>
+          <p>© 2025 Oeconomia DAO. A Decentralized Autonomous Organization.</p>
+          <p class="disclaimer">
+            Interactive flowcharts for protocol understanding and development
+            guidance.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabButton">
+      <span class="fab-icon">📋</span>
+    </button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Elements
+        const scrollIndicator = document.getElementById("scrollIndicator");
+        const tocSidebar = document.getElementById("tocSidebar");
+        const tocToggle = document.getElementById("tocToggle");
+        const fabButton = document.getElementById("fabButton");
+        const tocLinks = document.querySelectorAll(".toc-list a");
+        const sections = document.querySelectorAll(".section");
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          if (scrollIndicator) {
+            scrollIndicator.style.width = scrollPercent + "%";
+          }
+        }
+
+        // Table of Contents functionality
+        function toggleTOC() {
+          const isOpen = tocSidebar.classList.contains("open");
+
+          if (isOpen) {
+            tocSidebar.classList.remove("open");
+            document.body.classList.remove("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">📋</span>';
+          } else {
+            tocSidebar.classList.add("open");
+            document.body.classList.add("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">×</span>';
+          }
+        }
+
+        // Close TOC when clicking outside
+        function closeTOCOnOutsideClick(event) {
+          if (
+            tocSidebar &&
+            fabButton &&
+            !tocSidebar.contains(event.target) &&
+            !fabButton.contains(event.target) &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        }
+
+        // Smooth scrolling for TOC links
+        function smoothScrollToSection(event) {
+          event.preventDefault();
+          const targetId = event.target.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            const headerOffset = 100;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+
+            // Close TOC on mobile after clicking
+            if (window.innerWidth <= 768) {
+              setTimeout(() => {
+                toggleTOC();
+              }, 300);
+            }
+          }
+        }
+
+        // Update active TOC link based on scroll position
+        function updateActiveTOCLink() {
+          let currentSection = "";
+          const scrollPos = window.scrollY + 150;
+
+          sections.forEach((section) => {
+            const sectionTop =
+              section.getBoundingClientRect().top + window.pageYOffset;
+            const sectionHeight = section.offsetHeight;
+
+            if (
+              scrollPos >= sectionTop &&
+              scrollPos < sectionTop + sectionHeight
+            ) {
+              currentSection = section.getAttribute("id");
+            }
+          });
+
+          tocLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + currentSection) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Performance optimization - throttle scroll events
+        function throttle(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // Event Listeners
+        window.addEventListener(
+          "scroll",
+          throttle(() => {
+            updateScrollProgress();
+            updateActiveTOCLink();
+          }, 16)
+        );
+
+        document.addEventListener("click", closeTOCOnOutsideClick);
+
+        // TOC toggle button
+        if (tocToggle) {
+          tocToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // FAB button
+        if (fabButton) {
+          fabButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // TOC links
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", smoothScrollToSection);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            tocSidebar &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        });
+
+        // URL hash navigation support
+        if (window.location.hash) {
+          setTimeout(() => {
+            const targetSection = document.querySelector(window.location.hash);
+            if (targetSection) {
+              const headerOffset = 100;
+              const elementPosition = targetSection.getBoundingClientRect().top;
+              const offsetPosition =
+                elementPosition + window.pageYOffset - headerOffset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+              });
+            }
+          }, 100);
+        }
+
+        console.log("📋 Protocol Flowcharts Hub loaded successfully!");
+      });
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
+  </body>
+</html>

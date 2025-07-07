@@ -42,6 +42,56 @@
             50% { opacity: 0.7; }
         }
 
+        .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-logo {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+}
+
+.nav-content h1 {
+    margin: 0; /* Add this to remove default margin */
+}
+
+/* For flowcharts.html only - add this for the multiple nav links */
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Update responsive CSS */
+@media (max-width: 768px) {
+    .nav-brand {
+        gap: 0.5rem;
+    }
+    
+    .nav-logo {
+        height: 35px;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo {
+        height: 30px;
+    }
+}
+
         /* Navigation */
         nav {
             position: fixed;
@@ -638,6 +688,36 @@
             }
         }
 
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        padding: 0.5rem 1.5rem;
+        max-width: 155px;
+
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+      }
+
+
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 2rem;
@@ -683,11 +763,26 @@
     <div class="scroll-indicator" id="scrollIndicator"></div>
     
     <nav>
-        <div class="nav-content">
-            <h1>OECONOMIA</h1>
-<a href="../index.html" class="back-link">← Back to Home</a>
+<div class="nav-content">
+    <div class="nav-brand">
+        <img src="../images/OEC Logo.png" alt="Oeconomia Logo" class="nav-logo">
+        <h1>OECONOMIA</h1>
+    </div>
+        <div class="nav-links">
 
+          <a href="../content/tokenomics.html" class="back-link"
+            >Tokenomics</a
+          >
+          <a href="../content/flowcharts.html" class="back-link"
+            >Flow Charts</a
+          >
+
+          <a href="../content/privacypolicy.html" class="back-link"
+            >Privacy Policy</a
+          >
+          <a href="../index.html" class="btn-primary">← Back Home</a>
         </div>
+</div>
     </nav>
 
     <!-- Table of Contents Sidebar -->
@@ -709,7 +804,7 @@
 
     <div class="container">
         <div class="header">
-            <h1>Oeconomia Protocol Documentation</h1>
+            <h1>Protocol Documentation</h1>
             <p class="subtitle">A comprehensive decentralized finance infrastructure ecosystem</p>
             <p class="pronunciation">Pronunciation: ee-koh-NOH-mee-uh (IPA: /ˌiː.kəˈnoʊ.mi.ə/)</p>
             <p class="last-updated">Last Updated: June 25th, 2025</p>
@@ -1015,7 +1110,13 @@
         <span class="fab-icon">📚</span>
     </button>
 <!-- Back to Top Button HTML Snippet -->
-<button id="scrollToTopBtn" class="scroll-top-btn">↑</button>
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
 <script src="../scripts/backtotop.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

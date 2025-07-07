@@ -26,8 +26,8 @@ AI-Integrated DEX with MEV Protection
 DNS
 https://youtu.be/YbJr7YPmDsQ
 
-
-
+Connecting Web3 and HTML
+https://ethereum.stackexchange.com/questions/91574/using-only-html-page-for-frontend-with-web3-or-ethers-js
 
 
     <!-- Add this sidebar HTML right after the opening <body> tag -->

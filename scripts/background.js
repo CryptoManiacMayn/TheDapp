@@ -57,20 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 3. Lighting Setup (EXACTLY matching test.html)
     // --- Ambient Light (soft fill) ---
-    const ambientLight = new THREE.AmbientLight(0xffddbb, 1);
+    const ambientLight = new THREE.AmbientLight(0xffddbb, 2);
     scene.add(ambientLight);
 
     // --- Directional Lights ---
-    const keyLight = new THREE.DirectionalLight(0xff88cc, 1.5);
+    const keyLight = new THREE.DirectionalLight(0xff88cc, 2.5);
     keyLight.position.set(1, 1, 1).normalize();
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x00ffaa, 1.8);
+    const rimLight = new THREE.DirectionalLight(0x00ffaa, 2.5);
     rimLight.position.set(-1, -1, -1).normalize();
     scene.add(rimLight);
 
     // --- Point Light (sparkle) ---
-    const pointLight = new THREE.PointLight(0xffcc00, 10.5, 5);
+    const pointLight = new THREE.PointLight(0xffcc00, 15, 5);
     pointLight.position.set(0, 2, 10);
     scene.add(pointLight);
 

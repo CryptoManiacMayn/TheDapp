@@ -6,6 +6,8 @@
     <title>OECONOMIA</title>
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="stylesheet" href="styles/accordion.css" />
+    <link rel="stylesheet" href="styles/accordion-cube.css" />
+
     <link rel="stylesheet" href="styles/sidebar.css" />
     <link rel="stylesheet" href="styles/roadmap.css" />
     <link rel="stylesheet" href="styles/sectionnavigator.css" />
@@ -34,6 +36,8 @@
     <script src="scripts/cardobjects.js"></script>
     <script src="scripts/blockchainnetworks.js"></script>
 
+
+
     <!-- Navigation -->
     <nav>
       <div class="nav-content">
@@ -60,9 +64,11 @@
                 ><i class="fas fa-solid fa-shield-halved dropdown-icon"></i
                 >Privacy Policy</a
               >
-              <a href="content/howitworks.html"
-                ><i class="fas fa-solid fa-briefcase dropdown-icon"></i>How It
-                Works</a
+              <a href="content/flowcharts.html"
+                ><i class="fas fa-solid fa-briefcase dropdown-icon"></i>Flow Charts</a
+              >
+              <a href="content/tokenomics.html"
+                ><i class="fas fa-solid fa-coins dropdown-icon"></i>Tokenomics</a
               >
             </div>
           </li>
@@ -107,7 +113,7 @@
     <section class="features" id="features">
 
     <div class="features-video-background">
-        <video autoplay muted loop playsinline>
+    <video autoplay muted loop webkit-playsinline>
             <source src="https://www.shutterstock.com/shutterstock/videos/1055951651/preview/stock-footage-seamless-loop-of-d-animation-of-glowing-horizontal-lines-streaming-across-the-screen-deep-blues.mp4" type="video/mp4">
             <source src="your-video.webm" type="video/webm">
             Your browser does not support the video tag.
@@ -117,14 +123,14 @@
 
       <div class="container">
         <h1>The Future of Decentralization</h1>
-        <h3 style="text-align: center">
+        <h3 class="centered-feature-heading">
           Powered by neural networks and quantum-resistant cryptography, our
-          AI-enhanced DEX platform anticipates market movements and neutralizes
+          AI-enhanced DApp platform anticipates market movements and neutralizes
           threats before they happen.
         </h3>
         <div class="features-grid">
           <div class="feature-card">
-            <div><img src="images/Neural.png" alt="Girl in a jacket" width="60" height="60"></div>
+
             <h2>Neural DEX</h2>
             <h3>Self-Learning Exchange</h3>
             <p>
@@ -139,7 +145,7 @@
             </div>
           </div>
                     <div class="feature-card">
-         <div><img src="images/Predict.png" alt="Girl in a jacket" width="60" height="60"></div>
+
             <h2>Predictive Swap</h2>
             <h3>Oracle-Powered DEX</h3>
             <p>
@@ -154,7 +160,7 @@
             </div>
           </div>
           <div class="feature-card">
-         <div><img src="images/Algo.png" alt="Girl in a jacket" width="60" height="60"></div>
+
             <h2>Fluid Lending</h2>
             <h3>Algorithmic Credit Markets</h3>
             <p>
@@ -343,75 +349,12 @@
           </div>
         </div>
 
-        <!-- Dynamic Image Container -->
+<!-- Dynamic Cube Container -->
         <div class="dynamic-image-container">
-          <!-- Default Display -->
-          <div class="dynamic-image-display default-dynamic-display active">
-            <i class="fas fa-layer-group"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Protocol Suite</div>
-              <div class="dynamic-image-subtitle">
-                Explore our decentralized protocols
-              </div>
-            </div>
-          </div>
-
-          <!-- Oeconomia Display -->
-          <div class="dynamic-image-display" data-dynamic-image="oeconomia">
-            <i class="fas fa-exchange-alt"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Oeconomia Protocol Pantheon</div>
-              <div class="dynamic-image-subtitle">
-                Integrated DeFi Ecosystem with 5 Interoperable Protocols
-              </div>
-            </div>
-          </div>
-
-          <!-- Alluria Display -->
-          <div class="dynamic-image-display" data-dynamic-image="alluria">
-            <i class="fas fa-chart-line"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Alluria Protocol</div>
-              <div class="dynamic-image-subtitle">
-                Self-Custodial ALUD Stablecoin Platform
-              </div>
-            </div>
-          </div>
-
-          <!-- Eloqura Display -->
-          <div class="dynamic-image-display" data-dynamic-image="eloqura">
-            <i class="fas fa-coins"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Eloqura Protocol</div>
-              <div class="dynamic-image-subtitle">
-                Decentralized Liquidity & Yield Solutions
-              </div>
-            </div>
-          </div>
-
-          <!-- Artivya Display -->
-          <div class="dynamic-image-display" data-dynamic-image="artivya">
-            <i class="fas fa-palette"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Artivya Protocol</div>
-              <div class="dynamic-image-subtitle">
-                Hybrid NFT/Token Exchange Platform
-              </div>
-            </div>
-          </div>
-
-          <!-- Iridescia Display -->
-          <div class="dynamic-image-display" data-dynamic-image="iridescia">
-            <i class="fas fa-bridge"></i>
-            <div class="dynamic-image-info">
-              <div class="dynamic-image-title">Iridescia Protocol</div>
-              <div class="dynamic-image-subtitle">
-                Smart Contract Templates & Developer Tools
-              </div>
-            </div>
+          <div id="dynamic-cube-container">
+            <div class="cube-loading">Loading 3D Cube...</div>
           </div>
         </div>
-      </div>
     </section>
 
     <!-- Blockchain Networks Section -->
@@ -421,7 +364,7 @@
     <section class="blockchain-networks" id="blockchain-networks">
 
 <div class="blockchain-video-background">
-    <video autoplay muted loop playsinline webkit-playsinline>
+    <video autoplay muted loop webkit-playsinline>
         <source src="https://www.shutterstock.com/shutterstock/videos/3433949363/preview/stock-footage-abstract-gradient-particle-waves-seamlessly-flowing-with-soft-light-and-bokeh-fucsia-and-blue.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -439,24 +382,21 @@
 
         <div class="blockchain-scroll-container">
           <div class="blockchain-cards-wrapper">
+            
             <!-- Ethereum Card -->
             <div class="blockchain-card primary-launch">
               <div class="blockchain-header">
                 <div class="blockchain-logo ethereum">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\ethereum-eth-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Ethereum</h3>
                   <span class="launch-status primary">Primary Launch</span>
+
                 </div>
               </div>
             </div>
@@ -465,16 +405,11 @@
             <div class="blockchain-card primary-launch">
               <div class="blockchain-header">
                 <div class="blockchain-logo base">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\base-logo-in-blue.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Base</h3>
@@ -487,16 +422,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo zksync">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\zksync-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>zkSync Era</h3>
@@ -509,16 +439,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo polygon">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\polygon-matic-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Polygon</h3>
@@ -531,16 +456,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo optimism">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\optimism-ethereum-op-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Optimism</h3>
@@ -553,16 +473,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo arbitrum">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\arbitrum-arb-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Arbitrum</h3>
@@ -571,42 +486,16 @@
               </div>
             </div>
 
-            <!-- Loopring Card -->
-            <div class="blockchain-card future-expansion">
-              <div class="blockchain-header">
-                <div class="blockchain-logo loopring">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div class="blockchain-info">
-                  <h3>Loopring</h3>
-                  <span class="launch-status expansion">Q3 2026</span>
-                </div>
-              </div>
-            </div>
 
             <!-- BNB Chain Card -->
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo bsc">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\bnb-chain-binance-smart-chain-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>BNB Chain</h3>
@@ -619,16 +508,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo opbnb">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\opbnb-logo-916b2eb3.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>opBNB</h3>
@@ -641,16 +525,11 @@
             <div class="blockchain-card future-expansion">
               <div class="blockchain-header">
                 <div class="blockchain-logo starknet">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <img
+                  src="images\starknet-token-strk-logo.png"
+                  alt="NFT Marketplace"
+                  class="image"
+                />
                 </div>
                 <div class="blockchain-info">
                   <h3>Starknet</h3>
@@ -660,55 +539,8 @@
             </div>
 
             <!-- Duplicate cards for seamless scrolling -->
-            <div class="blockchain-card primary-launch">
-              <div class="blockchain-header">
-                <div class="blockchain-logo ethereum">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div class="blockchain-info">
-                  <h3>Ethereum</h3>
-                  <span class="launch-status primary">Primary Launch</span>
-                </div>
-              </div>
-            </div>
 
-            <div class="blockchain-card primary-launch">
-              <div class="blockchain-header">
-                <div class="blockchain-logo base">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path
-                      d="M16 0L7.5 16L16 21.5L24.5 16L16 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 23.5L7.5 18L16 32L24.5 18L16 23.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div class="blockchain-info">
-                  <h3>Base</h3>
-                  <span class="launch-status primary">Primary Launch</span>
-                </div>
-              </div>
-              <div class="blockchain-features">
-                <span class="feature">Low Gas Fees</span>
-                <span class="feature">Fast Finality</span>
-                <span class="feature">Coinbase Integration</span>
-              </div>
-              <div class="deployment-timeline">
-                <span class="timeline-status">Deploying Q4 2025</span>
-              </div>
-            </div>
+            
           </div>
         </div>
 
@@ -763,13 +595,14 @@
         <a href="#" class="btn-primary" onclick="launchDApp()"
           >Get Started Today</a
         >
-      </div>
 
-      <div class="platform-description">
+              <div class="platform-description">
         <span class="ai-pill">AI Liquidity Routing</span>
         <span class="ai-pill">Predictive Risk Analysis</span>
         <span class="ai-pill">Neural Order Matching</span>
         <span class="ai-pill">Smart Portfolio Rebalancing</span>
+      </div>
+      
       </div>
     </section>
 
@@ -919,7 +752,7 @@
     </script>
 
     <script src="scripts/script.js"></script>
-    <script src="scripts/accordion.js"></script>
+  
     <script src="scripts/roadmap.js"></script>
     <!-- Section Navigation Buttons -->
     <div class="section-nav-buttons">
@@ -934,5 +767,12 @@
         <i class="fas fa-chevron-down"></i>
       </button>
     </div>
+
+
+
+<script src="scripts/cube-manager.js"></script>
+<script src="scripts/accordion.js"></script>
+
+
   </body>
 </html>

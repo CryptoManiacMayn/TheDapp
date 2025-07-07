@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokenomics - Oeconomia Protocol</title>
+    <style>
+        /* Complete CSS matching documentation style */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #000000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+        }
+
+        .nav-content h1 {
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-content h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #00d4ff;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Table of Contents Sidebar */
+        .toc-sidebar {
+            position: fixed;
+            top: 80px;
+            left: -300px;
+            width: 300px;
+            height: calc(100vh - 80px);
+            background: rgba(10, 10, 10, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .toc-sidebar.open {
+            left: 0;
+        }
+
+        .toc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toc-header h3 {
+            color: #00d4ff;
+            font-size: 1.2rem;
+        }
+
+        .toc-toggle {
+            background: none;
+            border: none;
+            color: #ff00ff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-toggle:hover {
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin: 0;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .toc-list a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            border-left-color: #00d4ff;
+            padding-left: 1.5rem;
+        }
+
+        .toc-list a.active {
+            background: rgba(0, 212, 255, 0.15);
+            color: #00d4ff;
+            border-left-color: #00d4ff;
+        }
+
+        /* Container with smooth transform */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-open .container {
+            transform: translateX(150px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8)); }
+        }
+
+        /* Content Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.3s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(255, 0, 255, 0.05));
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2::before {
+            content: "▸";
+            color: #ff00ff;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: #00ff88;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem;
+            color: #fff;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        strong {
+            color: #00d4ff;
+        }
+
+        /* Token Controls */
+        .token-controls {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-item label {
+            color: #00ff88;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .control-item input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.8rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-item input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .reset-button {
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .reset-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+        }
+
+        /* Distribution Grid */
+        .distribution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .distribution-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .distribution-item:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .distribution-item.lead-dev { border-left: 4px solid #ff8800; }
+        .distribution-item.team { border-left: 4px solid #00d4ff; }
+        .distribution-item.treasury { border-left: 4px solid #00ff88; }
+        .distribution-item.users { border-left: 4px solid #ff00ff; }
+
+        .distribution-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .distribution-title {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .distribution-percentage {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .distribution-amount {
+            color: #00ff88;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .distribution-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Tax Breakdown */
+        .tax-breakdown {
+            background: rgba(255, 0, 255, 0.05);
+            border: 2px solid rgba(255, 0, 255, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tax-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tax-item h4 {
+            color: #ff00ff;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .tax-percentage {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .tax-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        /* Summary Stats */
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Vesting Schedule */
+        .vesting-table {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .vesting-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .vesting-table th,
+        .vesting-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vesting-table th {
+            color: #00d4ff;
+            font-weight: 600;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .vesting-table td {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #ff00ff);
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(26, 26, 46, 0.9));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar-open .container {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 15px 50px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .distribution-grid,
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc-sidebar {
+                width: 280px;
+                left: -280px;
+            }
+            
+            .fab {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <div class="nav-brand">
+                <img src="../images/OEC Logo.png" alt="Oeconomia Logo" class="nav-logo">
+                <h1>OECONOMIA</h1>
+            </div>
+            <div class="nav-links">
+                <a href="../content/documentation.html" class="back-link">← Documentation</a>
+                <a href="../index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Table of Contents Sidebar -->
+    <div class="toc-sidebar" id="tocSidebar">
+        <div class="toc-header">
+            <h3>Contents</h3>
+            <button class="toc-toggle" id="tocToggle">×</button>
+        </div>
+        <ul class="toc-list">
+            <li><a href="#overview">Token Overview</a></li>
+            <li><a href="#distribution">Token Distribution</a></li>
+            <li><a href="#vesting">Vesting Schedule</a></li>
+            <li><a href="#taxation">Transaction Fees</a></li>
+            <li><a href="#governance">Governance Model</a></li>
+            <li><a href="#utility">Token Utility</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>OEC Tokenomics</h1>
+            <p class="subtitle">Dynamic token economics powering the Oeconomia ecosystem</p>
+            <p class="last-updated">Last Updated: July 2025</p>
+        </div>
+
+        <!-- Token Controls -->
+        <section class="section" id="controls">
+            <h2>🔧 Token Configuration</h2>
+            <p>Adjust the parameters below to see how they affect the entire tokenomics structure. All calculations update automatically.</p>
+            
+            <div class="token-controls">
+                <div class="control-grid">
+                    <div class="control-item">
+                        <label for="totalSupply">Total Supply</label>
+                        <input type="number" id="totalSupply" value="1000000000" min="1" max="10000000000">
+                    </div>
+                    <div class="control-item">
+                        <label for="leadDevPercent">Lead Dev %</label>
+                        <input type="number" id="leadDevPercent" value="5" min="0" max="100" step="0.1">
+                    </div>
+                    <div class="control-item">
+                        <label for="teamPercent">Team %</label>
+                        <input type="number" id="teamPercent" value="10" min="0" max="100" step="0.1">
+                    </div>
+                    <div class="control-item">
+                        <label for="treasuryPercent">Treasury %</label>
+                        <input type="number" id="treasuryPercent" value="10" min="0" max="100" step="0.1">
+                    </div>
+                    <div class="control-item">
+                        <label for="usersPercent">Protocol Users %</label>
+                        <input type="number" id="usersPercent" value="75" min="0" max="100" step="0.1">
+                    </div>
+                    <div class="control-item">
+                        <label for="buySellFee">Buy/Sell Fee %</label>
+                        <input type="number" id="buySellFee" value="5" min="0" max="50" step="0.1">
+                    </div>
+                </div>
+                <button class="reset-button" onclick="resetToDefaults()">Reset to Defaults</button>
+            </div>
+        </section>
+
+        <!-- Token Overview -->
+        <section class="section hero-section" id="overview">
+            <h2>Token Overview</h2>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalSupplyDisplay">1,000,000,000</div>
+                    <div class="stat-label">Total Supply</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">OEC</div>
+                    <div class="stat-label">Token Symbol</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">ERC-20</div>
+                    <div class="stat-label">Token Standard</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="buySellFeeDisplay">5%</div>
+                    <div class="stat-label">Transaction Fee</div>
+                </div>
+            </div>
+            
+            <p>The OEC token serves as the foundational governance and utility token for the Oeconomia ecosystem. Through the innovative OECgrd (OEC Guardian) staking mechanism, token holders gain enhanced voting power and participate in securing the network while earning rewards from protocol fees and transaction volume.</p>
+        </section>
+
+" id="treasuryAmount">100,000,000 OEC</div>
+                    <div class="distribution-description">
+                        Controlled by DAO governance for protocol maintenance, development funding, partnerships, and ecosystem growth initiatives. Governed by OECgrd holders.
+                    </div>
+                </div>
+                
+                <div class="distribution-item users">
+                    <div class="distribution-header">
+                        <div class="distribution-title">Protocol Users</div>
+                        <div class="distribution-percentage" id="usersPercentDisplay">75%</div>
+                    </div>
+                    <div class="distribution-amount" id="usersAmount">750,000,000 OEC</div>
+                    <div class="distribution-description">
+                        The majority allocation for governance staking rewards, liquidity incentives, and community participation. Users wrap OEC to OECgrd for enhanced governance rights.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div style="color: rgba(255, 255, 255, 0.6); font-size: 1.1rem; margin-bottom: 1rem;">📊 Token Distribution Chart</div>
+                <div style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem; font-style: italic;">Interactive pie chart visualization would be integrated here showing the dynamic distribution percentages</div>
+            </div>
+        </section>
+
+        <!-- Vesting Schedule -->
+        <section class="section" id="vesting">
+            <h2>Vesting Schedule</h2>
+            <p>Structured token release schedules ensure long-term commitment and prevent market manipulation while incentivizing continued participation in the ecosystem.</p>
+            
+            <div class="vesting-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Allocation</th>
+                            <th>Initial Lock</th>
+                            <th>Cliff Period</th>
+                            <th>Vesting Period</th>
+                            <th>Release Schedule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Lead Developer</strong></td>
+                            <td>6 months</td>
+                            <td>6 months</td>
+                            <td>24 months</td>
+                            <td>0.5% every 3 months</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Team & Advisors</strong></td>
+                            <td>3 months</td>
+                            <td>12 months</td>
+                            <td>24 months</td>
+                            <td>Linear monthly release</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DAO Treasury</strong></td>
+                            <td>0 months</td>
+                            <td>0 months</td>
+                            <td>Governance</td>
+                            <td>DAO-controlled release</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Protocol Users</strong></td>
+                            <td>0 months</td>
+                            <td>0 months</td>
+                            <td>Ongoing</td>
+                            <td>Activity-based rewards</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Lead Developer Vesting Details</h3>
+            <p>The lead developer allocation features a conservative vesting schedule with <span id="leadDevLocked">3%</span> of total supply locked initially. After a 6-month initial lock period, tokens unlock at 0.5% of total supply every 3 months, ensuring sustained commitment over the critical early development phases.</p>
+        </section>
+
+        <!-- Transaction Fees -->
+        <section class="section" id="taxation">
+            <h2>Transaction Fees</h2>
+            <p>A balanced fee structure supports protocol sustainability while incentivizing long-term holding and active participation in governance.</p>
+            
+            <div class="tax-breakdown">
+                <h3>Buy/Sell Fee: <span id="buySellFeeBreakdown">5%</span></h3>
+                <p>Applied to all buy and sell transactions to fund protocol operations and reward active participants.</p>
+                
+                <div class="tax-grid">
+                    <div class="tax-item">
+                        <h4>Protocol Maintenance</h4>
+                        <div class="tax-percentage" id="maintenancePercent">25%</div>
+                        <div class="tax-description">Funds ongoing development, security audits, and infrastructure costs</div>
+                    </div>
+                    <div class="tax-item">
+                        <h4>Staker Rewards</h4>
+                        <div class="tax-percentage" id="stakerPercent">25%</div>
+                        <div class="tax-description">Distributed to OECgrd stakers as governance participation incentives</div>
+                    </div>
+                    <div class="tax-item">
+                        <h4>Liquidity Pool</h4>
+                        <div class="tax-percentage" id="liquidityPercent">50%</div>
+                        <div class="tax-description">Automatically added to liquidity to improve market stability and reduce slippage</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Fee Distribution Calculator</h3>
+            <div class="token-controls">
+                <div class="control-grid">
+                    <div class="control-item">
+                        <label for="maintenanceFee">Protocol Maintenance %</label>
+                        <input type="number" id="maintenanceFee" value="25" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <label for="stakerFee">Staker Rewards %</label>
+                        <input type="number" id="stakerFee" value="25" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <label for="liquidityFee">Liquidity %</label>
+                        <input type="number" id="liquidityFee" value="50" min="0" max="100" step="1">
+                    </div>
+                </div>
+                <p style="color: #00ff88; margin-top: 1rem;">Total: <span id="feeTotal">100%</span></p>
+            </div>
+        </section>
+
+        <!-- Governance Model -->
+        <section class="section" id="governance">
+            <h2>Governance Model</h2>
+            <p>The OECgrd (OEC Guardian) system transforms standard token holding into active network participation with enhanced voting power and reward mechanisms.</p>
+            
+            <h3>🛡️ OECgrd Guardian System</h3>
+            <div class="distribution-grid">
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">Token Conversion</div>
+                        <div class="distribution-percentage">1:1</div>
+                    </div>
+                    <div class="distribution-description">
+                        OEC tokens are wrapped 1:1 to OECgrd tokens, which can be unwrapped at any time (subject to any active lock periods).
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">Voting Power</div>
+                        <div class="distribution-percentage">Enhanced</div>
+                    </div>
+                    <div class="distribution-description">
+                        OECgrd holders gain voting power multipliers based on lock duration: Standard (1x), Enhanced (1.5x), Elite (2x).
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">Network Security</div>
+                        <div class="distribution-percentage">Active</div>
+                    </div>
+                    <div class="distribution-description">
+                        Staked OECgrd contributes to cross-protocol security through economic commitment and validator participation.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">Fee Rewards</div>
+                        <div class="distribution-percentage">Proportional</div>
+                    </div>
+                    <div class="distribution-description">
+                        Active stakers receive proportional rewards from transaction fees and protocol revenue.
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Governance Participation Tiers</h3>
+            <div class="vesting-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Lock Period</th>
+                            <th>Voting Multiplier</th>
+                            <th>Reward Bonus</th>
+                            <th>Benefits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard</strong></td>
+                            <td>No lock</td>
+                            <td>1.0x</td>
+                            <td>Base rate</td>
+                            <td>Basic voting, standard rewards</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enhanced</strong></td>
+                            <td>6 months</td>
+                            <td>1.5x</td>
+                            <td>+25%</td>
+                            <td>Priority proposals, bonus rewards</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Elite</strong></td>
+                            <td>12 months</td>
+                            <td>2.0x</td>
+                            <td>+50%</td>
+                            <td>Emergency voting, maximum rewards</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Token Utility -->
+        <section class="section" id="utility">
+            <h2>Token Utility</h2>
+            <p>OEC tokens serve multiple functions across the Oeconomia ecosystem, creating sustained demand and value accrual mechanisms.</p>
+            
+            <div class="distribution-grid">
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">🗳️ Governance Rights</div>
+                    </div>
+                    <div class="distribution-description">
+                        Vote on protocol upgrades, parameter changes, treasury allocation, and cross-protocol coordination through OECgrd staking.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">💰 Fee Revenue Sharing</div>
+                    </div>
+                    <div class="distribution-description">
+                        Stakers receive proportional shares of transaction fees, protocol revenue, and yield generated across all Oeconomia protocols.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">🛡️ Network Security</div>
+                    </div>
+                    <div class="distribution-description">
+                        OECgrd staking provides economic security for the entire protocol suite, with rewards for maintaining network integrity.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">🎯 Protocol Access</div>
+                    </div>
+                    <div class="distribution-description">
+                        Enhanced features, reduced fees, and priority access to new protocol launches for OECgrd holders.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">💎 Liquidity Incentives</div>
+                    </div>
+                    <div class="distribution-description">
+                        Rewards for providing liquidity across Eloqura AMM pools and participating in cross-chain bridge operations.
+                    </div>
+                </div>
+                
+                <div class="distribution-item">
+                    <div class="distribution-header">
+                        <div class="distribution-title">🚀 Ecosystem Growth</div>
+                    </div>
+                    <div class="distribution-description">
+                        Referral rewards, developer grants, and community building incentives to accelerate ecosystem adoption.
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Value Accrual Mechanisms</h3>
+            <p>The tokenomics design creates multiple value accrual streams:</p>
+            <ul>
+                <li><strong>Fee Burn:</strong> Portion of transaction fees permanently removed from circulation</li>
+                <li><strong>Staking Demand:</strong> Enhanced rewards drive token locking and reduce circulating supply</li>
+                <li><strong>Cross-Protocol Synergy:</strong> Integrated utility across Alluria, Eloqura, Artivya, and Iridescia</li>
+                <li><strong>Governance Premium:</strong> Voting power concentration increases token value for serious participants</li>
+                <li><strong>Revenue Distribution:</strong> Direct profit sharing with long-term stakers</li>
+            </ul>
+        </section>
+
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="../index.html#features">Features</a>
+                    <a href="../content/documentation.html">Documentation</a>
+                    <a href="../content/privacypolicy.html">Privacy Policy</a>
+                </div>
+                <p>© 2025 Oeconomia DAO. A Decentralized Autonomous Organization.</p>
+                <p class="disclaimer">This tokenomics documentation is for informational purposes. Token allocations and mechanisms subject to DAO governance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabButton">
+        <span class="fab-icon">📊</span>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const tocSidebar = document.getElementById('tocSidebar');
+            const tocToggle = document.getElementById('tocToggle');
+            const fabButton = document.getElementById('fabButton');
+            const tocLinks = document.querySelectorAll('.toc-list a');
+            const sections = document.querySelectorAll('.section');
+
+            // Token calculation elements
+            const totalSupplyInput = document.getElementById('totalSupply');
+            const leadDevPercentInput = document.getElementById('leadDevPercent');
+            const teamPercentInput = document.getElementById('teamPercent');
+            const treasuryPercentInput = document.getElementById('treasuryPercent');
+            const usersPercentInput = document.getElementById('usersPercent');
+            const buySellFeeInput = document.getElementById('buySellFee');
+            
+            // Fee breakdown elements
+            const maintenanceFeeInput = document.getElementById('maintenanceFee');
+            const stakerFeeInput = document.getElementById('stakerFee');
+            const liquidityFeeInput = document.getElementById('liquidityFee');
+
+            // Format number with commas
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+
+            // Calculate and update all values
+            function updateCalculations() {
+                const totalSupply = parseInt(totalSupplyInput.value) || 0;
+                const leadDevPercent = parseFloat(leadDevPercentInput.value) || 0;
+                const teamPercent = parseFloat(teamPercentInput.value) || 0;
+                const treasuryPercent = parseFloat(treasuryPercentInput.value) || 0;
+                const usersPercent = parseFloat(usersPercentInput.value) || 0;
+                const buySellFee = parseFloat(buySellFeeInput.value) || 0;
+
+                // Calculate token amounts
+                const leadDevAmount = Math.floor(totalSupply * leadDevPercent / 100);
+                const teamAmount = Math.floor(totalSupply * teamPercent / 100);
+                const treasuryAmount = Math.floor(totalSupply * treasuryPercent / 100);
+                const usersAmount = Math.floor(totalSupply * usersPercent / 100);
+
+                // Update displays
+                document.getElementById('totalSupplyDisplay').textContent = formatNumber(totalSupply);
+                document.getElementById('leadDevPercentDisplay').textContent = leadDevPercent + '%';
+                document.getElementById('teamPercentDisplay').textContent = teamPercent + '%';
+                document.getElementById('treasuryPercentDisplay').textContent = treasuryPercent + '%';
+                document.getElementById('usersPercentDisplay').textContent = usersPercent + '%';
+                document.getElementById('buySellFeeDisplay').textContent = buySellFee + '%';
+                document.getElementById('buySellFeeBreakdown').textContent = buySellFee + '%';
+
+                document.getElementById('leadDevAmount').textContent = formatNumber(leadDevAmount) + ' OEC';
+                document.getElementById('teamAmount').textContent = formatNumber(teamAmount) + ' OEC';
+                document.getElementById('treasuryAmount').textContent = formatNumber(treasuryAmount) + ' OEC';
+                document.getElementById('usersAmount').textContent = formatNumber(usersAmount) + ' OEC';
+
+                // Update lead dev locked amount (3% of total supply)
+                const leadDevLocked = (leadDevPercent * 0.6).toFixed(1); // 3% out of 5% = 60%
+                document.getElementById('leadDevLocked').textContent = leadDevLocked + '%';
+
+                // Validate percentages
+                const totalPercent = leadDevPercent + teamPercent + treasuryPercent + usersPercent;
+                if (totalPercent !== 100) {
+                    // Auto-adjust users percentage to make total 100%
+                    const adjustedUsersPercent = 100 - leadDevPercent - teamPercent - treasuryPercent;
+                    if (adjustedUsersPercent >= 0) {
+                        usersPercentInput.value = adjustedUsersPercent;
+                        document.getElementById('usersPercentDisplay').textContent = adjustedUsersPercent + '%';
+                        const adjustedUsersAmount = Math.floor(totalSupply * adjustedUsersPercent / 100);
+                        document.getElementById('usersAmount').textContent = formatNumber(adjustedUsersAmount) + ' OEC';
+                    }
+                }
+            }
+
+            // Update fee breakdown
+            function updateFeeBreakdown() {
+                const maintenance = parseInt(maintenanceFeeInput.value) || 0;
+                const staker = parseInt(stakerFeeInput.value) || 0;
+                const liquidity = parseInt(liquidityFeeInput.value) || 0;
+                const total = maintenance + staker + liquidity;
+
+                document.getElementById('maintenancePercent').textContent = maintenance + '%';
+                document.getElementById('stakerPercent').textContent = staker + '%';
+                document.getElementById('liquidityPercent').textContent = liquidity + '%';
+                document.getElementById('feeTotal').textContent = total + '%';
+
+                // Color code the total
+                const totalElement = document.getElementById('feeTotal');
+                if (total === 100) {
+                    totalElement.style.color = '#00ff88';
+                } else {
+                    totalElement.style.color = '#ff0088';
+                }
+            }
+
+            // Reset to defaults
+            function resetToDefaults() {
+                totalSupplyInput.value = 1000000000;
+                leadDevPercentInput.value = 5;
+                teamPercentInput.value = 10;
+                treasuryPercentInput.value = 10;
+                usersPercentInput.value = 75;
+                buySellFeeInput.value = 5;
+                maintenanceFeeInput.value = 25;
+                stakerFeeInput.value = 25;
+                liquidityFeeInput.value = 50;
+                updateCalculations();
+                updateFeeBreakdown();
+            }
+
+            // Make reset function globally available
+            window.resetToDefaults = resetToDefaults;
+
+            // Event listeners for inputs
+            [totalSupplyInput, leadDevPercentInput, teamPercentInput, treasuryPercentInput, usersPercentInput, buySellFeeInput].forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+
+            [maintenanceFeeInput, stakerFeeInput, liquidityFeeInput].forEach(input => {
+                input.addEventListener('input', updateFeeBreakdown);
+            });
+
+            // Scroll progress indicator
+            function updateScrollProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                if (scrollIndicator) {
+                    scrollIndicator.style.width = scrollPercent + '%';
+                }
+            }
+
+            // Table of Contents functionality
+            function toggleTOC() {
+                const isOpen = tocSidebar.classList.contains('open');
+                
+                if (isOpen) {
+                    tocSidebar.classList.remove('open');
+                    document.body.classList.remove('sidebar-open');
+                    fabButton.innerHTML = '<span class="fab-icon">📊</span>';
+                } else {
+                    tocSidebar.classList.add('open');
+                    document.body.classList.add('sidebar-open');
+                    fabButton.innerHTML = '<span class="fab-icon">×</span>';
+                }
+            }
+
+            // Close TOC when clicking outside
+            function closeTOCOnOutsideClick(event) {
+                if (tocSidebar && fabButton && 
+                    !tocSidebar.contains(event.target) && 
+                    !fabButton.contains(event.target) && 
+                    tocSidebar.classList.contains('open')) {
+                    toggleTOC();
+                }
+            }
+
+            // Smooth scrolling for TOC links
+            function smoothScrollToSection(event) {
+                event.preventDefault();
+                const targetId = event.target.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const headerOffset = 100;
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Close TOC on mobile after clicking
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            toggleTOC();
+                        }, 300);
+                    }
+                }
+            }
+
+            // Update active TOC link based on scroll position
+            function updateActiveTOCLink() {
+                let currentSection = '';
+                const scrollPos = window.scrollY + 150;
+
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
+                    const sectionHeight = section.offsetHeight;
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Performance optimization - throttle scroll events
+            function throttle(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // Event Listeners
+            window.addEventListener('scroll', throttle(() => {
+                updateScrollProgress();
+                updateActiveTOCLink();
+            }, 16));
+
+            document.addEventListener('click', closeTOCOnOutsideClick);
+
+            // TOC toggle button
+            if (tocToggle) {
+                tocToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTOC();
+                });
+            }
+
+            // FAB button
+            if (fabButton) {
+                fabButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTOC();
+                });
+            }
+
+            // TOC links
+            tocLinks.forEach(link => {
+                link.addEventListener('click', smoothScrollToSection);
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && tocSidebar && tocSidebar.classList.contains('open')) {
+                    toggleTOC();
+                }
+            });
+
+            // Initialize calculations
+            updateCalculations();
+            updateFeeBreakdown();
+
+            console.log('📊 Oeconomia Tokenomics loaded successfully!');
+        });
+    </script>
+</body>
+</html>
+

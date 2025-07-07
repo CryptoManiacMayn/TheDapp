@@ -1,0 +1,7 @@
+.dynamic-image-container,
+#dynamic-cube-container {
+    min-height: 500px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

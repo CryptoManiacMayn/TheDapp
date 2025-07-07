@@ -1,4 +1,4 @@
-// Add this to your existing script.js or create a new file
+// Enhanced seamless infinite scroll for blockchain networks
 document.addEventListener("DOMContentLoaded", function () {
     const blockchainSection = document.getElementById("blockchain-networks");
     let isAnimating = false;
@@ -17,6 +17,68 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    // Setup seamless infinite scroll
+    function setupSeamlessScroll() {
+        const wrapper = document.querySelector('.blockchain-cards-wrapper');
+        const cardsContainer = document.querySelector('.blockchain-scroll-container');
+        
+        if (!wrapper || !cardsContainer) return;
+
+        // Get all existing blockchain cards
+        const originalCards = wrapper.querySelectorAll('.blockchain-card');
+        
+        if (originalCards.length === 0) return;
+
+        // Clear the wrapper
+        wrapper.innerHTML = '';
+
+        // Create the first set container
+        const firstSet = document.createElement('div');
+        firstSet.className = 'blockchain-cards-set';
+        
+        // Create the duplicate set container
+        const secondSet = document.createElement('div');
+        secondSet.className = 'blockchain-cards-set';
+
+        // Clone all original cards to both sets
+        originalCards.forEach(card => {
+            // Add to first set
+            firstSet.appendChild(card.cloneNode(true));
+            // Add to second set (for seamless loop)
+            secondSet.appendChild(card.cloneNode(true));
+        });
+
+        // Add both sets to wrapper
+        wrapper.appendChild(firstSet);
+        wrapper.appendChild(secondSet);
+
+        // Calculate the exact width for seamless scrolling
+        const cardWidth = 200; // Width of each card
+        const gap = 4; // Gap between cards (0.25rem = 4px)
+        const totalCards = originalCards.length;
+        const setWidth = (cardWidth + gap) * totalCards;
+
+        // Set CSS custom property for animation
+        document.documentElement.style.setProperty('--scroll-width', `${setWidth}px`);
+
+        // Update the CSS animation dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes seamlessScroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-${setWidth}px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('Seamless scroll setup complete');
+        console.log(`Set width: ${setWidth}px, Cards: ${totalCards}`);
+    }
+
     // Handle video background
     function initializeVideoBackground() {
         const video = document.querySelector('.blockchain-video-background video');
@@ -33,10 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Initialize video background
-    initializeVideoBackground();
-
-    // Animation Handler
+    // Animation Handler for card entrance effects
     function initializeBlockchainCardAnimations() {
         const blockchainCards = document.querySelectorAll('.blockchain-card');
         let hasTriggered = false;
@@ -114,39 +173,52 @@ document.addEventListener("DOMContentLoaded", function () {
         return { triggerAnimation, resetAnimation };
     }
 
-    // Initialize animation system
-    const animationController = initializeBlockchainCardAnimations();
-    
-    // Expose controls globally
-    window.blockchainAnimationController = animationController;
+    // Initialize everything
+    function initialize() {
+        // Setup seamless scroll first
+        setupSeamlessScroll();
+        
+        // Initialize video background
+        initializeVideoBackground();
+        
+        // Initialize card animations (after seamless scroll setup)
+        setTimeout(() => {
+            const animationController = initializeBlockchainCardAnimations();
+            // Expose controls globally
+            window.blockchainAnimationController = animationController;
+        }, 100);
+    }
+
+    // Initialize when DOM is ready
+    initialize();
+
+    // Expose setup function globally for manual initialization if needed
+    window.setupSeamlessBlockchainScroll = setupSeamlessScroll;
 });
 
+// Enhanced particle system for visual effects
+class OeconomiaAnimations {
+    constructor() {
+        this.particles = [];
+        this.observers = [];
+        this.init();
+    }
 
+    init() {
+        this.createParticles();
+        this.setupScrollAnimations();
+        this.setupScrollToTop();
+        this.setupNavigation();
+    }
 
+    // Create floating particles
+    createParticles() {
+        const particleContainer = document.getElementById('particles');
+        if (!particleContainer) return;
+        
+        const particleCount = 50;
 
-
-
-
-      class OeconomiaAnimations {
-        constructor() {
-          this.particles = [];
-          this.observers = [];
-          this.init();
-        }
-
-        init() {
-          this.createParticles();
-          this.setupScrollAnimations();
-          this.setupScrollToTop();
-          this.setupNavigation();
-        }
-
-        // Create floating particles
-        createParticles() {
-          const particleContainer = document.getElementById('particles');
-          const particleCount = 50;
-
-          for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
@@ -159,200 +231,104 @@ document.addEventListener("DOMContentLoaded", function () {
             
             particleContainer.appendChild(particle);
             this.particles.push(particle);
-          }
         }
+    }
 
-        // Setup scroll-triggered animations
-        setupScrollAnimations() {
-          const animateElements = document.querySelectorAll('.section');
-          
-          const observer = new IntersectionObserver((entries) => {
+    // Setup scroll-triggered animations
+    setupScrollAnimations() {
+        const animateElements = document.querySelectorAll('.section');
+        
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                
-                // Animate child elements with stagger
-                const staggerElements = entry.target.querySelectorAll('[class*="stagger-"]');
-                staggerElements.forEach((el, index) => {
-                  setTimeout(() => {
-                    if (el.classList.contains('feature-card')) {
-                      el.classList.add('animate');
-                    }  else if (el.classList.contains('phase-card')) {
-                      el.classList.add('animate');
-                    }
-                  }, index * 150);
-                });
-              }
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    
+                    // Animate child elements with stagger
+                    const staggerElements = entry.target.querySelectorAll('[class*="stagger-"]');
+                    staggerElements.forEach((el, index) => {
+                        setTimeout(() => {
+                            if (el.classList.contains('feature-card')) {
+                                el.classList.add('animate');
+                            } else if (el.classList.contains('phase-card')) {
+                                el.classList.add('animate');
+                            }
+                        }, index * 150);
+                    });
+                }
             });
-          }, {
+        }, {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
-          });
+        });
 
-          animateElements.forEach(el => observer.observe(el));
-          this.observers.push(observer);
-        }
+        animateElements.forEach(el => observer.observe(el));
+        this.observers.push(observer);
+    }
 
-        // Setup accordion functionality
-        setupAccordion() {
-          const accordionItems = document.querySelectorAll('.accordion-item');
-          
-          accordionItems.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            
-            header.addEventListener('click', () => {
-              const isActive = item.classList.contains('active');
-              
-              // Close all accordion items
-              accordionItems.forEach(otherItem => {
-                otherItem.classList.remove('active');
-              });
-              
-              // Open clicked item if it wasn't active
-              if (!isActive) {
-                item.classList.add('active');
-              }
-            });
-          });
-        }
-
-        // Setup scroll to top button
-        setupScrollToTop() {
-          const scrollBtn = document.getElementById('scrollToTopBtn');
-          
-          window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-              scrollBtn.classList.add('show');
-            } else {
-              scrollBtn.classList.remove('show');
-            }
-          });
-
-          scrollBtn.addEventListener('click', () => {
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            });
-          });
-        }
-
-        // Setup navigation effects
-        setupNavigation() {
-          const nav = document.querySelector('nav');
-          
-          window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-              nav.style.background = 'rgba(0, 0, 0, 0.95)';
-            } else {
-              nav.style.background = 'rgba(0, 0, 0, 0.9)';
-            }
-          });
-
-          // Smooth scrolling for navigation links
-          const navLinks = document.querySelectorAll('nav a[href^="#"]');
-          navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-              e.preventDefault();
-              const target = document.querySelector(link.getAttribute('href'));
-              if (target) {
-                target.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start'
-                });
-              }
-            });
-          });
-        }
-
-        // Cleanup observers
-        destroy() {
-          this.observers.forEach(observer => observer.disconnect());
-        }
-      }
-
-      // Enhanced Blockchain Network Animation
-      class BlockchainNetworkAnimations {
-        constructor() {
-          this.isAnimating = false;
-          this.init();
-        }
-
-        init() {
-          this.initializeVideoBackground();
-          this.initializeCardAnimations();
-        }
-
-        initializeVideoBackground() {
-          const video = document.querySelector('.blockchain-video-background video');
-          if (video) {
-            video.addEventListener('canplaythrough', () => {
-              video.classList.add('loaded');
-            });
-            
-            setTimeout(() => {
-              if (!video.classList.contains('loaded')) {
-                video.classList.add('loaded');
-              }
-            }, 1000);
-          }
-        }
-
-        initializeCardAnimations() {
-          const blockchainSection = document.getElementById('blockchain-networks');
-          const blockchainCards = document.querySelectorAll('.blockchain-card');
-          let hasTriggered = false;
-          
-          const triggerAnimation = () => {
-            if (this.isAnimating) return;
-            
-            this.isAnimating = true;
-            hasTriggered = true;
-            
-            blockchainCards.forEach((card, index) => {
-              setTimeout(() => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px) scale(0.9)';
-                
-                setTimeout(() => {
-                  card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                  card.style.opacity = '1';
-                  card.style.transform = 'translateY(0) scale(1)';
-                }, 100);
-              }, index * 100);
-            });
-            
-            setTimeout(() => {
-              this.isAnimating = false;
-            }, 2000);
-          };
-          
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                if (!hasTriggered) {
-                  setTimeout(triggerAnimation, 200);
-                }
-              }
-            });
-          }, {
-            threshold: [0.1, 0.3, 0.5]
-          });
-          
-          if (blockchainSection) {
-            observer.observe(blockchainSection);
-          }
-        }
-      }
-
-      // Initialize animations when DOM is loaded
-      document.addEventListener('DOMContentLoaded', () => {
-        const oeconomiaAnimations = new OeconomiaAnimations();
-        const blockchainAnimations = new BlockchainNetworkAnimations();
+    // Setup scroll to top button
+    setupScrollToTop() {
+        const scrollBtn = document.getElementById('scrollToTopBtn');
+        if (!scrollBtn) return;
         
-        // Add some interactive effects
-        document.addEventListener('mousemove', (e) => {
-          const cursor = document.createElement('div');
-          cursor.style.cssText = `
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Setup navigation effects
+    setupNavigation() {
+        const nav = document.querySelector('nav');
+        if (!nav) return;
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    // Cleanup observers
+    destroy() {
+        this.observers.forEach(observer => observer.disconnect());
+    }
+}
+
+// Initialize animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const oeconomiaAnimations = new OeconomiaAnimations();
+    
+    // Add interactive cursor effect
+    document.addEventListener('mousemove', (e) => {
+        const cursor = document.createElement('div');
+        cursor.style.cssText = `
             position: fixed;
             top: ${e.clientY}px;
             left: ${e.clientX}px;
@@ -363,26 +339,25 @@ document.addEventListener("DOMContentLoaded", function () {
             pointer-events: none;
             z-index: 9999;
             animation: cursorFade 0.5s ease-out forwards;
-          `;
-          
-          document.body.appendChild(cursor);
-          
-          setTimeout(() => {
-            cursor.remove();
-          }, 500);
-        });
+        `;
         
-        // Add cursor fade animation
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes cursorFade {
+        document.body.appendChild(cursor);
+        
+        setTimeout(() => {
+            cursor.remove();
+        }, 500);
+    });
+    
+    // Add cursor fade animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes cursorFade {
             0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0; transform: scale(0); }
-          }
-        `;
-        document.head.appendChild(style);
-      });
+        }
+    `;
+    document.head.appendChild(style);
+});
 
-      // Expose animations globally
-      window.OeconomiaAnimations = OeconomiaAnimations;
-      window.BlockchainNetworkAnimations = BlockchainNetworkAnimations;
+// Expose animations globally
+window.OeconomiaAnimations = OeconomiaAnimations;

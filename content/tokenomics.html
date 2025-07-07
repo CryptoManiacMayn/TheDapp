@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tokenomics - Oeconomia Protocol</title>
+    <style>
+      /* Complete CSS matching documentation style */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #000000;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Animated background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+        animation: gradientShift 20s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .nav-logo {
+        height: 40px;
+        width: auto;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+      }
+
+      .nav-logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+      }
+
+      .nav-content h1 {
+        margin: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.9);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-content h1 {
+        font-size: 1.5rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .back-link {
+        color: #00d4ff;
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #00d4ff;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: #00d4ff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      /* Table of Contents Sidebar */
+      .toc-sidebar {
+        position: fixed;
+        top: 80px;
+        left: -300px;
+        width: 300px;
+        height: calc(100vh - 80px);
+        background: rgba(10, 10, 10, 0.95);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 999;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+      }
+
+      .toc-sidebar.open {
+        left: 0;
+      }
+
+      .toc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .toc-header h3 {
+        color: #00d4ff;
+        font-size: 1.2rem;
+      }
+
+      .toc-toggle {
+        background: none;
+        border: none;
+        color: #ff00ff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .toc-toggle:hover {
+        background: rgba(255, 0, 255, 0.1);
+      }
+
+      .toc-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .toc-list li {
+        margin: 0;
+      }
+
+      .toc-list a {
+        display: block;
+        padding: 0.8rem 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+      }
+
+      .toc-list a:hover {
+        background: rgba(0, 212, 255, 0.1);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+        padding-left: 1.5rem;
+      }
+
+      .toc-list a.active {
+        background: rgba(0, 212, 255, 0.15);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+      }
+
+      /* Container with smooth transform */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 20px 50px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .sidebar-open .container {
+        transform: translateX(150px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: textGlow 3s ease-in-out infinite alternate;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+      }
+
+      .last-updated {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      @keyframes textGlow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+        }
+      }
+
+      /* Content Sections */
+      .section {
+        background: rgba(255, 255, 255, 0.03);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        transition: all 0.3s ease;
+        scroll-margin-top: 100px;
+      }
+
+      .section:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.05),
+          rgba(255, 0, 255, 0.05)
+        );
+        border-color: rgba(0, 212, 255, 0.2);
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #00d4ff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      h2::before {
+        content: "▸";
+        color: #ff00ff;
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        color: #00ff88;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem;
+        color: #fff;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+      }
+
+      ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      strong {
+        color: #00d4ff;
+      }
+
+      /* Distribution Grid */
+      .distribution-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .distribution-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .distribution-item:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        transform: translateY(-3px);
+      }
+
+      .distribution-item.lead-dev {
+        border-left: 4px solid #ff8800;
+      }
+      .distribution-item.team {
+        border-left: 4px solid #00d4ff;
+      }
+      .distribution-item.treasury {
+        border-left: 4px solid #00ff88;
+      }
+      .distribution-item.users {
+        border-left: 4px solid #ff00ff;
+      }
+
+      .distribution-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .distribution-title {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .distribution-percentage {
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .distribution-amount {
+        color: #00ff88;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .distribution-description {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      /* Tax Breakdown */
+      .tax-breakdown {
+        background: rgba(255, 0, 255, 0.05);
+        border: 2px solid rgba(255, 0, 255, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+      }
+
+      .tax-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .tax-item {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        padding: 1.2rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .tax-item h4 {
+        color: #ff00ff;
+        margin-bottom: 0.5rem;
+        margin-top: 0;
+      }
+
+      .tax-percentage {
+        color: #00d4ff;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .tax-description {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.85rem;
+      }
+
+      /* Chart Container */
+      .chart-container {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        text-align: center;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      /* Summary Stats */
+      .summary-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .stat-item {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.1),
+          rgba(255, 0, 255, 0.1)
+        );
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        color: #00d4ff;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      }
+
+      /* Vesting Schedule */
+      .vesting-table {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        overflow-x: auto;
+      }
+
+      .vesting-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .vesting-table th,
+      .vesting-table td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .vesting-table th {
+        color: #00d4ff;
+        font-weight: 600;
+        background: rgba(0, 212, 255, 0.1);
+      }
+
+      .vesting-table td {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* Important Notice Box */
+      .important-box {
+        background: rgba(255, 0, 255, 0.1);
+        border: 2px solid rgba(255, 0, 255, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .important-box::before {
+        content: "⚠️";
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        opacity: 0.5;
+      }
+
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        transition: all 0.3s ease;
+        z-index: 998;
+      }
+
+      .fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+      }
+
+      /* Scroll Progress Indicator */
+      .scroll-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d4ff, #ff00ff);
+        transition: width 0.3s ease;
+        z-index: 1001;
+      }
+
+      /* Footer */
+      .footer {
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.9),
+          rgba(26, 26, 46, 0.9)
+        );
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem 0;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #00d4ff;
+      }
+
+      .footer p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+      }
+
+      .disclaimer {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .sidebar-open .container {
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 100px 15px 50px;
+        }
+
+        .header h1 {
+          font-size: 2.5rem;
+        }
+
+        .section {
+          padding: 1.5rem;
+        }
+
+        .nav-content {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .distribution-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .toc-sidebar {
+          width: 280px;
+          left: -280px;
+        }
+
+        .fab {
+          bottom: 20px;
+          right: 20px;
+        }
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        padding: 0.5rem 1.5rem;
+        max-width: 155px;
+
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .section {
+          padding: 1.5rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <nav>
+      <div class="nav-content">
+        <div class="nav-brand">
+          <img
+            src="../images/OEC Logo.png"
+            alt="Oeconomia Logo"
+            class="nav-logo"
+          />
+          <h1>OECONOMIA</h1>
+        </div>
+        <div class="nav-links">
+
+
+          <a href="../content/flowcharts.html" class="back-link"
+            >Flow Charts</a
+          >
+          <a href="../content/documentation.html" class="back-link"
+            >Documentation</a
+          >
+          <a href="../content/privacypolicy.html" class="back-link"
+            >Privacy Policy</a
+          >
+          <a href="../index.html" class="btn-primary">← Back Home</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Sidebar -->
+    <div class="toc-sidebar" id="tocSidebar">
+      <div class="toc-header">
+        <h3>Contents</h3>
+        <button class="toc-toggle" id="tocToggle">×</button>
+      </div>
+      <ul class="toc-list">
+        <li><a href="#overview">Token Overview</a></li>
+        <li><a href="#distribution">Token Distribution</a></li>
+        <li><a href="#vesting">Vesting Schedule</a></li>
+        <li><a href="#taxation">Network Fees</a></li>
+        <li><a href="#governance">Governance Model</a></li>
+        <li><a href="#utility">Token Utility</a></li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <h1>OEC Network Token</h1>
+        <p class="subtitle">
+          Functional utility token for decentralized protocol governance
+        </p>
+        <p class="last-updated">Last Updated: July 2025</p>
+      </div>
+
+      <!-- Token Overview -->
+      <section class="section hero-section" id="overview">
+        <h2>Token Overview</h2>
+        <div class="summary-stats">
+          <div class="stat-item">
+            <div class="stat-value">1,000,000,000</div>
+            <div class="stat-label">Total Supply</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">OEC</div>
+            <div class="stat-label">Token Symbol</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">ERC-20</div>
+            <div class="stat-label">Token Standard</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">5%</div>
+            <div class="stat-label">Network Fee</div>
+          </div>
+        </div>
+
+        <p>
+          The OEC token serves as a functional utility token required for
+          accessing and operating within the Oeconomia protocol ecosystem. Users
+          actively convert OEC to OECgrd through the Guardian system to
+          participate in protocol governance, security validation, and network
+          maintenance functions.
+        </p>
+
+        <div class="important-box">
+          <p>
+            <strong>Utility-First Design</strong>: OEC functions as the
+            operational fuel for protocol interactions. The OECgrd Guardian
+            system requires active user participation in network security and
+            governance to access enhanced protocol features and capabilities.
+          </p>
+        </div>
+      </section>
+
+      <!-- Token Distribution -->
+      <section class="section" id="distribution">
+        <h2>Token Distribution</h2>
+        <p>
+          The initial token allocation prioritizes community control and
+          decentralized operations while ensuring adequate resources for
+          protocol development and maintenance.
+        </p>
+
+        <div class="distribution-grid">
+          <div class="distribution-item lead-dev">
+            <div class="distribution-header">
+              <div class="distribution-title">Lead Developer</div>
+              <div class="distribution-percentage">5%</div>
+            </div>
+            <div class="distribution-amount">50,000,000 OEC</div>
+            <div class="distribution-description">
+              Allocated for ongoing protocol development and maintenance work.
+              Subject to performance-based vesting with 3% locked and 0.5%
+              unlocking every 3 months contingent on development milestones and
+              community approval.
+            </div>
+          </div>
+
+          <div class="distribution-item team">
+            <div class="distribution-header">
+              <div class="distribution-title">Core Contributors</div>
+              <div class="distribution-percentage">10%</div>
+            </div>
+            <div class="distribution-amount">100,000,000 OEC</div>
+            <div class="distribution-description">
+              Distributed to team members and advisors contributing technical
+              work to protocol development. Features milestone-based vesting
+              tied to delivered contributions and community-approved development
+              objectives.
+            </div>
+          </div>
+
+          <div class="distribution-item treasury">
+            <div class="distribution-header">
+              <div class="distribution-title">Protocol Treasury</div>
+              <div class="distribution-percentage">10%</div>
+            </div>
+            <div class="distribution-amount">100,000,000 OEC</div>
+            <div class="distribution-description">
+              Decentralized treasury controlled entirely by community
+              governance. Funds protocol operations, security audits,
+              infrastructure costs, and ecosystem development as determined by
+              active participant voting.
+            </div>
+          </div>
+
+          <div class="distribution-item users">
+            <div class="distribution-header">
+              <div class="distribution-title">Community Participants</div>
+              <div class="distribution-percentage">60%</div>
+            </div>
+            <div class="distribution-amount">600,000,000 OEC</div>
+            <div class="distribution-description">
+              Distributed to active protocol users through work-based
+              incentives: governance participation, security validation,
+              liquidity provision, and network maintenance activities. Requires
+              ongoing contribution to earn allocations.
+            </div>
+          </div>
+          <div class="distribution-item users">
+            <div class="distribution-header">
+              <div class="distribution-title">Network Incentives</div>
+              <div class="distribution-percentage">15%</div>
+            </div>
+            <div class="distribution-amount">150,000,000 OEC</div>
+            <div class="distribution-description">
+              Rewards for specific network activities including cross-chain
+              bridge operations, oracle data provision, emergency response
+              coordination, and ecosystem development contributions requiring
+              active participation.
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <div
+            style="
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 1.1rem;
+              margin-bottom: 1rem;
+            "
+          >
+            📊 Token Distribution Visualization
+          </div>
+          <div
+            style="
+              color: rgba(255, 255, 255, 0.4);
+              font-size: 0.9rem;
+              font-style: italic;
+            "
+          >
+            75% community allocation ensures decentralized control from launch
+          </div>
+        </div>
+      </section>
+
+      <!-- Vesting Schedule -->
+      <section class="section" id="vesting">
+        <h2>Release Schedule</h2>
+        <p>
+          Token release schedules are tied to work completion, development
+          milestones, and community governance decisions rather than passive
+          time-based unlocking.
+        </p>
+
+        <div class="vesting-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Allocation</th>
+                <th>Release Condition</th>
+                <th>Governance Requirement</th>
+                <th>Performance Metric</th>
+                <th>Community Control</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Lead Developer</strong></td>
+                <td>Milestone completion</td>
+                <td>Community approval</td>
+                <td>Development deliverables</td>
+                <td>DAO voting on releases</td>
+              </tr>
+              <tr>
+                <td><strong>Core Contributors</strong></td>
+                <td>Work-based vesting</td>
+                <td>Contribution verification</td>
+                <td>Code commits, audits</td>
+                <td>Peer review approval</td>
+              </tr>
+              <tr>
+                <td><strong>Protocol Treasury</strong></td>
+                <td>Governance proposals</td>
+                <td>Active participant voting</td>
+                <td>Budget approval</td>
+                <td>Full DAO control</td>
+              </tr>
+              <tr>
+                <td><strong>Community Participants</strong></td>
+                <td>Activity completion</td>
+                <td>Verification of work</td>
+                <td>Network contribution</td>
+                <td>Merit-based distribution</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Performance-Based Release Mechanics</h3>
+        <p>
+          Developer allocations unlock based on completion of specific
+          development milestones verified by the community. 3% of total supply
+          (30,000,000 OEC) requires initial development phase completion, with
+          subsequent 0.5% releases (5,000,000 OEC) contingent on delivering
+          protocol improvements and maintaining community confidence through
+          transparent progress reporting.
+        </p>
+
+        <div class="important-box">
+          <p>
+            <strong>Merit-Based Distribution</strong>: All token releases
+            require demonstrated work completion, community verification, or
+            active network contribution. No tokens are released based solely on
+            time passage without corresponding value delivery.
+          </p>
+        </div>
+      </section>
+
+      <!-- Network Fees -->
+      <section class="section" id="taxation">
+        <h2>Network Fees</h2>
+        <p>
+          Network fees fund essential protocol operations and maintenance while
+          creating sustainable economic incentives for active network
+          participants rather than passive holders.
+        </p>
+
+        <div class="tax-breakdown">
+          <h3>Network Usage Fee: 5%</h3>
+          <p>
+            Applied to protocol interactions to ensure sustainable operations,
+            fund security measures, and maintain network infrastructure. Fee
+            allocation directly supports active protocol maintenance and
+            improvement.
+          </p>
+
+          <div class="tax-grid">
+            <div class="tax-item">
+              <h4>Protocol Operations</h4>
+              <div class="tax-percentage">25%</div>
+              <div class="tax-description">
+                Funds development work, security audits, infrastructure
+                maintenance, and protocol upgrades
+              </div>
+            </div>
+            <div class="tax-item">
+              <h4>Active Participant Compensation</h4>
+              <div class="tax-percentage">25%</div>
+              <div class="tax-description">
+                Compensates validators, governance participants, and network
+                maintainers for active work performed
+              </div>
+            </div>
+            <div class="tax-item">
+              <h4>Network Stability</h4>
+              <div class="tax-percentage">50%</div>
+              <div class="tax-description">
+                Maintains liquidity pools and ensures stable protocol operations
+                through automated market mechanisms
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Fee Utilization Framework</h3>
+        <p>
+          Each fee component serves essential network functions tied to active
+          participation:
+        </p>
+        <ul>
+          <li>
+            <strong>Protocol Operations (1.25%)</strong>: Directly funds ongoing
+            development work, security audits, and infrastructure maintenance
+            performed by contributors
+          </li>
+          <li>
+            <strong>Active Participant Compensation (1.25%)</strong>: Rewards
+            users who perform network validation, governance work, and security
+            functions
+          </li>
+          <li>
+            <strong>Network Stability (2.5%)</strong>: Maintains protocol
+            functionality through automated liquidity management and stability
+            mechanisms
+          </li>
+        </ul>
+      </section>
+
+      <!-- Governance Model -->
+      <section class="section" id="governance">
+        <h2>Governance Model</h2>
+        <p>
+          The OECgrd (OEC Guardian) system requires active user participation in
+          network governance and security functions to access enhanced protocol
+          capabilities and influence protocol direction.
+        </p>
+
+        <h3>🛡️ OECgrd Guardian System</h3>
+        <div class="distribution-grid">
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Active Conversion</div>
+              <div class="distribution-percentage">1:1</div>
+            </div>
+            <div class="distribution-description">
+              Users actively convert OEC to OECgrd tokens to access governance
+              functions. Conversion requires commitment to participate in
+              network validation and governance activities with ability to
+              convert back subject to participation requirements.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Governance Work</div>
+              <div class="distribution-percentage">Required</div>
+            </div>
+            <div class="distribution-description">
+              OECgrd holders must actively participate in governance decisions,
+              proposal evaluation, and network validation to maintain enhanced
+              capabilities and voting influence.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Network Security</div>
+              <div class="distribution-percentage">Active</div>
+            </div>
+            <div class="distribution-description">
+              Participants contribute to network security through validation
+              work, monitoring activities, and emergency response coordination
+              across all Oeconomia protocols.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Work Compensation</div>
+              <div class="distribution-percentage">Merit-Based</div>
+            </div>
+            <div class="distribution-description">
+              Active participants receive compensation for governance work,
+              security validation, and network maintenance activities based on
+              contribution quality and community verification.
+            </div>
+          </div>
+        </div>
+
+        <h3>Participation Requirements by Tier</h3>
+        <div class="vesting-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Work Commitment</th>
+                <th>Governance Influence</th>
+                <th>Work Compensation</th>
+                <th>Required Activities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Standard</strong></td>
+                <td>Basic participation</td>
+                <td>Standard voting</td>
+                <td>Base compensation</td>
+                <td>Proposal voting, basic governance</td>
+              </tr>
+              <tr>
+                <td><strong>Enhanced</strong></td>
+                <td>Regular validation work</td>
+                <td>Increased influence</td>
+                <td>+25% work bonus</td>
+                <td>Proposal creation, detailed review, validation</td>
+              </tr>
+              <tr>
+                <td><strong>Elite</strong></td>
+                <td>Continuous network support</td>
+                <td>Maximum influence</td>
+                <td>+50% work bonus</td>
+                <td>Emergency response, complex validation, mentoring</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important-box">
+          <p>
+            <strong>Work-Based Authority</strong>: All governance influence and
+            enhanced capabilities are earned through demonstrable work
+            contribution to network security, governance participation, and
+            ecosystem development rather than passive token holding.
+          </p>
+        </div>
+      </section>
+
+      <!-- Token Utility -->
+      <section class="section" id="utility">
+        <h2>Token Utility</h2>
+        <p>
+          OEC tokens provide essential functionality for protocol access and
+          operation, requiring active user participation to unlock advanced
+          features and capabilities across the Oeconomia ecosystem.
+        </p>
+
+        <div class="distribution-grid">
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">🗳️ Governance Access</div>
+            </div>
+            <div class="distribution-description">
+              Required for participating in protocol governance including
+              parameter adjustments, upgrade decisions, and resource allocation
+              across Alluria, Eloqura, Artivya, and Iridescia protocols. Voting
+              power tied to active participation.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">💰 Work Compensation</div>
+            </div>
+            <div class="distribution-description">
+              Participants receive compensation in OEC for performing validation
+              work, governance activities, security monitoring, and network
+              maintenance across all protocol components.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">🛡️ Network Security</div>
+            </div>
+            <div class="distribution-description">
+              OECgrd staking provides collateral for validation activities and
+              emergency response functions. Participants risk tokens through
+              slashing for malicious behavior while earning compensation for
+              honest work.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">🎯 Protocol Operations</div>
+            </div>
+            <div class="distribution-description">
+              Required for accessing advanced protocol features, reduced fee
+              tiers for active participants, and priority access to new
+              functionality based on contribution history and work performed.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">💎 Liquidity Operations</div>
+            </div>
+            <div class="distribution-description">
+              Used for providing liquidity across Eloqura AMM pools, supporting
+              cross-chain bridge operations, and maintaining stability pools in
+              Alluria lending protocol through active management.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">🚀 Development Incentives</div>
+            </div>
+            <div class="distribution-description">
+              Rewards developers building on Iridescia, content creators using
+              Artivya, community contributors, and ecosystem participants based
+              on measurable contributions and community validation.
+            </div>
+          </div>
+        </div>
+
+        <h3>Functional Utility Mechanisms</h3>
+        <p>
+          The token design creates utility through required active participation
+          rather than passive holding:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Work-Based Compensation</strong>: Participants earn tokens
+            by performing validation, governance, and maintenance work rather
+            than passive holding
+          </li>
+          <li>
+            <strong>Active Participation Requirements</strong>: Enhanced
+            features require ongoing contribution to network security and
+            governance functions
+          </li>
+          <li>
+            <strong>Cross-Protocol Functionality</strong>: Tokens needed for
+            operating across all Oeconomia protocols, creating utility through
+            ecosystem integration
+          </li>
+          <li>
+            <strong>Merit-Based Influence</strong>: Governance power earned
+            through demonstrated contribution rather than token quantity alone
+          </li>
+          <li>
+            <strong>Network Maintenance Costs</strong>: Fees fund actual
+            protocol operations and participant compensation rather than
+            redistributing to passive holders
+          </li>
+          <li>
+            <strong>Development Funding</strong>: Community-controlled treasury
+            funds ecosystem growth through work-based grants and development
+            bounties
+          </li>
+        </ul>
+
+        <h3>Economic Sustainability Model</h3>
+        <p>
+          The protocol maintains economic sustainability through work-based
+          incentives:
+        </p>
+
+        <div class="distribution-grid">
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Active Participation</div>
+            </div>
+            <div class="distribution-description">
+              All economic benefits require active contribution to network
+              security, governance, or development rather than passive
+              investment expectations.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Community Verification</div>
+            </div>
+            <div class="distribution-description">
+              Work contributions and compensation are verified by community
+              consensus and transparent performance metrics rather than
+              automated distribution.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Network Security</div>
+            </div>
+            <div class="distribution-description">
+              Economic security comes from active participants with stake at
+              risk for malicious behavior, ensuring honest validation and
+              governance participation.
+            </div>
+          </div>
+
+          <div class="distribution-item">
+            <div class="distribution-header">
+              <div class="distribution-title">Operational Funding</div>
+            </div>
+            <div class="distribution-description">
+              Network fees fund actual protocol operations, development work,
+              and participant compensation rather than creating investment-like
+              returns for passive holders.
+            </div>
+          </div>
+        </div>
+
+        <div class="important-box">
+          <p>
+            <strong>Utility-Driven Economics</strong>: The economic model
+            prioritizes functional utility and active participation over passive
+            investment characteristics. All benefits are tied to work performed,
+            network contributions, and community-verified value creation.
+          </p>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../content/documentation.html">Documentation</a>
+            <a href="../content/privacypolicy.html">Privacy Policy</a>
+          </div>
+          <p>
+            © 2025 Oeconomia Protocol. A decentralized network maintained by
+            active participants.
+          </p>
+          <p class="disclaimer">
+            This documentation describes the functional utility of network
+            tokens. All allocations and mechanisms are subject to community
+            governance and require active participation for access.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabButton">
+      <span class="fab-icon">📊</span>
+    </button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Elements
+        const scrollIndicator = document.getElementById("scrollIndicator");
+        const tocSidebar = document.getElementById("tocSidebar");
+        const tocToggle = document.getElementById("tocToggle");
+        const fabButton = document.getElementById("fabButton");
+        const tocLinks = document.querySelectorAll(".toc-list a");
+        const sections = document.querySelectorAll(".section");
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          if (scrollIndicator) {
+            scrollIndicator.style.width = scrollPercent + "%";
+          }
+        }
+
+        // Table of Contents functionality
+        function toggleTOC() {
+          const isOpen = tocSidebar.classList.contains("open");
+
+          if (isOpen) {
+            tocSidebar.classList.remove("open");
+            document.body.classList.remove("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">📊</span>';
+          } else {
+            tocSidebar.classList.add("open");
+            document.body.classList.add("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">×</span>';
+          }
+        }
+
+        // Close TOC when clicking outside
+        function closeTOCOnOutsideClick(event) {
+          if (
+            tocSidebar &&
+            fabButton &&
+            !tocSidebar.contains(event.target) &&
+            !fabButton.contains(event.target) &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        }
+
+        // Smooth scrolling for TOC links
+        function smoothScrollToSection(event) {
+          event.preventDefault();
+          const targetId = event.target.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            const headerOffset = 100;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+
+            // Close TOC on mobile after clicking
+            if (window.innerWidth <= 768) {
+              setTimeout(() => {
+                toggleTOC();
+              }, 300);
+            }
+          }
+        }
+
+        // Update active TOC link based on scroll position
+        function updateActiveTOCLink() {
+          let currentSection = "";
+          const scrollPos = window.scrollY + 150;
+
+          sections.forEach((section) => {
+            const sectionTop =
+              section.getBoundingClientRect().top + window.pageYOffset;
+            const sectionHeight = section.offsetHeight;
+
+            if (
+              scrollPos >= sectionTop &&
+              scrollPos < sectionTop + sectionHeight
+            ) {
+              currentSection = section.getAttribute("id");
+            }
+          });
+
+          tocLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + currentSection) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+          const elements = document.querySelectorAll(
+            ".distribution-item, .stat-item, .tax-item"
+          );
+          const windowHeight = window.innerHeight;
+
+          elements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+              element.style.opacity = "1";
+              element.style.transform = "translateY(0)";
+            }
+          });
+        }
+
+        // Initialize animations
+        function initializeAnimations() {
+          const elements = document.querySelectorAll(
+            ".distribution-item, .stat-item, .tax-item"
+          );
+
+          elements.forEach((element) => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(30px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          });
+        }
+
+        // Performance optimization - throttle scroll events
+        function throttle(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // Event Listeners
+        window.addEventListener(
+          "scroll",
+          throttle(() => {
+            updateScrollProgress();
+            updateActiveTOCLink();
+            animateOnScroll();
+          }, 16)
+        );
+
+        document.addEventListener("click", closeTOCOnOutsideClick);
+
+        // TOC toggle button
+        if (tocToggle) {
+          tocToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // FAB button
+        if (fabButton) {
+          fabButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // TOC links
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", smoothScrollToSection);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            tocSidebar &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        });
+
+        // Initialize features
+        initializeAnimations();
+
+        // Initial animation trigger
+        setTimeout(() => {
+          animateOnScroll();
+        }, 100);
+
+        console.log(
+          "📊 Oeconomia Network Token documentation loaded successfully!"
+        );
+      });
+    </script>
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
+  </body>
+</html>
