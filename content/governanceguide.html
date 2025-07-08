@@ -241,13 +241,13 @@
         }
 
         .header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGlow 3s ease-in-out infinite alternate;
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: textGlow 3s ease-in-out infinite alternate;
         }
 
         .subtitle {
@@ -765,7 +765,7 @@
     <div class="toc-sidebar" id="tocSidebar">
         <div class="toc-header">
             <h3>Governance Guide</h3>
-            <button class="toc-toggle" id="tocToggle">×</button>
+            <button type="button" class="toc-toggle" id="tocToggle">×</button>
         </div>
         <ul class="toc-list">
             <li><a href="#overview">Governance Overview</a></li>
@@ -1558,7 +1558,7 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="fabButton">
+    <button type="button" class="fab" id="fabButton">
         <span class="fab-icon">📚</span>
     </button>
 
@@ -1772,7 +1772,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+    <button type="button" id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
       <i class="fas fa-chevron-up"></i>
     </button>
     <link rel="stylesheet" href="../styles/backtotop.css" />

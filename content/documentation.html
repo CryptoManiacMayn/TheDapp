@@ -1,692 +1,753 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oeconomia Protocol Documentation</title>
     <style>
-        /* Complete CSS with smooth sidebar fix */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      /* Complete CSS with smooth sidebar fix */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background: #000000;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #000000;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-        /* Animated background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            animation: gradientShift 20s ease infinite;
-        }
+      /* Animated background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+        animation: gradientShift 20s ease infinite;
+      }
 
-        @keyframes gradientShift {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+      @keyframes gradientShift {
+        0%,
+        100% {
+          opacity: 1;
         }
+        50% {
+          opacity: 0.7;
+        }
+      }
 
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .nav-logo {
+        height: 40px;
+        width: auto;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+      }
+
+      .nav-logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+      }
+
+      .nav-content h1 {
+        margin: 0; /* Add this to remove default margin */
+      }
+
+      /* For flowcharts.html only - add this for the multiple nav links */
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      /* Update responsive CSS */
+      @media (max-width: 768px) {
         .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+          gap: 0.5rem;
+        }
 
-.nav-logo {
-    height: 40px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
-}
+        .nav-logo {
+          height: 35px;
+        }
 
-.nav-logo:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
-}
+        .nav-links {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
 
-.nav-content h1 {
-    margin: 0; /* Add this to remove default margin */
-}
+      @media (max-width: 480px) {
+        .nav-logo {
+          height: 30px;
+        }
+      }
 
-/* For flowcharts.html only - add this for the multiple nav links */
-.nav-links {
-    display: flex;
-    gap: 1rem;
-}
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.9);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
 
-/* Update responsive CSS */
-@media (max-width: 768px) {
-    .nav-brand {
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-content h1 {
+        font-size: 1.5rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .back-link {
+        color: #00d4ff;
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #00d4ff;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: #00d4ff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      /* Table of Contents Sidebar */
+      .toc-sidebar {
+        position: fixed;
+        top: 80px;
+        left: -300px;
+        width: 300px;
+        height: calc(100vh - 80px);
+        background: rgba(10, 10, 10, 0.95);
+        background: rgba(10, 10, 10, 0.95);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 999;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+      }
+
+      .toc-sidebar.open {
+        left: 0;
+      }
+
+      .toc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .toc-header h3 {
+        color: #00d4ff;
+        font-size: 1.2rem;
+      }
+
+      .toc-toggle {
+        background: none;
+        border: none;
+        color: #ff00ff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .toc-toggle:hover {
+        background: rgba(255, 0, 255, 0.1);
+      }
+
+      .toc-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .toc-list li {
+        margin: 0;
+      }
+
+      .toc-list a {
+        display: block;
+        padding: 0.8rem 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+      }
+
+      .toc-list a:hover {
+        background: rgba(0, 212, 255, 0.1);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+        padding-left: 1.5rem;
+      }
+
+      .toc-list a.active {
+        background: rgba(0, 212, 255, 0.15);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+      }
+
+      /* MAIN FIX: Container with smooth transform */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 100px 20px 50px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* When sidebar is open, translate content smoothly */
+      .sidebar-open .container {
+        transform: translateX(150px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: textGlow 3s ease-in-out infinite alternate;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+      }
+
+      .pronunciation {
+        color: #00ff88;
+        font-size: 1rem;
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .last-updated {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      @keyframes textGlow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+        }
+      }
+
+      /* Content Sections */
+      .section {
+        background: rgba(255, 255, 255, 0.03);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        transition: all 0.3s ease;
+        scroll-margin-top: 100px;
+      }
+
+      .section:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.05),
+          rgba(255, 0, 255, 0.05)
+        );
+        border-color: rgba(0, 212, 255, 0.2);
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #00d4ff;
+        display: flex;
+        align-items: center;
         gap: 0.5rem;
-    }
-    
-    .nav-logo {
-        height: 35px;
-    }
-    
-    .nav-links {
+      }
+
+      h2::before {
+        content: "▸";
+        color: #ff00ff;
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        color: #00ff88;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem;
+        color: #fff;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+      }
+
+      ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      strong {
+        color: #00d4ff;
+      }
+
+      /* Protocol Diagram */
+      .protocol-diagram {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-    }
-}
+        gap: 1.5rem;
+        align-items: center;
+      }
 
-@media (max-width: 480px) {
-    .nav-logo {
-        height: 30px;
-    }
-}
+      .governance-layer,
+      .protocols-layer,
+      .infrastructure-layer {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      .protocol-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1.5rem;
+        min-width: 200px;
+        text-align: center;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
 
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .protocol-box.governance {
+        border-color: rgba(0, 212, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.1),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
 
-        .nav-content h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+      .protocol-box.alluria {
+        border-color: rgba(255, 136, 0, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 136, 0, 0.1),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
 
-        .back-link {
-            color: #00d4ff;
-            text-decoration: none;
-            padding: 0.5rem 1.5rem;
-            border: 1px solid #00d4ff;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+      .protocol-box.eloqura {
+        border-color: rgba(255, 0, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 0, 255, 0.1),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
 
-        .back-link:hover {
-            background: #00d4ff;
-            color: #000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
-        }
+      .protocol-box.artivya {
+        border-color: rgba(0, 255, 136, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.1),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
 
-        /* Table of Contents Sidebar */
-        .toc-sidebar {
-            position: fixed;
-            top: 80px;
-            left: -300px;
-            width: 300px;
-            height: calc(100vh - 80px);
-            background: rgba(10, 10, 10, 0.95);
-            background: rgba(10, 10, 10, 0.95);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 999;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
+      .protocol-box.iridescia {
+        border-color: rgba(136, 0, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(136, 0, 255, 0.1),
+          rgba(0, 0, 0, 0.2)
+        );
+      }
 
-        .toc-sidebar.open {
-            left: 0;
-        }
+      .protocol-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+      }
 
-        .toc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      .protocol-box h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: #fff;
+        margin-top: 0;
+      }
 
-        .toc-header h3 {
-            color: #00d4ff;
-            font-size: 1.2rem;
-        }
+      .protocol-box p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
 
-        .toc-toggle {
-            background: none;
-            border: none;
-            color: #ff00ff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
+      .protocol-box ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+      }
 
-        .toc-toggle:hover {
-            background: rgba(255, 0, 255, 0.1);
-        }
+      .protocol-box li {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.3rem;
+        padding-left: 1rem;
+        position: relative;
+      }
 
-        .toc-list {
-            list-style: none;
-            padding: 0;
-        }
+      .protocol-box li::before {
+        content: "•";
+        color: #00d4ff;
+        position: absolute;
+        left: 0;
+      }
 
-        .toc-list li {
-            margin: 0;
-        }
+      /* Philosophy Grid */
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
 
-        .toc-list a {
-            display: block;
-            padding: 0.8rem 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
+      .philosophy-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
 
-        .toc-list a:hover {
-            background: rgba(0, 212, 255, 0.1);
-            color: #00d4ff;
-            border-left-color: #00d4ff;
-            padding-left: 1.5rem;
-        }
+      .philosophy-item:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        transform: translateY(-3px);
+      }
 
-        .toc-list a.active {
-            background: rgba(0, 212, 255, 0.15);
-            color: #00d4ff;
-            border-left-color: #00d4ff;
-        }
+      .philosophy-item h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
 
-        /* MAIN FIX: Container with smooth transform */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 100px 20px 50px;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+      /* Important Notice Box */
+      .important-box {
+        background: rgba(255, 0, 255, 0.1);
+        border: 2px solid rgba(255, 0, 255, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
 
-        /* When sidebar is open, translate content smoothly */
+      .important-box::before {
+        content: "⚠️";
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        opacity: 0.5;
+      }
+
+      .protocol-highlight {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.1),
+          rgba(0, 212, 255, 0.1)
+        );
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      /* Feature Grids */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .feature-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .feature-item:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
+      }
+
+      .feature-item h4 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: #00d4ff;
+      }
+
+      .feature-item.lending {
+        border-left: 4px solid #ff8800;
+      }
+      .feature-item.stablecoin {
+        border-left: 4px solid #00d4ff;
+      }
+      .feature-item.liquidation {
+        border-left: 4px solid #00ff88;
+      }
+      .feature-item.tokenomics {
+        border-left: 4px solid #ff00ff;
+      }
+
+      /* Spec Table */
+      .spec-table {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .spec-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .spec-row:last-child {
+        border-bottom: none;
+      }
+
+      .spec-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+      }
+
+      .spec-value {
+        color: #00d4ff;
+        font-weight: bold;
+      }
+
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        transition: all 0.3s ease;
+        z-index: 998;
+      }
+
+      .fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+      }
+
+      .fab-icon {
+        display: block;
+      }
+
+      /* Scroll Progress Indicator */
+      .scroll-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d4ff, #ff00ff);
+        transition: width 0.3s ease;
+        z-index: 1001;
+      }
+
+      /* Footer */
+      .footer {
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.9),
+          rgba(26, 26, 46, 0.9)
+        );
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem 0;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #00d4ff;
+      }
+
+      .footer p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+      }
+
+      .disclaimer {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
         .sidebar-open .container {
-            transform: translateX(150px);
+          transform: translateX(0); /* No shift on smaller screens */
         }
+      }
 
-        .header {
-            text-align: center;
-            margin-bottom: 4rem;
+      @media (max-width: 768px) {
+        .container {
+          padding: 100px 15px 50px;
         }
 
         .header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGlow 3s ease-in-out infinite alternate;
+          font-size: 2.5rem;
         }
 
-        .subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.5rem;
-        }
-
-        .pronunciation {
-            color: #00ff88;
-            font-size: 1rem;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .last-updated {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8)); }
-        }
-
-        /* Content Sections */
         .section {
-            background: rgba(255, 255, 255, 0.03);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            transition: all 0.3s ease;
-            scroll-margin-top: 100px;
+          padding: 1.5rem;
         }
 
-        .section:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(255, 0, 255, 0.05));
-            border-color: rgba(0, 212, 255, 0.2);
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #00d4ff;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        h2::before {
-            content: "▸";
-            color: #ff00ff;
-            font-size: 1.5rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: #00ff88;
-        }
-
-        h4 {
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.8rem;
-            color: #fff;
-        }
-
-        p {
-            margin-bottom: 1.2rem;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.7;
-        }
-
-        ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        strong {
-            color: #00d4ff;
-        }
-
-        /* Protocol Diagram */
         .protocol-diagram {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .governance-layer,
-        .protocols-layer,
-        .infrastructure-layer {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+          padding: 1.5rem;
         }
 
         .protocol-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            min-width: 200px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
+          min-width: 180px;
         }
 
-        .protocol-box.governance {
-            border-color: rgba(0, 212, 255, 0.3);
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 0, 0, 0.2));
+        .nav-content {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
         }
 
-        .protocol-box.alluria {
-            border-color: rgba(255, 136, 0, 0.3);
-            background: linear-gradient(135deg, rgba(255, 136, 0, 0.1), rgba(0, 0, 0, 0.2));
-        }
-
-        .protocol-box.eloqura {
-            border-color: rgba(255, 0, 255, 0.3);
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 0, 0, 0.2));
-        }
-
-        .protocol-box.artivya {
-            border-color: rgba(0, 255, 136, 0.3);
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 0, 0, 0.2));
-        }
-
-        .protocol-box.iridescia {
-            border-color: rgba(136, 0, 255, 0.3);
-            background: linear-gradient(135deg, rgba(136, 0, 255, 0.1), rgba(0, 0, 0, 0.2));
-        }
-
-        .protocol-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
-        }
-
-        .protocol-box h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-            margin-top: 0;
-        }
-
-        .protocol-box p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .protocol-box ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-        }
-
-        .protocol-box li {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 0.3rem;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        .protocol-box li::before {
-            content: "•";
-            color: #00d4ff;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Philosophy Grid */
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .philosophy-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .philosophy-item:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .philosophy-item h3 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        /* Important Notice Box */
-        .important-box {
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .important-box::before {
-            content: "⚠️";
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .protocol-highlight {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        /* Feature Grids */
+        .philosophy-grid,
         .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+          grid-template-columns: 1fr;
         }
 
-        .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+        .toc-sidebar {
+          width: 280px;
+          left: -280px;
         }
 
-        .feature-item:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
-        }
-
-        .feature-item h4 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            color: #00d4ff;
-        }
-
-        .feature-item.lending { border-left: 4px solid #ff8800; }
-        .feature-item.stablecoin { border-left: 4px solid #00d4ff; }
-        .feature-item.liquidation { border-left: 4px solid #00ff88; }
-        .feature-item.tokenomics { border-left: 4px solid #ff00ff; }
-
-        /* Spec Table */
-        .spec-table {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .spec-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .spec-row:last-child {
-            border-bottom: none;
-        }
-
-        .spec-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-        }
-
-        .spec-value {
-            color: #00d4ff;
-            font-weight: bold;
-        }
-
-        /* Floating Action Button */
         .fab {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-            transition: all 0.3s ease;
-            z-index: 998;
+          bottom: 0px;
+          right: 20px;
+          width: 50px;
+          height: 50px;
+          font-size: 1.2rem;
         }
-
-        .fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
-        }
-
-        .fab-icon {
-            display: block;
-        }
-
-        /* Scroll Progress Indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00d4ff, #ff00ff);
-            transition: width 0.3s ease;
-            z-index: 1001;
-        }
-
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(26, 26, 46, 0.9));
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 0;
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #00d4ff;
-        }
-
-        .footer p {
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 0.5rem;
-        }
-
-        .disclaimer {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-style: italic;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .sidebar-open .container {
-                transform: translateX(0); /* No shift on smaller screens */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 100px 15px 50px;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-            
-            .protocol-diagram {
-                padding: 1.5rem;
-            }
-            
-            .protocol-box {
-                min-width: 180px;
-            }
-            
-            .nav-content {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            
-            .philosophy-grid,
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .toc-sidebar {
-                width: 280px;
-                left: -280px;
-            }
-            
-            .fab {
-                bottom: 0px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-        }
+      }
 
       .hero-buttons {
         display: flex;
@@ -717,636 +778,739 @@
         box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
       }
 
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-
-            .protocol-box {
-                min-width: 160px;
-                padding: 1rem;
-            }
-            
-            .protocol-box h3 {
-                font-size: 1.1rem;
-            }
-            
-            .philosophy-item,
-            .feature-item {
-                padding: 1.2rem;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .spec-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .spec-value {
-                font-size: 1.2rem;
-            }
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
         }
-    </style>
-    <link rel="stylesheet" href="../styles/backtotop.css">
-</head>
-<body>
-    <div class="scroll-indicator" id="scrollIndicator"></div>
-    
-    <nav>
-<div class="nav-content">
-    <div class="nav-brand">
-        <img src="../images/OEC Logo.png" alt="Oeconomia Logo" class="nav-logo">
-        <h1>OECONOMIA</h1>
-    </div>
-        <div class="nav-links">
 
-          <a href="../content/tokenomics.html" class="back-link"
-            >Tokenomics</a
-          >
-          <a href="../content/flowcharts.html" class="back-link"
-            >Flow Charts</a
-          >
+        .section {
+          padding: 1.5rem;
+        }
+
+        .protocol-box {
+          min-width: 160px;
+          padding: 1rem;
+        }
+
+        .protocol-box h3 {
+          font-size: 1.1rem;
+        }
+
+        .philosophy-item,
+        .feature-item {
+          padding: 1.2rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .spec-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .spec-value {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <nav>
+      <div class="nav-content">
+        <div class="nav-brand">
+          <img
+            src="../images/OEC Logo.png"
+            alt="Oeconomia Logo"
+            class="nav-logo"
+          />
+          <h1>OECONOMIA</h1>
+        </div>
+        <div class="nav-links">
+          <a href="../content/tokenomics.html" class="back-link">Tokenomics</a>
+          <a href="../content/flowcharts.html" class="back-link">Flow Charts</a>
 
           <a href="../content/privacypolicy.html" class="back-link"
             >Privacy Policy</a
           >
           <a href="../index.html" class="btn-primary">← Back Home</a>
         </div>
-</div>
+      </div>
     </nav>
 
     <!-- Table of Contents Sidebar -->
     <div class="toc-sidebar" id="tocSidebar">
-        <div class="toc-header">
-            <h3>Contents</h3>
-            <button class="toc-toggle" id="tocToggle">×</button>
-        </div>
-        <ul class="toc-list">
-            <li><a href="#overview">Network Overview</a></li>
-            <li><a href="#governance">Governance Protocol</a></li>
-            <li><a href="#alluria">Alluria Protocol</a></li>
-            <li><a href="#eloqura">Eloqura Protocol</a></li>
-            <li><a href="#artivya">Artivya Protocol</a></li>
-            <li><a href="#iridescia">Iridescia Protocol</a></li>
-            <li><a href="#integration">Cross-Protocol Integration</a></li>
-        </ul>
+      <div class="toc-header">
+        <h3>Contents</h3>
+        <button type="button" class="toc-toggle" id="tocToggle">×</button>
+      </div>
+      <ul class="toc-list">
+        <li><a href="#overview">Network Overview</a></li>
+        <li><a href="#governance">Governance Protocol</a></li>
+        <li><a href="#alluria">Alluria Protocol</a></li>
+        <li><a href="#eloqura">Eloqura Protocol</a></li>
+        <li><a href="#artivya">Artivya Protocol</a></li>
+        <li><a href="#iridescia">Iridescia Protocol</a></li>
+        <li><a href="#integration">Cross-Protocol Integration</a></li>
+      </ul>
     </div>
 
     <div class="container">
-        <div class="header">
-            <h1>Protocol Documentation</h1>
-            <p class="subtitle">A comprehensive decentralized finance infrastructure ecosystem</p>
-            <p class="pronunciation">Pronunciation: ee-koh-NOH-mee-uh (IPA: /ˌiː.kəˈnoʊ.mi.ə/)</p>
-            <p class="last-updated">Last Updated: June 25th, 2025</p>
+      <div class="header">
+        <h1>Protocol Documentation</h1>
+        <p class="subtitle">
+          A comprehensive decentralized finance infrastructure ecosystem
+        </p>
+        <p class="pronunciation">
+          Pronunciation: ee-koh-NOH-mee-uh (IPA: /ˌiː.kəˈnoʊ.mi.ə/)
+        </p>
+        <p class="last-updated">Last Updated: June 25th, 2025</p>
+      </div>
+
+      <section class="section hero-section" id="overview">
+        <h2>Network Overview</h2>
+        <div class="protocol-diagram">
+          <div class="governance-layer">
+            <div class="protocol-box governance">
+              <h3>OECONOMIA GOVERNANCE</h3>
+              <p>Foundational Layer</p>
+              <ul>
+                <li>OECgrd Guardian Staking</li>
+                <li>Cross-Protocol Coordination</li>
+                <li>Emergency Response Systems</li>
+                <li>Unified Treasury Management</li>
+              </ul>
+            </div>
+          </div>
+          <div class="protocols-layer">
+            <div class="protocol-box alluria">
+              <h3>ALLURIA</h3>
+              <p>Lending Protocol</p>
+              <ul>
+                <li>ETH → ALUD</li>
+                <li>Stability Pool</li>
+                <li>110% Ratio</li>
+                <li>Zero Interest</li>
+              </ul>
+            </div>
+            <div class="protocol-box eloqura">
+              <h3>ELOQURA</h3>
+              <p>AMM+Bridge+Optimization</p>
+              <ul>
+                <li>Multi-Curve AMM</li>
+                <li>Cross-Chain</li>
+                <li>Yield Strategies</li>
+                <li>MEV Protection</li>
+              </ul>
+            </div>
+            <div class="protocol-box artivya">
+              <h3>ARTIVYA</h3>
+              <p>Exchange Protocol</p>
+              <ul>
+                <li>Order Books</li>
+                <li>NFT Trading</li>
+                <li>Creator Tools</li>
+                <li>Professional</li>
+              </ul>
+            </div>
+          </div>
+          <div class="infrastructure-layer">
+            <div class="protocol-box iridescia">
+              <h3>IRIDESCIA</h3>
+              <p>Contract Deploy Infrastructure</p>
+              <ul>
+                <li>Template Engine</li>
+                <li>Security Scanning</li>
+                <li>Multi-Chain Deploy</li>
+                <li>Developer Tools</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <section class="section hero-section" id="overview">
-            <h2>Network Overview</h2>
-            <div class="protocol-diagram">
-                <div class="governance-layer">
-                    <div class="protocol-box governance">
-                        <h3>OECONOMIA GOVERNANCE</h3>
-                        <p>Foundational Layer</p>
-                        <ul>
-                            <li>OECgrd Guardian Staking</li>
-                            <li>Cross-Protocol Coordination</li>
-                            <li>Emergency Response Systems</li>
-                            <li>Unified Treasury Management</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="protocols-layer">
-                    <div class="protocol-box alluria">
-                        <h3>ALLURIA</h3>
-                        <p>Lending Protocol</p>
-                        <ul>
-                            <li>ETH → ALUD</li>
-                            <li>Stability Pool</li>
-                            <li>110% Ratio</li>
-                            <li>Zero Interest</li>
-                        </ul>
-                    </div>
-                    <div class="protocol-box eloqura">
-                        <h3>ELOQURA</h3>
-                        <p>AMM+Bridge+Optimization</p>
-                        <ul>
-                            <li>Multi-Curve AMM</li>
-                            <li>Cross-Chain</li>
-                            <li>Yield Strategies</li>
-                            <li>MEV Protection</li>
-                        </ul>
-                    </div>
-                    <div class="protocol-box artivya">
-                        <h3>ARTIVYA</h3>
-                        <p>Exchange Protocol</p>
-                        <ul>
-                            <li>Order Books</li>
-                            <li>NFT Trading</li>
-                            <li>Creator Tools</li>
-                            <li>Professional</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="infrastructure-layer">
-                    <div class="protocol-box iridescia">
-                        <h3>IRIDESCIA</h3>
-                        <p>Contract Deploy Infrastructure</p>
-                        <ul>
-                            <li>Template Engine</li>
-                            <li>Security Scanning</li>
-                            <li>Multi-Chain Deploy</li>
-                            <li>Developer Tools</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <p>Oeconomia represents a paradigm shift in decentralized finance infrastructure, operating as a comprehensive protocol suite that provides essential financial services through autonomous, interconnected systems. As the foundational governance layer, Oeconomia coordinates and secures a network of specialized protocols, each designed to address specific aspects of the DeFi ecosystem while maintaining seamless composability and shared security.</p>
-            
-            <div class="philosophy-grid">
-                <div class="philosophy-item">
-                    <h3>🏗️ Decentralized Infrastructure</h3>
-                    <p>Prioritizes infrastructure over speculation, building foundational layers that enable sophisticated financial applications without central points of control.</p>
-                </div>
-                <div class="philosophy-item">
-                    <h3>🛡️ Security-First Design</h3>
-                    <p>Every protocol incorporates multi-layered security through economic incentives, cryptographic proofs, and community-driven governance.</p>
-                </div>
-                <div class="philosophy-item">
-                    <h3>🧩 Composable Architecture</h3>
-                    <p>Protocols designed as modular building blocks that can be combined to create complex financial operations while maintaining independence.</p>
-                </div>
-                <div class="philosophy-item">
-                    <h3>🌐 Cross-Chain Native</h3>
-                    <p>Built from the ground up for multi-chain operation, enabling unified liquidity and functionality across multiple blockchain networks.</p>
-                </div>
-            </div>
-        </section>
+        <p>
+          Oeconomia represents a paradigm shift in decentralized finance
+          infrastructure, operating as a comprehensive protocol suite that
+          provides essential financial services through autonomous,
+          interconnected systems. As the foundational governance layer,
+          Oeconomia coordinates and secures a network of specialized protocols,
+          each designed to address specific aspects of the DeFi ecosystem while
+          maintaining seamless composability and shared security.
+        </p>
 
-        <section class="section" id="governance">
-            <h2>Oeconomia Governance Protocol</h2>
-            <div class="important-box">
-                <p><strong>Central Coordination</strong>: The governance protocol serves as the foundational layer for the entire network, enabling community-driven decision making through OECgrd Guardian staking and transparent voting mechanisms.</p>
-            </div>
-            
-            <h3>Guardian System and OECgrd Mechanism</h3>
-            <p>OEC token holders become "Guardians" by staking their tokens to receive OECgrd (OEC Guardian) tokens, which represent both their commitment to network security and their governance participation rights.</p>
-            
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>🔒 Token Conversion</h4>
-                    <p>OEC tokens staked in the governance contract are converted to OECgrd tokens with enhanced voting power based on lock duration.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>⚡ Network Security</h4>
-                    <p>OECgrd stakers contribute to network security through economic commitment and validator participation.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🗳️ Governance Rights</h4>
-                    <p>OECgrd holders gain proposal and voting rights in protocol governance with cross-protocol authority.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>📊 Staking Tiers</h4>
-                    <p>Multiple staking tiers provide different multipliers: Standard (1x), Enhanced (1.5x), Elite (2x) voting power.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="alluria">
-            <h2>Alluria Protocol</h2>
-            <p class="pronunciation">Pronunciation: ah-LOOR-ee-ah (IPA: /əˈlʊər.i.ə/)</p>
-            
-            <div class="protocol-highlight">
-                <h3>🎯 Core Innovation: Capital Efficiency Revolution</h3>
-                <p>Alluria provides <strong>110% minimum collateral ratio</strong> - industry-leading capital efficiency with zero ongoing interest rates through a one-time borrowing fee model.</p>
-            </div>
-
-            <h3>Key Features</h3>
-            <div class="feature-grid">
-                <div class="feature-item lending">
-                    <h4>🏦 Vault System (Troves)</h4>
-                    <p>Individual collateral positions with complete user autonomy - add collateral, repay debt, or adjust positions anytime.</p>
-                </div>
-                <div class="feature-item stablecoin">
-                    <h4>💰 ALUD Stablecoin</h4>
-                    <p>Algorithmic price stability through direct redemption mechanism - 1 ALUD always redeemable for $1 worth of ETH.</p>
-                </div>
-                <div class="feature-item liquidation">
-                    <h4>🤝 Community-Driven Liquidations</h4>
-                    <p>Stability Pool mechanism where ALUD holders serve as decentralized insurance fund, earning discounted ETH and ALUR rewards.</p>
-                </div>
-                <div class="feature-item tokenomics">
-                    <h4>🪙 ALUR Token Economics</h4>
-                    <p>Multi-utility token for stability incentives, governance rights, fee distribution, and cross-protocol integration.</p>
-                </div>
-            </div>
-
-            <h3>Technical Specifications</h3>
-            <div class="spec-table">
-                <div class="spec-row">
-                    <span class="spec-label">Minimum Collateral Ratio:</span>
-                    <span class="spec-value">110%</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-label">Borrowing Fee Range:</span>
-                    <span class="spec-value">0.5% - 5%</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-label">Recovery Mode Trigger:</span>
-                    <span class="spec-value">150% system ratio</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-label">Interest Rate:</span>
-                    <span class="spec-value">Zero ongoing interest</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="eloqura">
-            <h2>Eloqura Protocol</h2>
-            <p class="pronunciation">Pronunciation: el-oh-KYUR-uh (IPA: /ˌɛl.oʊˈkjʊɹ.ə/)</p>
-            
-            <div class="protocol-highlight">
-                <h3>🎯 Tri-Component Architecture</h3>
-                <p>Eloqura uniquely combines <strong>Automated Market Making</strong>, <strong>Cross-Chain Infrastructure</strong>, and <strong>Protocol Optimization</strong> into a unified system that maximizes capital efficiency.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>🔄 Automated Market Making</h4>
-                    <ul>
-                        <li>Multi-curve innovation (constant product, stable asset, concentrated liquidity)</li>
-                        <li>Adaptive curve technology responding to market conditions</li>
-                        <li>Advanced MEV protection mechanisms</li>
-                        <li>Dynamic fee optimization</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>🌉 Cross-Chain Infrastructure</h4>
-                    <ul>
-                        <li>Hybrid bridge architecture (Optimistic + ZK proofs)</li>
-                        <li>Economic security through validator staking</li>
-                        <li>Multi-modal asset transfers (tokens, NFTs, LP positions)</li>
-                        <li>10-30 minute settlement times</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>🤖 Protocol Optimization Network</h4>
-                    <ul>
-                        <li>AI-driven strategy execution</li>
-                        <li>Automated yield farming and arbitrage</li>
-                        <li>Advanced risk management framework</li>
-                        <li>15-25% yield enhancement</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="artivya">
-            <h2>Artivya Protocol</h2>
-            <p class="pronunciation">Pronunciation: ar-TIV-ee-uh (IPA: /ɑːrˈtɪv.i.ə/)</p>
-            
-            <div class="protocol-highlight">
-                <h3>🎯 Hybrid Trading Architecture</h3>
-                <p>Artivya uniquely combines <strong>order book efficiency</strong> with <strong>AMM liquidity</strong>, providing professional-grade trading infrastructure for both fungible and non-fungible digital assets.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>📊 Advanced Order Book Engine</h4>
-                    <p>Professional order types including market, limit, stop-loss, take-profit, iceberg, and time-weighted orders with multiple time-in-force options.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🎨 NFT Marketplace Infrastructure</h4>
-                    <p>Multi-tier verification, royalty management, revenue analytics, and collaborative tools for creators.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🛡️ MEV Protection</h4>
-                    <p>Fair ordering mechanisms, anti-gaming protection, and commit-reveal systems.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="iridescia">
-            <h2>Iridescia Protocol</h2>
-            <p class="pronunciation">Pronunciation: ir-ih-DES-see-ah (IPA: /ˌɪr.ɪˈdes.si.ə/)</p>
-            
-            <div class="protocol-highlight">
-                <h3>🎯 Development Infrastructure Backbone</h3>
-                <p>Iridescia provides comprehensive smart contract deployment tools, security frameworks, and developer resources enabling rapid, secure protocol development across multiple blockchain networks.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>🏗️ Template Engine</h4>
-                    <p>DeFi protocol templates, token standards, and governance systems with 200+ vulnerability pattern analysis.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🛡️ Security Framework</h4>
-                    <p>Automated analysis, formal verification, and integration with 50+ professional audit firms.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🚀 Deployment Manager</h4>
-                    <p>Multi-network support across 25+ blockchains with CI/CD integration and upgrade management.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="integration">
-            <h2>Cross-Protocol Integration</h2>
-            
-            <div class="protocol-highlight">
-                <h3>🎯 Unified DeFi Infrastructure</h3>
-                <p>Oeconomia protocols create value through deep integration, shared security models, unified governance, and economic synergies that exceed the sum of their parts.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>👥 For Users</h4>
-                    <p>Simplified access to comprehensive DeFi services through unified interfaces and shared liquidity</p>
-                </div>
-                <div class="feature-item">
-                    <h4>👨‍💻 For Developers</h4>
-                    <p>Complete development infrastructure with templates, tools, and security frameworks</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🏢 For Institutions</h4>
-                    <p>Professional-grade DeFi infrastructure with comprehensive risk management and compliance</p>
-                </div>
-                <div class="feature-item">
-                    <h4>🌱 For Ecosystem</h4>
-                    <p>Network effects that accelerate adoption and create sustainable economic value</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <a href="../index.html">Home</a>
-                    <a href="../index.html#features">Features</a>
-                    <a href="../index.html#about">About</a>
-                    <a href="../content/privacypolicy.html">Privacy Policy</a>
-                </div>
-                <p>© 2025 Oeconomia DAO. A Decentralized Autonomous Organization.</p>
-                <p class="disclaimer">This documentation is for informational purposes. All smart contracts should be audited before use.</p>
-            </div>
+        <div class="philosophy-grid">
+          <div class="philosophy-item">
+            <h3>🏗️ Decentralized Infrastructure</h3>
+            <p>
+              Prioritizes infrastructure over speculation, building foundational
+              layers that enable sophisticated financial applications without
+              central points of control.
+            </p>
+          </div>
+          <div class="philosophy-item">
+            <h3>🛡️ Security-First Design</h3>
+            <p>
+              Every protocol incorporates multi-layered security through
+              economic incentives, cryptographic proofs, and community-driven
+              governance.
+            </p>
+          </div>
+          <div class="philosophy-item">
+            <h3>🧩 Composable Architecture</h3>
+            <p>
+              Protocols designed as modular building blocks that can be combined
+              to create complex financial operations while maintaining
+              independence.
+            </p>
+          </div>
+          <div class="philosophy-item">
+            <h3>🌐 Cross-Chain Native</h3>
+            <p>
+              Built from the ground up for multi-chain operation, enabling
+              unified liquidity and functionality across multiple blockchain
+              networks.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <section class="section" id="governance">
+        <h2>Oeconomia Governance Protocol</h2>
+        <div class="important-box">
+          <p>
+            <strong>Central Coordination</strong>: The governance protocol
+            serves as the foundational layer for the entire network, enabling
+            community-driven decision making through OECgrd Guardian staking and
+            transparent voting mechanisms.
+          </p>
+        </div>
+
+        <h3>Guardian System and OECgrd Mechanism</h3>
+        <p>
+          OEC token holders become "Guardians" by staking their tokens to
+          receive OECgrd (OEC Guardian) tokens, which represent both their
+          commitment to network security and their governance participation
+          rights.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>🔒 Token Conversion</h4>
+            <p>
+              OEC tokens staked in the governance contract are converted to
+              OECgrd tokens with enhanced voting power based on lock duration.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>⚡ Network Security</h4>
+            <p>
+              OECgrd stakers contribute to network security through economic
+              commitment and validator participation.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🗳️ Governance Rights</h4>
+            <p>
+              OECgrd holders gain proposal and voting rights in protocol
+              governance with cross-protocol authority.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>📊 Staking Tiers</h4>
+            <p>
+              Multiple staking tiers provide different multipliers: Standard
+              (1x), Enhanced (1.5x), Elite (2x) voting power.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="alluria">
+        <h2>Alluria Protocol</h2>
+        <p class="pronunciation">
+          Pronunciation: ah-LOOR-ee-ah (IPA: /əˈlʊər.i.ə/)
+        </p>
+
+        <div class="protocol-highlight">
+          <h3>🎯 Core Innovation: Capital Efficiency Revolution</h3>
+          <p>
+            Alluria provides <strong>110% minimum collateral ratio</strong> -
+            industry-leading capital efficiency with zero ongoing interest rates
+            through a one-time borrowing fee model.
+          </p>
+        </div>
+
+        <h3>Key Features</h3>
+        <div class="feature-grid">
+          <div class="feature-item lending">
+            <h4>🏦 Vault System (Troves)</h4>
+            <p>
+              Individual collateral positions with complete user autonomy - add
+              collateral, repay debt, or adjust positions anytime.
+            </p>
+          </div>
+          <div class="feature-item stablecoin">
+            <h4>💰 ALUD Stablecoin</h4>
+            <p>
+              Algorithmic price stability through direct redemption mechanism -
+              1 ALUD always redeemable for $1 worth of ETH.
+            </p>
+          </div>
+          <div class="feature-item liquidation">
+            <h4>🤝 Community-Driven Liquidations</h4>
+            <p>
+              Stability Pool mechanism where ALUD holders serve as decentralized
+              insurance fund, earning discounted ETH and ALUR rewards.
+            </p>
+          </div>
+          <div class="feature-item tokenomics">
+            <h4>🪙 ALUR Token Economics</h4>
+            <p>
+              Multi-utility token for stability incentives, governance rights,
+              fee distribution, and cross-protocol integration.
+            </p>
+          </div>
+        </div>
+
+        <h3>Technical Specifications</h3>
+        <div class="spec-table">
+          <div class="spec-row">
+            <span class="spec-label">Minimum Collateral Ratio:</span>
+            <span class="spec-value">110%</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Borrowing Fee Range:</span>
+            <span class="spec-value">0.5% - 5%</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Recovery Mode Trigger:</span>
+            <span class="spec-value">150% system ratio</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Interest Rate:</span>
+            <span class="spec-value">Zero ongoing interest</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="eloqura">
+        <h2>Eloqura Protocol</h2>
+        <p class="pronunciation">
+          Pronunciation: el-oh-KYUR-uh (IPA: /ˌɛl.oʊˈkjʊɹ.ə/)
+        </p>
+
+        <div class="protocol-highlight">
+          <h3>🎯 Tri-Component Architecture</h3>
+          <p>
+            Eloqura uniquely combines <strong>Automated Market Making</strong>,
+            <strong>Cross-Chain Infrastructure</strong>, and
+            <strong>Protocol Optimization</strong> into a unified system that
+            maximizes capital efficiency.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>🔄 Automated Market Making</h4>
+            <ul>
+              <li>
+                Multi-curve innovation (constant product, stable asset,
+                concentrated liquidity)
+              </li>
+              <li>Adaptive curve technology responding to market conditions</li>
+              <li>Advanced MEV protection mechanisms</li>
+              <li>Dynamic fee optimization</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>🌉 Cross-Chain Infrastructure</h4>
+            <ul>
+              <li>Hybrid bridge architecture (Optimistic + ZK proofs)</li>
+              <li>Economic security through validator staking</li>
+              <li>Multi-modal asset transfers (tokens, NFTs, LP positions)</li>
+              <li>10-30 minute settlement times</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>🤖 Protocol Optimization Network</h4>
+            <ul>
+              <li>AI-driven strategy execution</li>
+              <li>Automated yield farming and arbitrage</li>
+              <li>Advanced risk management framework</li>
+              <li>15-25% yield enhancement</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="artivya">
+        <h2>Artivya Protocol</h2>
+        <p class="pronunciation">
+          Pronunciation: ar-TIV-ee-uh (IPA: /ɑːrˈtɪv.i.ə/)
+        </p>
+
+        <div class="protocol-highlight">
+          <h3>🎯 Hybrid Trading Architecture</h3>
+          <p>
+            Artivya uniquely combines
+            <strong>order book efficiency</strong> with
+            <strong>AMM liquidity</strong>, providing professional-grade trading
+            infrastructure for both fungible and non-fungible digital assets.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>📊 Advanced Order Book Engine</h4>
+            <p>
+              Professional order types including market, limit, stop-loss,
+              take-profit, iceberg, and time-weighted orders with multiple
+              time-in-force options.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🎨 NFT Marketplace Infrastructure</h4>
+            <p>
+              Multi-tier verification, royalty management, revenue analytics,
+              and collaborative tools for creators.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🛡️ MEV Protection</h4>
+            <p>
+              Fair ordering mechanisms, anti-gaming protection, and
+              commit-reveal systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="iridescia">
+        <h2>Iridescia Protocol</h2>
+        <p class="pronunciation">
+          Pronunciation: ir-ih-DES-see-ah (IPA: /ˌɪr.ɪˈdes.si.ə/)
+        </p>
+
+        <div class="protocol-highlight">
+          <h3>🎯 Development Infrastructure Backbone</h3>
+          <p>
+            Iridescia provides comprehensive smart contract deployment tools,
+            security frameworks, and developer resources enabling rapid, secure
+            protocol development across multiple blockchain networks.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>🏗️ Template Engine</h4>
+            <p>
+              DeFi protocol templates, token standards, and governance systems
+              with 200+ vulnerability pattern analysis.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🛡️ Security Framework</h4>
+            <p>
+              Automated analysis, formal verification, and integration with 50+
+              professional audit firms.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🚀 Deployment Manager</h4>
+            <p>
+              Multi-network support across 25+ blockchains with CI/CD
+              integration and upgrade management.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="integration">
+        <h2>Cross-Protocol Integration</h2>
+
+        <div class="protocol-highlight">
+          <h3>🎯 Unified DeFi Infrastructure</h3>
+          <p>
+            Oeconomia protocols create value through deep integration, shared
+            security models, unified governance, and economic synergies that
+            exceed the sum of their parts.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>👥 For Users</h4>
+            <p>
+              Simplified access to comprehensive DeFi services through unified
+              interfaces and shared liquidity
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>👨‍💻 For Developers</h4>
+            <p>
+              Complete development infrastructure with templates, tools, and
+              security frameworks
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🏢 For Institutions</h4>
+            <p>
+              Professional-grade DeFi infrastructure with comprehensive risk
+              management and compliance
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>🌱 For Ecosystem</h4>
+            <p>
+              Network effects that accelerate adoption and create sustainable
+              economic value
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#about">About</a>
+            <a href="../content/privacypolicy.html">Privacy Policy</a>
+          </div>
+          <p>© 2025 Oeconomia DAO. A Decentralized Autonomous Organization.</p>
+          <p class="disclaimer">
+            This documentation is for informational purposes. All smart
+            contracts should be audited before use.
+          </p>
+        </div>
+      </div>
     </div>
 
-
     <!-- Floating Action Button -->
-    <button class="fab" id="fabButton">
-        <span class="fab-icon">📚</span>
+    <button type="button" class="fab" id="fabButton">
+      <span class="fab-icon">📚</span>
     </button>
-<!-- Back to Top Button HTML Snippet -->
-        <link
+    <!-- Back to Top Button HTML Snippet -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Elements
+        const scrollIndicator = document.getElementById("scrollIndicator");
+        const tocSidebar = document.getElementById("tocSidebar");
+        const tocToggle = document.getElementById("tocToggle");
+        const fabButton = document.getElementById("fabButton");
+        const tocLinks = document.querySelectorAll(".toc-list a");
+        const sections = document.querySelectorAll(".section");
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          if (scrollIndicator) {
+            scrollIndicator.style.width = scrollPercent + "%";
+          }
+        }
+
+        // Table of Contents functionality - MAIN FIX
+        function toggleTOC() {
+          const isOpen = tocSidebar.classList.contains("open");
+
+          if (isOpen) {
+            // Close sidebar
+            tocSidebar.classList.remove("open");
+            document.body.classList.remove("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">📚</span>';
+          } else {
+            // Open sidebar
+            tocSidebar.classList.add("open");
+            document.body.classList.add("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">×</span>';
+          }
+        }
+
+        // Close TOC when clicking outside
+        function closeTOCOnOutsideClick(event) {
+          if (
+            tocSidebar &&
+            fabButton &&
+            !tocSidebar.contains(event.target) &&
+            !fabButton.contains(event.target) &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        }
+
+        // Smooth scrolling for TOC links
+        function smoothScrollToSection(event) {
+          event.preventDefault();
+          const targetId = event.target.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            const headerOffset = 100;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+
+            // Close TOC on mobile after clicking
+            if (window.innerWidth <= 768) {
+              setTimeout(() => {
+                toggleTOC();
+              }, 300);
+            }
+          }
+        }
+
+        // Update active TOC link based on scroll position
+        function updateActiveTOCLink() {
+          let currentSection = "";
+          const scrollPos = window.scrollY + 150;
+
+          sections.forEach((section) => {
+            const sectionTop =
+              section.getBoundingClientRect().top + window.pageYOffset;
+            const sectionHeight = section.offsetHeight;
+
+            if (
+              scrollPos >= sectionTop &&
+              scrollPos < sectionTop + sectionHeight
+            ) {
+              currentSection = section.getAttribute("id");
+            }
+          });
+
+          tocLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + currentSection) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+          const elements = document.querySelectorAll(
+            ".feature-item, .philosophy-item, .protocol-box"
+          );
+          const windowHeight = window.innerHeight;
+
+          elements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+              element.style.opacity = "1";
+              element.style.transform = "translateY(0)";
+            }
+          });
+        }
+
+        // Back to top functionality
+
+        // Initialize animations
+        function initializeAnimations() {
+          const elements = document.querySelectorAll(
+            ".feature-item, .philosophy-item, .protocol-box"
+          );
+
+          elements.forEach((element) => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(30px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          });
+        }
+
+        // Performance optimization - throttle scroll events
+        function throttle(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // Event Listeners
+        window.addEventListener(
+          "scroll",
+          throttle(() => {
+            updateScrollProgress();
+            updateActiveTOCLink();
+            animateOnScroll();
+          }, 16)
+        );
+
+        document.addEventListener("click", closeTOCOnOutsideClick);
+
+        // TOC toggle button
+        if (tocToggle) {
+          tocToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // FAB button
+        if (fabButton) {
+          fabButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // TOC links
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", smoothScrollToSection);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            tocSidebar &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        });
+
+        // Initialize features
+        initializeAnimations();
+
+        // Initial animation trigger
+        setTimeout(() => {
+          animateOnScroll();
+        }, 100);
+        console.log("📚 Complete Oeconomia Documentation loaded successfully!");
+      });
+    </script>
+
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+    <button type="button" id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
       <i class="fas fa-chevron-up"></i>
     </button>
-<script src="../scripts/backtotop.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elements
-            const scrollIndicator = document.getElementById('scrollIndicator');
-            const tocSidebar = document.getElementById('tocSidebar');
-            const tocToggle = document.getElementById('tocToggle');
-            const fabButton = document.getElementById('fabButton');
-            const tocLinks = document.querySelectorAll('.toc-list a');
-            const sections = document.querySelectorAll('.section');
-
-            // Scroll progress indicator
-            function updateScrollProgress() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                if (scrollIndicator) {
-                    scrollIndicator.style.width = scrollPercent + '%';
-                }
-            }
-
-            // Table of Contents functionality - MAIN FIX
-            function toggleTOC() {
-                const isOpen = tocSidebar.classList.contains('open');
-                
-                if (isOpen) {
-                    // Close sidebar
-                    tocSidebar.classList.remove('open');
-                    document.body.classList.remove('sidebar-open');
-                    fabButton.innerHTML = '<span class="fab-icon">📚</span>';
-                } else {
-                    // Open sidebar
-                    tocSidebar.classList.add('open');
-                    document.body.classList.add('sidebar-open');
-                    fabButton.innerHTML = '<span class="fab-icon">×</span>';
-                }
-            }
-
-            // Close TOC when clicking outside
-            function closeTOCOnOutsideClick(event) {
-                if (tocSidebar && fabButton && 
-                    !tocSidebar.contains(event.target) && 
-                    !fabButton.contains(event.target) && 
-                    tocSidebar.classList.contains('open')) {
-                    toggleTOC();
-                }
-            }
-
-            // Smooth scrolling for TOC links
-            function smoothScrollToSection(event) {
-                event.preventDefault();
-                const targetId = event.target.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                
-                if (targetSection) {
-                    const headerOffset = 100;
-                    const elementPosition = targetSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-
-                    // Close TOC on mobile after clicking
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            toggleTOC();
-                        }, 300);
-                    }
-                }
-            }
-
-            // Update active TOC link based on scroll position
-            function updateActiveTOCLink() {
-                let currentSection = '';
-                const scrollPos = window.scrollY + 150;
-
-                sections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
-                    const sectionHeight = section.offsetHeight;
-
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-
-                tocLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + currentSection) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            // Animate elements on scroll
-            function animateOnScroll() {
-                const elements = document.querySelectorAll('.feature-item, .philosophy-item, .protocol-box');
-                const windowHeight = window.innerHeight;
-
-                elements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-
-                    if (elementTop < windowHeight - elementVisible) {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
-            }
-
-    // Back to top functionality
-    function initializeBackToTop() {
-        const backToTopBtn = document.createElement('button');
-        backToTopBtn.innerHTML = '↑';
-        backToTopBtn.className = 'back-to-top-btn';
-        backToTopBtn.style.cssText = `
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            color: white;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(100px);
-            transition: all 0.3s ease;
-            z-index: 997;
-        `;
-        
-        document.body.appendChild(backToTopBtn);
-        
-        function toggleBackToTop() {
-            if (window.scrollY > 500) {
-                backToTopBtn.style.opacity = '1';
-                backToTopBtn.style.transform = 'translateY(0)';
-            } else {
-                backToTopBtn.style.opacity = '0';
-                backToTopBtn.style.transform = 'translateY(100px)';
-            }
-        }
-        
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        window.addEventListener('scroll', toggleBackToTop);
-    }
-
-
-            // Initialize animations
-            function initializeAnimations() {
-                const elements = document.querySelectorAll('.feature-item, .philosophy-item, .protocol-box');
-                
-                elements.forEach(element => {
-                    element.style.opacity = '0';
-                    element.style.transform = 'translateY(30px)';
-                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                });
-            }
-
-            // Performance optimization - throttle scroll events
-            function throttle(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
-            }
-
-            // Event Listeners
-            window.addEventListener('scroll', throttle(() => {
-                updateScrollProgress();
-                updateActiveTOCLink();
-                animateOnScroll();
-            }, 16));
-
-            document.addEventListener('click', closeTOCOnOutsideClick);
-
-            // TOC toggle button
-            if (tocToggle) {
-                tocToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleTOC();
-                });
-            }
-
-            // FAB button
-            if (fabButton) {
-                fabButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleTOC();
-                });
-            }
-
-            // TOC links
-            tocLinks.forEach(link => {
-                link.addEventListener('click', smoothScrollToSection);
-            });
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && tocSidebar && tocSidebar.classList.contains('open')) {
-                    toggleTOC();
-                }
-            });
-
-            // Initialize features
-            initializeAnimations();
-            
-            // Initial animation trigger
-            setTimeout(() => {
-                animateOnScroll();
-            }, 100);
-
-            console.log('📚 Complete Oeconomia Documentation loaded successfully!');
-        });
-    </script>
-</body>
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
+  </body>
 </html>

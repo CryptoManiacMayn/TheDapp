@@ -485,6 +485,18 @@
             border: 2px dashed rgba(255, 255, 255, 0.2);
         }
 
+        .token-distribution-chart-title {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .token-distribution-chart-desc {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
         /* Summary Stats */
         .summary-stats {
             display: grid;
@@ -520,6 +532,12 @@
             padding: 1.5rem;
             margin: 2rem 0;
             overflow-x: auto;
+        }
+
+        /* Fee Total Paragraph */
+        .fee-total {
+            color: #00ff88;
+            margin-top: 1rem;
         }
 
         .vesting-table table {
@@ -706,7 +724,7 @@
     <div class="toc-sidebar" id="tocSidebar">
         <div class="toc-header">
             <h3>Contents</h3>
-            <button class="toc-toggle" id="tocToggle">×</button>
+            <button type="button" class="toc-toggle" id="tocToggle">×</button>
         </div>
         <ul class="toc-list">
             <li><a href="#overview">Token Overview</a></li>
@@ -757,7 +775,7 @@
                         <input type="number" id="buySellFee" value="5" min="0" max="50" step="0.1">
                     </div>
                 </div>
-                <button class="reset-button" onclick="resetToDefaults()">Reset to Defaults</button>
+                <button type="button" class="reset-button" onclick="resetToDefaults()">Reset to Defaults</button>
             </div>
         </section>
 
@@ -793,13 +811,13 @@
                 </div>
                 
                 <div class="distribution-item users">
-                    <div class="distribution-header">
-                        <div class="distribution-title">Protocol Users</div>
+                <div class="token-distribution-chart-title">📊 Token Distribution Chart</div>
+                <div class="token-distribution-chart-desc">Interactive pie chart visualization would be integrated here showing the dynamic distribution percentages</div>
                         <div class="distribution-percentage" id="usersPercentDisplay">75%</div>
                     </div>
                     <div class="distribution-amount" id="usersAmount">750,000,000 OEC</div>
                     <div class="distribution-description">
-                        The majority allocation for governance staking rewards, liquidity incentives, and community participation. Users wrap OEC to OECgrd for enhanced governance rights.
+                <div class="token-distribution-chart-title">📊 Token Distribution Chart</div>
                     </div>
                 </div>
             </div>
@@ -811,7 +829,7 @@
         </section>
 
         <!-- Vesting Schedule -->
-        <section class="section" id="vesting">
+                <div class="token-distribution-chart-title">📊 Token Distribution Chart</div>
             <h2>Vesting Schedule</h2>
             <p>Structured token release schedules ensure long-term commitment and prevent market manipulation while incentivizing continued participation in the ecosystem.</p>
             
@@ -901,13 +919,13 @@
                     <div class="control-item">
                         <label for="stakerFee">Staker Rewards %</label>
                         <input type="number" id="stakerFee" value="25" min="0" max="100" step="1">
-                    </div>
+                <p class="fee-total">Total: <span id="feeTotal">100%</span></p>
                     <div class="control-item">
                         <label for="liquidityFee">Liquidity %</label>
                         <input type="number" id="liquidityFee" value="50" min="0" max="100" step="1">
                     </div>
                 </div>
-                <p style="color: #00ff88; margin-top: 1rem;">Total: <span id="feeTotal">100%</span></p>
+                <p class="fee-total">Total: <span id="feeTotal">100%</span></p>
             </div>
         </section>
 
@@ -1085,7 +1103,7 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="fabButton">
+    <button type="button" class="fab" id="fabButton">
         <span class="fab-icon">📊</span>
     </button>
 

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles/sidebar.css" />
     <link rel="stylesheet" href="styles/roadmap.css" />
     <link rel="stylesheet" href="styles/sectionnavigator.css" />
-    <link rel="stylesheet" href="styles/cardobjects.css" />
+    <link rel="stylesheet" href="styles/features.css" />
     <link rel="stylesheet" href="styles/blockchainnetworks.css" />
     <link rel="stylesheet" href="styles/products-animation.css" />
     <link
@@ -34,10 +34,8 @@
     <script src="scripts/sectionnavigator.js"></script>
     <script src="scripts/background.js"></script>
     <script src="scripts/sidebar.js"></script>
-    <script src="scripts/cardobjects.js"></script>
+    <script src="scripts/features.js"></script>
     <script src="scripts/blockchainnetworks.js"></script>
-
-
 
     <!-- Navigation -->
     <nav>
@@ -580,32 +578,81 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta" id="cta">
+<!-- CTA Section -->
+<section class="cta" id="cta">
+  <!-- Animated Background -->
+  <div class="animated-background"></div>
+  
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <!-- Feature Cards Grid -->
+    <div class="cta-cards-section">
+      <h3>Why Choose Oeconomia?</h3>
+      <div class="cta-cards-grid">
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="https://via.placeholder.com/300x150/00d4ff/ffffff?text=Security" alt="Advanced Security" />
+          </div>
+          <div class="cta-card-content">
+            <h4>Advanced Security</h4>
+            <p>Multi-layer security protocols with quantum-resistant encryption and real-time threat detection.</p>
+          </div>
+        </div>
 
-                  <!-- Animated Background -->
-    <div class="animated-background"></div>
-    
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="https://via.placeholder.com/300x150/ff00ff/ffffff?text=AI+Trading" alt="AI-Powered Trading" />
+          </div>
+          <div class="cta-card-content">
+            <h4>AI-Powered Trading</h4>
+            <p>Smart algorithms optimize your trades automatically with machine learning and predictive analytics.</p>
+          </div>
+        </div>
 
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="https://via.placeholder.com/300x150/00ff88/ffffff?text=Cross+Chain" alt="Cross-Chain Support" />
+          </div>
+          <div class="cta-card-content">
+            <h4>Cross-Chain Support</h4>
+            <p>Seamlessly trade across multiple blockchain networks with unified liquidity pools.</p>
+          </div>
+        </div>
 
-      <div class="container">
-        <h2>Prepared for Future Proof Protocols?</h2>
-        <p>Join the users who trust Oeconomia for their digital asset needs.</p>
-        <a href="#" class="btn-primary" onclick="launchDApp()"
-          >Get Started Today</a
-        >
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="images\arbitrum-arb-logo.png" alt="Non-Custodial" />
+          </div>
+          <div class="cta-card-content">
+            <h4>Non-Custodial</h4>
+            <p>Maintain full control of your assets with our decentralized, non-custodial infrastructure.</p>
+          </div>
+        </div>
 
-              <div class="platform-description">
-        <span class="ai-pill">AI Liquidity Routing</span>
-        <span class="ai-pill">Predictive Risk Analysis</span>
-        <span class="ai-pill">Neural Order Matching</span>
-        <span class="ai-pill">Smart Portfolio Rebalancing</span>
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="https://via.placeholder.com/300x150/4ecdc4/ffffff?text=Low+Fees" alt="Low Transaction Fees" />
+          </div>
+          <div class="cta-card-content">
+            <h4>Low Transaction Fees</h4>
+            <p>Optimized gas usage and smart routing minimize your transaction costs across all networks.</p>
+          </div>
+        </div>
+
+        <div class="cta-card">
+          <div class="cta-card-image">
+            <img src="https://via.placeholder.com/300x150/ffd93d/ffffff?text=24%2F7+Support" alt="24/7 Support" />
+          </div>
+          <div class="cta-card-content">
+            <h4>24/7 Community Support</h4>
+            <p>Access comprehensive documentation and active community support whenever you need help.</p>
+          </div>
+        </div>
       </div>
-      
-      </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer" id="footer">

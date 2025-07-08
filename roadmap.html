@@ -30,6 +30,7 @@
             padding: 30px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -118,6 +119,7 @@
             background: rgba(255, 255, 255, 0.05);
             padding: 25px;
             border-radius: 15px;
+                        -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -339,6 +341,19 @@
                 align-items: center;
             }
         }
+
+        #fileInput {
+            display: none;
+        }
+        #deleteBtn,
+        .delete-btn {
+            display: none;
+            background: #f44336;
+        }
+        #deleteBtn.show,
+        .delete-btn.show {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -350,14 +365,14 @@
 
         <div class="controls">
             <div class="status-filters">
-                <button class="filter-btn active" data-status="all">All Phases</button>
-                <button class="filter-btn" data-status="completed">Completed</button>
-                <button class="filter-btn" data-status="in-progress">In Progress</button>
-                <button class="filter-btn" data-status="planned">Planned</button>
+                <button type="button" class="filter-btn active" data-status="all">All Phases</button>
+                <button type="button" class="filter-btn" data-status="completed">Completed</button>
+                <button type="button" class="filter-btn" data-status="in-progress">In Progress</button>
+                <button type="button" class="filter-btn" data-status="planned">Planned</button>
             </div>
-            <button class="btn primary" onclick="addPhase()">Add Phase</button>
-            <button class="btn" onclick="exportRoadmap()">Export JSON</button>
-            <button class="btn" onclick="importRoadmap()">Import JSON</button>
+            <button type="button" class="btn primary" onclick="addPhase()">Add Phase</button>
+            <button type="button" class="btn" onclick="exportRoadmap()">Export JSON</button>
+            <button type="button" class="btn" onclick="importRoadmap()">Import JSON</button>
         </div>
 
         <div class="timeline" id="timeline">
@@ -401,19 +416,19 @@
                     <input type="text" id="phaseProtocols" placeholder="Oeconomia Gov, Alluria, Eloqura">
                 </div>
                 <div class="form-group">
-                    <label>Milestones (one per line)</label>
-                    <textarea id="phaseMilestones" placeholder="Smart contract deployment&#10;Security audit completion&#10;Mainnet launch"></textarea>
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
                 </div>
                 <div class="controls">
                     <button type="button" class="btn primary" onclick="savePhase()">Save</button>
-                    <button type="button" class="btn" onclick="deletePhase()" id="deleteBtn" style="display: none; background: #f44336;">Delete</button>
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
                     <button type="button" class="btn" onclick="closeEditMode()">Cancel</button>
                 </div>
-            </form>
+    <input type="file" id="fileInput" accept=".json" onchange="handleFileImport(event)">
         </div>
     </div>
 
-    <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+    <input type="file" id="fileInput" accept=".json" onchange="handleFileImport(event)">
 
     <script>
         let roadmapData = [
@@ -710,5 +725,16 @@
             setupFilters();
         });
     </script>
+
+            <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
+    
 </body>
 </html>

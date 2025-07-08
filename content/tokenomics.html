@@ -712,6 +712,16 @@
           gap: 1rem;
         }
       }
+    .token-distribution-title {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .token-distribution-note {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
     </style>
   </head>
   <body>
@@ -748,7 +758,7 @@
     <div class="toc-sidebar" id="tocSidebar">
       <div class="toc-header">
         <h3>Contents</h3>
-        <button class="toc-toggle" id="tocToggle">×</button>
+        <button type="button" class="toc-toggle" id="tocToggle">×</button>
       </div>
       <ul class="toc-list">
         <li><a href="#overview">Token Overview</a></li>
@@ -880,32 +890,14 @@
               <div class="distribution-percentage">15%</div>
             </div>
             <div class="distribution-amount">150,000,000 OEC</div>
-            <div class="distribution-description">
-              Rewards for specific network activities including cross-chain
-              bridge operations, oracle data provision, emergency response
-              coordination, and ecosystem development contributions requiring
-              active participation.
-            </div>
-          </div>
-        </div>
-
-        <div class="chart-container">
-          <div
-            style="
-              color: rgba(255, 255, 255, 0.6);
-              font-size: 1.1rem;
-              margin-bottom: 1rem;
-            "
-          >
+          <div class="token-distribution-title">
             📊 Token Distribution Visualization
           </div>
-          <div
-            style="
-              color: rgba(255, 255, 255, 0.4);
-              font-size: 0.9rem;
-              font-style: italic;
-            "
-          >
+          <div class="token-distribution-note">
+            75% community allocation ensures decentralized control from launch
+          </div>
+          </div>
+          <div class="token-distribution-note">
             75% community allocation ensures decentralized control from launch
           </div>
         </div>
@@ -1364,7 +1356,7 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="fabButton">
+    <button type="button" class="fab" id="fabButton">
       <span class="fab-icon">📊</span>
     </button>
 
@@ -1576,7 +1568,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+    <button type="button" id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
       <i class="fas fa-chevron-up"></i>
     </button>
     <link rel="stylesheet" href="../styles/backtotop.css" />

@@ -57,7 +57,7 @@
         }
       }
 
-            .nav-brand {
+      .nav-brand {
         display: flex;
         align-items: center;
         gap: 0.75rem;
@@ -75,7 +75,7 @@
         filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
       }
 
-            .nav-content h1 {
+      .nav-content h1 {
         margin: 0;
       }
 
@@ -142,7 +142,7 @@
       }
 
       .header h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
         margin-bottom: 1rem;
         background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
         -webkit-background-clip: text;
@@ -311,7 +311,7 @@
         }
       }
 
-            .hero-buttons {
+      .hero-buttons {
         display: flex;
         gap: 1rem;
         justify-content: center;
@@ -351,7 +351,6 @@
         z-index: 1001;
       }
     </style>
-    <link rel="stylesheet" href="../styles/backtotop.css" />
   </head>
   <body>
     <div class="scroll-indicator" id="scrollIndicator"></div>
@@ -367,13 +366,8 @@
           <h1>OECONOMIA</h1>
         </div>
         <div class="nav-links">
-
-          <a href="../content/tokenomics.html" class="back-link"
-            >Tokenomics</a
-          >
-          <a href="../content/flowcharts.html" class="back-link"
-            >Flow Charts</a
-          >
+          <a href="../content/tokenomics.html" class="back-link">Tokenomics</a>
+          <a href="../content/flowcharts.html" class="back-link">Flow Charts</a>
           <a href="../content/documentation.html" class="back-link"
             >Documentation</a
           >
@@ -667,15 +661,7 @@
         </div>
       </div>
     </div>
-    <!-- Back to Top Button HTML Snippet -->
-        <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
-      <i class="fas fa-chevron-up"></i>
-    </button>
-    <script src="../scripts/backtotop.js"></script>
+
     <script>
       // Scroll progress indicator
       window.addEventListener("scroll", () => {
@@ -698,5 +684,16 @@
         });
       });
     </script>
+
+    <!-- Back to Top Button HTML Snippet -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button type="button" id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
   </body>
 </html>

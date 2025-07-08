@@ -227,6 +227,12 @@
             text-align: center;
             font-weight: 500;
         }
+
+        .demo-phrase-btn {
+            margin-top: 10px;
+            width: auto;
+            background: #28a745;
+        }
     </style>
 </head>
 <body>
@@ -253,13 +259,13 @@
 
         <div class="input-section">
             <div class="form-group">
-                <label for="seedPhrase">Seed Phrase (12 or 24 words):</label>
+                <button type="button" class="btn demo-phrase-btn" onclick="generateDemoPhrase()">Generate Demo Phrase</button>
                 <textarea 
                     id="seedPhrase" 
                     rows="3" 
                     placeholder="Enter your seed phrase here (12 or 24 words separated by spaces) or click 'Generate Demo Phrase' to test"
                 ></textarea>
-                <button class="btn" onclick="generateDemoPhrase()" style="margin-top: 10px; width: auto; background: #28a745;">Generate Demo Phrase</button>
+                <button type="button" class="btn demo-phrase-btn" onclick="generateDemoPhrase()">Generate Demo Phrase</button>
             </div>
 
             <div class="form-group">
@@ -272,7 +278,7 @@
                 </select>
             </div>
 
-            <button class="btn" onclick="checkWallet()">Check Wallet Balance</button>
+            <button type="button" class="btn" onclick="checkWallet()">Check Wallet Balance</button>
 
             <div id="results" class="results"></div>
         </div>
