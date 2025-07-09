@@ -450,11 +450,11 @@ class CubeManager {
     const mouse = new THREE.Vector2();
     
     this.faceToProtocol = {
-      0: { name: 'alluria', url: 'content/flowcharts.html#alluria' },
-      1: { name: 'artivya', url: 'content/flowcharts.html#artivya' },
-      2: { name: 'iridescia', url: 'content/flowcharts.html#iridescia' },
-      3: { name: 'eloqura', url: 'content/flowcharts.html#eloqura' },
-      4: { name: 'oeconomia', url: 'content/flowcharts.html#oeconomia' },
+      0: { name: 'alluria', url: 'content/more/flowcharts.html#alluria' },
+      1: { name: 'artivya', url: 'content/more/flowcharts.html#artivya' },
+      2: { name: 'iridescia', url: 'content/more/flowcharts.html#iridescia' },
+      3: { name: 'eloqura', url: 'content/more/flowcharts.html#eloqura' },
+      4: { name: 'oeconomia', url: 'content/more/flowcharts.html#oeconomia' },
       5: { name: 'future', url: '#' }
     };
     
