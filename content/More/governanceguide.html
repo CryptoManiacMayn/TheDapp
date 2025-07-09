@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Governance Guide - Oeconomia Protocol</title>
     <style>
-        /* Complete CSS matching documentation style */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      /* Complete CSS matching documentation style */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background: #000000;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #000000;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-        /* Animated background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            animation: gradientShift 20s ease infinite;
-        }
+      /* Animated background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+        animation: gradientShift 20s ease infinite;
+      }
 
-              .btn-primary {
+      .btn-primary {
         padding: 0.5rem 1.5rem;
         max-width: 155px;
 
@@ -59,188 +71,192 @@
         box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
       }
 
-
-        @keyframes gradientShift {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+      @keyframes gradientShift {
+        0%,
+        100% {
+          opacity: 1;
         }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+        50% {
+          opacity: 0.7;
         }
+      }
 
-        .nav-logo {
-            height: 40px;
-            width: auto;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
-        }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
 
-        .nav-logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
-        }
+      .nav-logo {
+        height: 40px;
+        width: auto;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+      }
 
-        .nav-content h1 {
-            margin: 0;
-        }
+      .nav-logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+      }
 
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
+      .nav-content h1 {
+        margin: 0;
+      }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+      }
 
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.9);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
 
-        .nav-content h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .back-link {
-            color: #00d4ff;
-            text-decoration: none;
-            padding: 0.5rem 1.5rem;
-            border: 1px solid #00d4ff;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+      .nav-content h1 {
+        font-size: 1.5rem;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
 
-        .back-link:hover {
-            background: #00d4ff;
-            color: #000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
-        }
+      .back-link {
+        color: #00d4ff;
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #00d4ff;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
 
-        /* Table of Contents Sidebar */
-        .toc-sidebar {
-            position: fixed;
-            top: 80px;
-            left: -400px;
-            width: 400px;
-            height: calc(100vh - 80px);
-            background: rgba(10, 10, 10, 0.95);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 999;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
+      .back-link:hover {
+        background: #00d4ff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+      }
 
-        .toc-sidebar.open {
-            left: 0;
-        }
+      /* Table of Contents Sidebar */
+      .toc-sidebar {
+        position: fixed;
+        top: 80px;
+        left: -400px;
+        width: 400px;
+        height: calc(100vh - 80px);
+        background: rgba(10, 10, 10, 0.95);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 999;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+      }
 
-        .toc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      .toc-sidebar.open {
+        left: 0;
+      }
 
-        .toc-header h3 {
-            color: #00d4ff;
-            font-size: 1.2rem;
-        }
+      .toc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
 
-        .toc-toggle {
-            background: none;
-            border: none;
-            color: #ff00ff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
+      .toc-header h3 {
+        color: #00d4ff;
+        font-size: 1.2rem;
+      }
 
-        .toc-toggle:hover {
-            background: rgba(255, 0, 255, 0.1);
-        }
+      .toc-toggle {
+        background: none;
+        border: none;
+        color: #ff00ff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
 
-        .toc-list {
-            list-style: none;
-            padding: 0;
-        }
+      .toc-toggle:hover {
+        background: rgba(255, 0, 255, 0.1);
+      }
 
-        .toc-list li {
-            margin: 0;
-        }
+      .toc-list {
+        list-style: none;
+        padding: 0;
+      }
 
-        .toc-list a {
-            display: block;
-            padding: 0.8rem 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-            font-size: 0.9rem;
-        }
+      .toc-list li {
+        margin: 0;
+      }
 
-        .toc-list a:hover {
-            background: rgba(0, 212, 255, 0.1);
-            color: #00d4ff;
-            border-left-color: #00d4ff;
-            padding-left: 1.5rem;
-        }
+      .toc-list a {
+        display: block;
+        padding: 0.8rem 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        font-size: 0.9rem;
+      }
 
-        .toc-list a.active {
-            background: rgba(0, 212, 255, 0.15);
-            color: #00d4ff;
-            border-left-color: #00d4ff;
-        }
+      .toc-list a:hover {
+        background: rgba(0, 212, 255, 0.1);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+        padding-left: 1.5rem;
+      }
 
-        .toc-list .sub-item {
-            padding-left: 2rem;
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
+      .toc-list a.active {
+        background: rgba(0, 212, 255, 0.15);
+        color: #00d4ff;
+        border-left-color: #00d4ff;
+      }
 
-        /* Container with smooth transform */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px 50px;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+      .toc-list .sub-item {
+        padding-left: 2rem;
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
 
-        .sidebar-open .container {
-            transform: translateX(200px);
-        }
+      /* Container with smooth transform */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 20px 50px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-        .header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
+      .sidebar-open .container {
+        transform: translateX(200px);
+      }
 
-        .header h1 {
+      .header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .header h1 {
         font-size: 3.5rem;
         margin-bottom: 1rem;
         background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
@@ -248,616 +264,690 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         animation: textGlow 3s ease-in-out infinite alternate;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+      }
+
+      .governance-intro {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.1),
+          rgba(255, 0, 255, 0.1)
+        );
+        border: 2px solid rgba(0, 212, 255, 0.3);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        text-align: center;
+      }
+
+      .last-updated {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      @keyframes textGlow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+        }
+      }
+
+      /* Content Sections */
+      .section {
+        background: rgba(255, 255, 255, 0.03);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        transition: all 0.3s ease;
+        scroll-margin-top: 100px;
+      }
+
+      .section:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.05),
+          rgba(255, 0, 255, 0.05)
+        );
+        border-color: rgba(0, 212, 255, 0.2);
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #00d4ff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      h2::before {
+        content: "▸";
+        color: #ff00ff;
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        color: #00ff88;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem;
+        color: #fff;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+      }
+
+      ul,
+      ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      strong {
+        color: #00d4ff;
+      }
+
+      /* Step boxes */
+      .step-box {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+
+      .step-number {
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: linear-gradient(45deg, #00ff88, #00d4ff);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      /* Feature Grid */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .feature-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .feature-item:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
+      }
+
+      .feature-item h4 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: #00d4ff;
+      }
+
+      .feature-item.standard {
+        border-left: 4px solid #00d4ff;
+      }
+      .feature-item.enhanced {
+        border-left: 4px solid #ff8800;
+      }
+      .feature-item.elite {
+        border-left: 4px solid #ff00ff;
+      }
+      .feature-item.emergency {
+        border-left: 4px solid #ff4444;
+      }
+      .feature-item.treasury {
+        border-left: 4px solid #00ff88;
+      }
+      .feature-item.constitutional {
+        border-left: 4px solid #8800ff;
+      }
+
+      /* Tier comparison table */
+      .tier-table {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        overflow-x: auto;
+      }
+
+      .tier-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .tier-table th,
+      .tier-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .tier-table th {
+        color: #00d4ff;
+        font-weight: 600;
+        background: rgba(0, 212, 255, 0.1);
+      }
+
+      .tier-table td {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .tier-table .tier-standard {
+        background: rgba(0, 212, 255, 0.05);
+      }
+      .tier-table .tier-enhanced {
+        background: rgba(255, 136, 0, 0.05);
+      }
+      .tier-table .tier-elite {
+        background: rgba(255, 0, 255, 0.05);
+      }
+
+      /* Code blocks */
+      .code-block {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        margin: 0;
+        color: #00ff88;
+      }
+
+      /* Important Notice Box */
+      .important-box {
+        background: rgba(255, 0, 255, 0.1);
+        border: 2px solid rgba(255, 0, 255, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .important-box::before {
+        content: "⚠️";
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        opacity: 0.5;
+      }
+
+      .warning-box {
+        background: rgba(255, 136, 0, 0.1);
+        border: 2px solid rgba(255, 136, 0, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+      }
+
+      .warning-box::before {
+        content: "🚨";
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        opacity: 0.5;
+      }
+
+      .success-box {
+        background: rgba(0, 255, 136, 0.1);
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+      }
+
+      .success-box::before {
+        content: "✅";
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        opacity: 0.5;
+      }
+
+      /* Protocol cards */
+      .protocol-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .protocol-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .protocol-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+      }
+
+      .protocol-card.oeconomia {
+        border-left: 4px solid #00d4ff;
+      }
+      .protocol-card.alluria {
+        border-left: 4px solid #ff8800;
+      }
+      .protocol-card.eloqura {
+        border-left: 4px solid #ff00ff;
+      }
+      .protocol-card.artivya {
+        border-left: 4px solid #00ff88;
+      }
+      .protocol-card.iridescia {
+        border-left: 4px solid #8800ff;
+      }
+
+      /* Stats grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .stat-item {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 212, 255, 0.1),
+          rgba(255, 0, 255, 0.1)
+        );
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        color: #00d4ff;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      }
+
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        transition: all 0.3s ease;
+        z-index: 998;
+      }
+
+      .fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+      }
+
+      /* Scroll Progress Indicator */
+      .scroll-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d4ff, #ff00ff);
+        transition: width 0.3s ease;
+        z-index: 1001;
+      }
+
+      /* Quick links */
+      .quick-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 2rem 0;
+      }
+
+      .quick-link {
+        background: linear-gradient(45deg, #00d4ff, #ff00ff);
+        color: white;
+        text-decoration: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      .quick-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+      }
+
+      /* Footer */
+      .footer {
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.9),
+          rgba(26, 26, 46, 0.9)
+        );
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem 0;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #00d4ff;
+      }
+
+      .footer p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+      }
+
+      .disclaimer {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .sidebar-open .container {
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 100px 15px 50px;
         }
 
-        .subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.5rem;
+        .header h1 {
+          font-size: 2.5rem;
         }
 
-        .governance-intro {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1));
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        .last-updated {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8)); }
-        }
-
-        /* Content Sections */
         .section {
-            background: rgba(255, 255, 255, 0.03);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            transition: all 0.3s ease;
-            scroll-margin-top: 100px;
+          padding: 1.5rem;
         }
 
-        .section:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+        .nav-content {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
         }
 
-        .hero-section {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(255, 0, 255, 0.05));
-            border-color: rgba(0, 212, 255, 0.2);
+        .nav-links {
+          flex-direction: column;
+          gap: 0.5rem;
         }
 
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #00d4ff;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .feature-grid,
+        .protocol-grid,
+        .stats-grid {
+          grid-template-columns: 1fr;
         }
 
-        h2::before {
-            content: "▸";
-            color: #ff00ff;
-            font-size: 1.5rem;
+        .toc-sidebar {
+          width: 320px;
+          left: -320px;
         }
 
-        h3 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: #00ff88;
+        .fab {
+          bottom: 20px;
+          right: 20px;
         }
 
-        h4 {
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.8rem;
-            color: #fff;
+        .quick-links {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
         }
 
-        p {
-            margin-bottom: 1.2rem;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.7;
+        .section {
+          padding: 1.2rem;
         }
 
-        ul, ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        strong {
-            color: #00d4ff;
-        }
-
-        /* Step boxes */
-        .step-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            position: relative;
-        }
-
-        .step-number {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            color: #000;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        /* Feature Grid */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
-        }
-
-        .feature-item h4 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            color: #00d4ff;
-        }
-
-        .feature-item.standard { border-left: 4px solid #00d4ff; }
-        .feature-item.enhanced { border-left: 4px solid #ff8800; }
-        .feature-item.elite { border-left: 4px solid #ff00ff; }
-        .feature-item.emergency { border-left: 4px solid #ff4444; }
-        .feature-item.treasury { border-left: 4px solid #00ff88; }
-        .feature-item.constitutional { border-left: 4px solid #8800ff; }
-
-        /* Tier comparison table */
         .tier-table {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            overflow-x: auto;
-        }
-
-        .tier-table table {
-            width: 100%;
-            border-collapse: collapse;
+          font-size: 0.85rem;
         }
 
         .tier-table th,
         .tier-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 0.6rem;
         }
-
-        .tier-table th {
-            color: #00d4ff;
-            font-weight: 600;
-            background: rgba(0, 212, 255, 0.1);
-        }
-
-        .tier-table td {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .tier-table .tier-standard { background: rgba(0, 212, 255, 0.05); }
-        .tier-table .tier-enhanced { background: rgba(255, 136, 0, 0.05); }
-        .tier-table .tier-elite { background: rgba(255, 0, 255, 0.05); }
-
-        /* Code blocks */
-        .code-block {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .code-block pre {
-            margin: 0;
-            color: #00ff88;
-        }
-
-        /* Important Notice Box */
-        .important-box {
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .important-box::before {
-            content: "⚠️";
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .warning-box {
-            background: rgba(255, 136, 0, 0.1);
-            border: 2px solid rgba(255, 136, 0, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .warning-box::before {
-            content: "🚨";
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .success-box {
-            background: rgba(0, 255, 136, 0.1);
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .success-box::before {
-            content: "✅";
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-
-        /* Protocol cards */
-        .protocol-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .protocol-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .protocol-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
-        }
-
-        .protocol-card.oeconomia { border-left: 4px solid #00d4ff; }
-        .protocol-card.alluria { border-left: 4px solid #ff8800; }
-        .protocol-card.eloqura { border-left: 4px solid #ff00ff; }
-        .protocol-card.artivya { border-left: 4px solid #00ff88; }
-        .protocol-card.iridescia { border-left: 4px solid #8800ff; }
-
-        /* Stats grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-item {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1));
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .stat-value {
-            color: #00d4ff;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-            transition: all 0.3s ease;
-            z-index: 998;
-        }
-
-        .fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
-        }
-
-        /* Scroll Progress Indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00d4ff, #ff00ff);
-            transition: width 0.3s ease;
-            z-index: 1001;
-        }
-
-        /* Quick links */
-        .quick-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .quick-link {
-            background: linear-gradient(45deg, #00d4ff, #ff00ff);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
-        }
-
-        .quick-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
-        }
-
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(26, 26, 46, 0.9));
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 0;
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #00d4ff;
-        }
-
-        .footer p {
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 0.5rem;
-        }
-
-        .disclaimer {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-style: italic;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .sidebar-open .container {
-                transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 100px 15px 50px;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-            
-            .nav-content {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            
-            .nav-links {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .feature-grid,
-            .protocol-grid,
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .toc-sidebar {
-                width: 320px;
-                left: -320px;
-            }
-            
-            .fab {
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .quick-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .section {
-                padding: 1.2rem;
-            }
-            
-            .tier-table {
-                font-size: 0.85rem;
-            }
-            
-            .tier-table th,
-            .tier-table td {
-                padding: 0.6rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="scroll-indicator" id="scrollIndicator"></div>
-    
+
     <nav>
-        <div class="nav-content">
-            <div class="nav-brand">
-                <img src="..\../images\OEC Logo.png" alt="Oeconomia Logo" class="nav-logo">
-                <h1>OECONOMIA</h1>
-            </div>
-            <div class="nav-links">
-                <a href="#tally-integration" class="back-link">Tally Guide</a>
-                <a href="#guardian-tiers" class="back-link">Guardian Tiers</a>
-                <a href="#compensation" class="back-link">Rewards</a>
-          <a href="../../index.html" class="btn-primary">← Back Home</a>
-            </div>
+      <div class="nav-content">
+        <div class="nav-brand">
+          <img
+            src="..\../images\OEC Logo.png"
+            alt="Oeconomia Logo"
+            class="nav-logo"
+          />
+          <h1>OECONOMIA</h1>
         </div>
+        <div class="nav-links">
+          <a href="#tally-integration" class="back-link">Tally Guide</a>
+          <a href="#guardian-tiers" class="back-link">Guardian Tiers</a>
+          <a href="#compensation" class="back-link">Rewards</a>
+          <a href="../../index.html" class="btn-primary">← Back Home</a>
+        </div>
+      </div>
     </nav>
 
     <!-- Table of Contents Sidebar -->
     <div class="toc-sidebar" id="tocSidebar">
-        <div class="toc-header">
-            <h3>Governance Guide</h3>
-            <button type="button" class="toc-toggle" id="tocToggle">×</button>
-        </div>
-        <ul class="toc-list">
-            <li><a href="#overview">Governance Overview</a></li>
-            <li><a href="#getting-started">Getting Started</a>
-                <ul>
-                    <li><a href="#oec-conversion" class="sub-item">OEC Conversion</a></li>
-                    <li><a href="#guardian-activation" class="sub-item">Guardian Activation</a></li>
-                </ul>
+      <div class="toc-header">
+        <h3>Governance Guide</h3>
+        <button type="button" class="toc-toggle" id="tocToggle">×</button>
+      </div>
+      <ul class="toc-list">
+        <li><a href="#overview">Governance Overview</a></li>
+        <li>
+          <a href="#getting-started">Getting Started</a>
+          <ul>
+            <li>
+              <a href="#oec-conversion" class="sub-item">OEC Conversion</a>
             </li>
-            <li><a href="#tally-integration">Tally.xyz Integration</a></li>
-            <li><a href="#proposal-types">Proposal Types</a></li>
-            <li><a href="#guardian-tiers">Guardian Responsibilities</a></li>
-            <li><a href="#voting-guide">Voting Guide</a></li>
-            <li><a href="#compensation">Compensation System</a></li>
-            <li><a href="#emergency-procedures">Emergency Procedures</a></li>
-            <li><a href="#delegation">Delegation & Proxy</a></li>
-            <li><a href="#analytics">Analytics & Reporting</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
-            <li><a href="#best-practices">Best Practices</a></li>
-            <li><a href="#support">Support Resources</a></li>
-        </ul>
+            <li>
+              <a href="#guardian-activation" class="sub-item"
+                >Guardian Activation</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li><a href="#tally-integration">Tally.xyz Integration</a></li>
+        <li><a href="#proposal-types">Proposal Types</a></li>
+        <li><a href="#guardian-tiers">Guardian Responsibilities</a></li>
+        <li><a href="#voting-guide">Voting Guide</a></li>
+        <li><a href="#compensation">Compensation System</a></li>
+        <li><a href="#emergency-procedures">Emergency Procedures</a></li>
+        <li><a href="#delegation">Delegation & Proxy</a></li>
+        <li><a href="#analytics">Analytics & Reporting</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="#best-practices">Best Practices</a></li>
+        <li><a href="#support">Support Resources</a></li>
+      </ul>
     </div>
 
     <div class="container">
-        <div class="header">
-            <h1>Governance Guide</h1>
-            <p class="subtitle">Complete user instructions for Oeconomia Protocol governance through Tally.xyz</p>
-            <div class="governance-intro">
-                <p><strong>Work-Based Governance System</strong> where active participation is required to influence protocol decisions across five interconnected protocols through the OECgrd Guardian mechanism.</p>
-            </div>
-            <p class="last-updated">Last Updated: July 2025</p>
+      <div class="header">
+        <h1>Governance Guide</h1>
+        <p class="subtitle">
+          Complete user instructions for Oeconomia Protocol governance through
+          Tally.xyz
+        </p>
+        <div class="governance-intro">
+          <p>
+            <strong>Work-Based Governance System</strong> where active
+            participation is required to influence protocol decisions across
+            five interconnected protocols through the OECgrd Guardian mechanism.
+          </p>
         </div>
+        <p class="last-updated">Last Updated: July 2025</p>
+      </div>
 
-        <!-- Quick Links -->
-        <div class="quick-links">
-            <a href="#getting-started" class="quick-link">🚀 Start Here</a>
-            <a href="#tally-integration" class="quick-link">🗳️ Use Tally</a>
-            <a href="#compensation" class="quick-link">💰 Earn Rewards</a>
-            <a href="#troubleshooting" class="quick-link">🛠️ Get Help</a>
+      <!-- Quick Links -->
+      <div class="quick-links">
+        <a href="#getting-started" class="quick-link">🚀 Start Here</a>
+        <a href="#tally-integration" class="quick-link">🗳️ Use Tally</a>
+        <a href="#compensation" class="quick-link">💰 Earn Rewards</a>
+        <a href="#troubleshooting" class="quick-link">🛠️ Get Help</a>
+      </div>
+
+      <!-- Governance Overview -->
+      <section class="section hero-section" id="overview">
+        <h2>🏛️ Governance Overview</h2>
+
+        <p>
+          Oeconomia operates a
+          <strong>work-based governance system</strong> where active
+          participation is required to influence protocol decisions. The system
+          coordinates governance across five interconnected protocols through
+          the OECgrd Guardian mechanism.
+        </p>
+
+        <h3>Governed Protocols</h3>
+        <div class="protocol-grid">
+          <div class="protocol-card oeconomia">
+            <h4>Oeconomia Core</h4>
+            <p>Cross-protocol coordination and treasury management</p>
+          </div>
+          <div class="protocol-card alluria">
+            <h4>Alluria</h4>
+            <p>Lending protocol (ETH → ALUD stablecoin)</p>
+          </div>
+          <div class="protocol-card eloqura">
+            <h4>Eloqura</h4>
+            <p>AMM, Bridge, and Yield Optimization</p>
+          </div>
+          <div class="protocol-card artivya">
+            <h4>Artivya</h4>
+            <p>Professional trading and NFT marketplace</p>
+          </div>
+          <div class="protocol-card iridescia">
+            <h4>Iridescia</h4>
+            <p>Smart contract deployment infrastructure</p>
+          </div>
         </div>
+      </section>
 
-        <!-- Governance Overview -->
-        <section class="section hero-section" id="overview">
-            <h2>🏛️ Governance Overview</h2>
-            
-            <p>Oeconomia operates a <strong>work-based governance system</strong> where active participation is required to influence protocol decisions. The system coordinates governance across five interconnected protocols through the OECgrd Guardian mechanism.</p>
+      <!-- Getting Started -->
+      <section class="section" id="getting-started">
+        <h2>🎯 Getting Started: OEC to OECgrd Conversion</h2>
 
-            <h3>Governed Protocols</h3>
-            <div class="protocol-grid">
-                <div class="protocol-card oeconomia">
-                    <h4>Oeconomia Core</h4>
-                    <p>Cross-protocol coordination and treasury management</p>
-                </div>
-                <div class="protocol-card alluria">
-                    <h4>Alluria</h4>
-                    <p>Lending protocol (ETH → ALUD stablecoin)</p>
-                </div>
-                <div class="protocol-card eloqura">
-                    <h4>Eloqura</h4>
-                    <p>AMM, Bridge, and Yield Optimization</p>
-                </div>
-                <div class="protocol-card artivya">
-                    <h4>Artivya</h4>
-                    <p>Professional trading and NFT marketplace</p>
-                </div>
-                <div class="protocol-card iridescia">
-                    <h4>Iridescia</h4>
-                    <p>Smart contract deployment infrastructure</p>
-                </div>
-            </div>
-        </section>
+        <div id="oec-conversion">
+          <h3>Step 1: Obtain OEC Tokens</h3>
+          <div class="step-box">
+            <div class="step-number">Step 1</div>
+            <ul>
+              <li>Purchase OEC tokens through supported exchanges</li>
+              <li>Ensure you have ETH for gas fees</li>
+              <li>Connect your wallet to the Oeconomia protocol interface</li>
+            </ul>
+          </div>
 
-        <!-- Getting Started -->
-        <section class="section" id="getting-started">
-            <h2>🎯 Getting Started: OEC to OECgrd Conversion</h2>
-
-            <div id="oec-conversion">
-                <h3>Step 1: Obtain OEC Tokens</h3>
-                <div class="step-box">
-                    <div class="step-number">Step 1</div>
-                    <ul>
-                        <li>Purchase OEC tokens through supported exchanges</li>
-                        <li>Ensure you have ETH for gas fees</li>
-                        <li>Connect your wallet to the Oeconomia protocol interface</li>
-                    </ul>
-                </div>
-
-                <h3>Step 2: Convert to Guardian Status</h3>
-                <div class="step-box">
-                    <div class="step-number">Step 2</div>
-                    <div class="code-block">
-                        <pre>Required Actions:
+          <h3>Step 2: Convert to Guardian Status</h3>
+          <div class="step-box">
+            <div class="step-number">Step 2</div>
+            <div class="code-block">
+              <pre>
+Required Actions:
 1. Navigate to "Guardian Conversion" in the protocol interface
 2. Select conversion amount (minimum: 1,000 OEC recommended)
 3. Choose your commitment tier:
@@ -865,918 +955,1147 @@
    - Enhanced: 1.5x voting power, regular participation needed
    - Elite: 2x voting power, continuous network support required
 4. Confirm transaction and pay gas fees
-5. Receive OECgrd tokens (1:1 conversion ratio)</pre>
-                    </div>
-                </div>
+5. Receive OECgrd tokens (1:1 conversion ratio)</pre
+              >
             </div>
-
-            <div id="guardian-activation">
-                <h3>Step 3: Activate Governance Rights</h3>
-                <div class="step-box">
-                    <div class="step-number">Step 3</div>
-                    <ul>
-                        <li>Complete identity verification process</li>
-                        <li>Accept Guardian responsibilities agreement</li>
-                        <li>Set up notification preferences for proposals</li>
-                        <li>Join the community Discord/forum for governance discussions</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tally Integration -->
-        <section class="section" id="tally-integration">
-            <h2>🗳️ Using Tally.xyz for Governance</h2>
-
-            <h3>Accessing Governance</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>1. Visit Tally.xyz</h4>
-                    <p>Navigate to the Oeconomia governance page on Tally.xyz platform</p>
-                </div>
-                <div class="feature-item">
-                    <h4>2. Connect Wallet</h4>
-                    <p>Use the same wallet containing your OECgrd tokens</p>
-                </div>
-                <div class="feature-item">
-                    <h4>3. Verify Status</h4>
-                    <p>Confirm your Guardian tier and voting power display correctly</p>
-                </div>
-                <div class="feature-item">
-                    <h4>4. Enable Notifications</h4>
-                    <p>Set up alerts for new proposals and governance activities</p>
-                </div>
-            </div>
-
-            <h3>Understanding the Interface</h3>
-            
-            <h4>Dashboard Elements</h4>
-            <ul>
-                <li><strong>Your Voting Power</strong>: Shows total influence based on OECgrd amount × tier multiplier</li>
-                <li><strong>Active Proposals</strong>: Current votes requiring your attention</li>
-                <li><strong>Proposal History</strong>: Past governance decisions and your participation</li>
-                <li><strong>Delegation Options</strong>: Ability to delegate voting power to trusted community members</li>
-            </ul>
-
-            <h4>Proposal Categories</h4>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Protocol Parameters</h4>
-                    <p>Technical settings across all protocols</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Treasury Allocation</h4>
-                    <p>Community fund distribution decisions</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Emergency Actions</h4>
-                    <p>Urgent security or operational responses</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Cross-Protocol Integration</h4>
-                    <p>New protocol additions or modifications</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Fee Structure</h4>
-                    <p>Network fee adjustments and allocation changes</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Proposal Types -->
-        <section class="section" id="proposal-types">
-            <h2>📝 Proposal Types and Voting Process</h2>
-
-            <div class="feature-grid">
-                <div class="feature-item standard">
-                    <h4>Standard Proposals</h4>
-                    <p><strong>Duration:</strong> 7 days voting period<br>
-                    <strong>Quorum:</strong> 10% of total OECgrd supply must participate<br>
-                    <strong>Threshold:</strong> 60% approval required</p>
-                    
-                    <p><strong>Examples:</strong></p>
-                    <ul>
-                        <li>Adjusting Alluria collateral ratios</li>
-                        <li>Modifying Eloqura AMM curve parameters</li>
-                        <li>Updating Artivya trading fees</li>
-                        <li>Adding new Iridescia deployment templates</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item emergency">
-                    <h4>Emergency Proposals</h4>
-                    <p><strong>Duration:</strong> 24-48 hours<br>
-                    <strong>Quorum:</strong> 5% of total OECgrd supply<br>
-                    <strong>Threshold:</strong> 70% approval required</p>
-                    
-                    <p><strong>Examples:</strong></p>
-                    <ul>
-                        <li>Pausing protocol functions due to security issues</li>
-                        <li>Activating emergency liquidation procedures</li>
-                        <li>Implementing temporary parameter changes</li>
-                        <li>Coordinating cross-protocol security responses</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item treasury">
-                    <h4>Treasury Proposals</h4>
-                    <p><strong>Duration:</strong> 14 days<br>
-                    <strong>Quorum:</strong> 15% of total OECgrd supply<br>
-                    <strong>Threshold:</strong> 65% approval required</p>
-                    
-                    <p><strong>Examples:</strong></p>
-                    <ul>
-                        <li>Funding development bounties</li>
-                        <li>Paying for security audits</li>
-                        <li>Supporting ecosystem projects</li>
-                        <li>Compensating active contributors</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item constitutional">
-                    <h4>Constitutional Changes</h4>
-                    <p><strong>Duration:</strong> 21 days<br>
-                    <strong>Quorum:</strong> 25% of total OECgrd supply<br>
-                    <strong>Threshold:</strong> 75% approval required</p>
-                    
-                    <p><strong>Examples:</strong></p>
-                    <ul>
-                        <li>Modifying governance structure</li>
-                        <li>Changing voting thresholds</li>
-                        <li>Adding new protocol to the ecosystem</li>
-                        <li>Altering fundamental tokenomics</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>Voting Process</h3>
-            <div class="step-box">
-                <div class="step-number">Voting Steps</div>
-                <ol>
-                    <li>Review proposal details and community discussion</li>
-                    <li>Check impact assessment and risk analysis</li>
-                    <li>Cast your vote: For, Against, or Abstain</li>
-                    <li>Add optional comment explaining your reasoning</li>
-                    <li>Confirm transaction (small gas fee required)</li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Guardian Tiers -->
-        <section class="section" id="guardian-tiers">
-            <h2>🛡️ Guardian Responsibilities and Requirements</h2>
-
-            <h3>Participation Requirements by Tier</h3>
-            <div class="tier-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tier</th>
-                            <th>Voting Power</th>
-                            <th>Participation Rate</th>
-                            <th>Additional Requirements</th>
-                            <th>Compensation Bonus</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="tier-standard">
-                            <td><strong>Standard</strong></td>
-                            <td>1x</td>
-                            <td>50% of proposals</td>
-                            <td>Basic governance participation</td>
-                            <td>Base rate</td>
-                        </tr>
-                        <tr class="tier-enhanced">
-                            <td><strong>Enhanced</strong></td>
-                            <td>1.5x</td>
-                            <td>75% of proposals</td>
-                            <td>Submit feedback, protocol testing, mentoring</td>
-                            <td>+25%</td>
-                        </tr>
-                        <tr class="tier-elite">
-                            <td><strong>Elite</strong></td>
-                            <td>2x</td>
-                            <td>90%+ of proposals</td>
-                            <td>Emergency response, development contributions</td>
-                            <td>+50%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item standard">
-                    <h4>Standard Guardians (1x voting power)</h4>
-                    <p><strong>Minimum Requirements:</strong></p>
-                    <ul>
-                        <li>Vote on at least 50% of proposals</li>
-                        <li>Participate in community discussions</li>
-                        <li>Complete monthly network health check</li>
-                    </ul>
-                    <p><strong>Benefits:</strong></p>
-                    <ul>
-                        <li>Basic governance rights</li>
-                        <li>Access to Guardian-only information</li>
-                        <li>Eligibility for participation rewards</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item enhanced">
-                    <h4>Enhanced Guardians (1.5x voting power)</h4>
-                    <p><strong>Additional Requirements:</strong></p>
-                    <ul>
-                        <li>Vote on at least 75% of proposals</li>
-                        <li>Submit proposal feedback and analysis</li>
-                        <li>Participate in protocol testing</li>
-                        <li>Mentor new community members</li>
-                    </ul>
-                    <p><strong>Benefits:</strong></p>
-                    <ul>
-                        <li>Increased voting influence</li>
-                        <li>Priority access to new features</li>
-                        <li>+25% compensation for governance work</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item elite">
-                    <h4>Elite Guardians (2x voting power)</h4>
-                    <p><strong>Additional Requirements:</strong></p>
-                    <ul>
-                        <li>Vote on 90%+ of proposals</li>
-                        <li>Create detailed proposal analysis</li>
-                        <li>Lead emergency response coordination</li>
-                        <li>Contribute to protocol development</li>
-                        <li>Maintain 24/7 availability for critical issues</li>
-                    </ul>
-                    <p><strong>Benefits:</strong></p>
-                    <ul>
-                        <li>Maximum voting influence</li>
-                        <li>Access to development discussions</li>
-                        <li>+50% compensation for governance work</li>
-                        <li>Ability to trigger emergency proposals</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>Performance Tracking</h3>
-            <p>Your Guardian status is evaluated monthly based on:</p>
-            <ul>
-                <li><strong>Participation Rate</strong>: Percentage of proposals voted on</li>
-                <li><strong>Quality Contributions</strong>: Community feedback on your proposals/comments</li>
-                <li><strong>Network Support</strong>: Technical contributions and assistance provided</li>
-                <li><strong>Availability</strong>: Response time to critical governance needs</li>
-            </ul>
-        </section>
-
-        <!-- Voting Guide -->
-        <section class="section" id="voting-guide">
-            <h2>🎯 Step-by-Step Voting Guide</h2>
-
-            <h3>Before Voting</h3>
-            <div class="step-box">
-                <div class="step-number">Preparation</div>
-                <ol>
-                    <li><strong>Read the Full Proposal</strong>
-                        <ul>
-                            <li>Review technical specifications</li>
-                            <li>Understand financial implications</li>
-                            <li>Check security audit results (if applicable)</li>
-                        </ul>
-                    </li>
-                    <li><strong>Research Community Sentiment</strong>
-                        <ul>
-                            <li>Read forum discussions</li>
-                            <li>Join community calls</li>
-                            <li>Review expert analysis from other Guardians</li>
-                        </ul>
-                    </li>
-                    <li><strong>Assess Impact</strong>
-                        <ul>
-                            <li>Consider effects on all five protocols</li>
-                            <li>Evaluate risk/reward ratio</li>
-                            <li>Think about long-term consequences</li>
-                        </ul>
-                    </li>
-                </ol>
-            </div>
-
-            <h3>During Voting</h3>
-            <div class="step-box">
-                <div class="step-number">Voting Process</div>
-                <ol>
-                    <li>Navigate to Tally Proposal Page</li>
-                    <li>Click "Vote" Button</li>
-                    <li>Select Your Choice:
-                        <ul>
-                            <li><strong>For</strong>: Support the proposal</li>
-                            <li><strong>Against</strong>: Oppose the proposal</li>
-                            <li><strong>Abstain</strong>: Acknowledge without taking a position</li>
-                        </ul>
-                    </li>
-                    <li>Add Comment (Recommended):
-                        <ul>
-                            <li>Explain your reasoning</li>
-                            <li>Share relevant expertise</li>
-                            <li>Suggest modifications if voting against</li>
-                        </ul>
-                    </li>
-                    <li>Confirm Transaction:
-                        <ul>
-                            <li>Review gas fees</li>
-                            <li>Confirm with wallet</li>
-                            <li>Wait for transaction confirmation</li>
-                        </ul>
-                    </li>
-                </ol>
-            </div>
-
-            <h3>After Voting</h3>
-            <div class="step-box">
-                <div class="step-number">Follow-up</div>
-                <ol>
-                    <li><strong>Monitor Results</strong>: Track voting progress and community sentiment</li>
-                    <li><strong>Engage in Discussion</strong>: Respond to questions about your vote</li>
-                    <li><strong>Prepare for Implementation</strong>: If proposal passes, understand your role in execution</li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Compensation -->
-        <section class="section" id="compensation">
-            <h2>💰 Governance Compensation and Incentives</h2>
-
-            <h3>Earning Governance Rewards</h3>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">100-150</div>
-                    <div class="stat-label">OEC Monthly Base Reward</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">500-2,000</div>
-                    <div class="stat-label">OEC Proposal Creation</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">200-800</div>
-                    <div class="stat-label">OEC Quality Analysis</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">1,000-5,000</div>
-                    <div class="stat-label">OEC Emergency Response</div>
-                </div>
-            </div>
-
-            <h4>Active Participation Rewards</h4>
-            <ul>
-                <li><strong>Monthly Base</strong>: 100 OEC for Standard, 125 for Enhanced, 150 for Elite</li>
-                <li><strong>Proposal Creation</strong>: 500-2,000 OEC based on quality and impact</li>
-                <li><strong>Quality Analysis</strong>: 200-800 OEC for detailed proposal reviews</li>
-                <li><strong>Emergency Response</strong>: 1,000-5,000 OEC for critical issue resolution</li>
-            </ul>
-
-            <h4>Performance Bonuses</h4>
-            <ul>
-                <li><strong>Perfect Attendance</strong>: +50% monthly bonus for voting on all proposals</li>
-                <li><strong>Community Leadership</strong>: +100% bonus for mentoring and guidance</li>
-                <li><strong>Technical Contributions</strong>: Variable bonus for development work</li>
-                <li><strong>Cross-Protocol Expertise</strong>: Bonus for specialized knowledge across protocols</li>
-            </ul>
-
-            <h3>Compensation Claims Process</h3>
-            <div class="step-box">
-                <div class="step-number">Claims Process</div>
-                <ol>
-                    <li><strong>Track Activity</strong>: Monitor your participation through the Guardian dashboard</li>
-                    <li><strong>Monthly Review</strong>: System automatically calculates earned rewards</li>
-                    <li><strong>Claim Rewards</strong>: Navigate to "Claim Rewards" section</li>
-                    <li><strong>Verify Contributions</strong>: Community verification for larger rewards</li>
-                    <li><strong>Receive Tokens</strong>: Claims processed within 48 hours</li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Emergency Procedures -->
-        <section class="section" id="emergency-procedures">
-            <h2>🚨 Emergency Governance Procedures</h2>
-
-            <div class="warning-box">
-                <p><strong>Critical Alert System</strong>: Emergency procedures activate during security incidents, protocol failures, or time-sensitive operational issues requiring immediate Guardian response.</p>
-            </div>
-
-            <h3>When Emergencies Occur</h3>
-            <div class="step-box">
-                <div class="step-number">Emergency Response</div>
-                <ol>
-                    <li><strong>Alert Notification</strong>: Guardians receive immediate notifications</li>
-                    <li><strong>Rapid Assessment</strong>: 2-hour period for initial community analysis</li>
-                    <li><strong>Emergency Proposal</strong>: Fast-track proposal creation and submission</li>
-                    <li><strong>Expedited Voting</strong>: 24-48 hour voting window</li>
-                    <li><strong>Immediate Implementation</strong>: Automated execution upon approval</li>
-                </ol>
-            </div>
-
-            <h3>Your Emergency Responsibilities</h3>
-            <ul>
-                <li><strong>Monitor Alerts</strong>: Keep notifications enabled at all times</li>
-                <li><strong>Rapid Response</strong>: Vote within 12 hours of emergency proposal</li>
-                <li><strong>Communication</strong>: Share critical information with other Guardians</li>
-                <li><strong>Technical Support</strong>: Provide expertise during crisis resolution</li>
-            </ul>
-
-            <h3>Emergency Contact Methods</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Tally.xyz</h4>
-                    <p>Primary governance interface for emergency voting</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Discord</h4>
-                    <p>Real-time community coordination and updates</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Guardian Forum</h4>
-                    <p>Detailed technical discussions and analysis</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Mobile Alerts</h4>
-                    <p>Critical notifications via SMS/push notifications</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Delegation -->
-        <section class="section" id="delegation">
-            <h2>🔄 Delegation and Proxy Voting</h2>
-
-            <h3>When to Consider Delegation</h3>
-            <ul>
-                <li>Extended absence from governance activities</li>
-                <li>Lack of technical expertise for specific proposals</li>
-                <li>Time constraints preventing proper research</li>
-                <li>Trust in another Guardian's expertise</li>
-            </ul>
-
-            <h3>Delegation Process</h3>
-            <div class="step-box">
-                <div class="step-number">Delegation Steps</div>
-                <ol>
-                    <li><strong>Choose Delegate</strong>: Select trusted, active Guardian</li>
-                    <li><strong>Set Delegation</strong>: Use Tally.xyz delegation interface</li>
-                    <li><strong>Confirm Terms</strong>: Agree on delegation scope and duration</li>
-                    <li><strong>Monitor Activity</strong>: Track how your votes are being used</li>
-                    <li><strong>Revoke if Needed</strong>: Cancel delegation at any time</li>
-                </ol>
-            </div>
-
-            <h3>Finding Quality Delegates</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Review Voting History</h4>
-                    <p>Check past decisions and reasoning behind votes</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Assess Expertise</h4>
-                    <p>Look for relevant technical knowledge and experience</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Community Standing</h4>
-                    <p>Consider reputation and contributions to ecosystem</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Alignment</h4>
-                    <p>Ensure philosophical agreement on protocol direction</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Analytics -->
-        <section class="section" id="analytics">
-            <h2>📊 Governance Analytics and Reporting</h2>
-
-            <h3>Tracking Your Impact</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Personal Dashboard</h4>
-                    <ul>
-                        <li>Total votes cast and participation rate</li>
-                        <li>Governance rewards earned</li>
-                        <li>Community reputation score</li>
-                        <li>Proposal success rate (for creators)</li>
-                        <li>Cross-protocol engagement metrics</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>Community Analytics</h4>
-                    <ul>
-                        <li>Overall governance participation rates</li>
-                        <li>Proposal outcome trends</li>
-                        <li>Guardian tier distribution</li>
-                        <li>Treasury allocation patterns</li>
-                        <li>Emergency response effectiveness</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>Monthly Governance Reports</h3>
-            <ol>
-                <li><strong>Participation Summary</strong>: Individual and community-wide statistics</li>
-                <li><strong>Decision Impact</strong>: How governance choices affected protocol performance</li>
-                <li><strong>Reward Distribution</strong>: Breakdown of compensation across all Guardians</li>
-                <li><strong>Upcoming Priorities</strong>: Preview of next month's expected proposals</li>
-                <li><strong>Community Health</strong>: Analysis of governance engagement and effectiveness</li>
-            </ol>
-        </section>
-
-        <!-- Troubleshooting -->
-        <section class="section" id="troubleshooting">
-            <h2>❓ Troubleshooting Common Issues</h2>
-
-            <h3>Voting Problems</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Can't see OECgrd balance on Tally</h4>
-                    <p><strong>Solution:</strong> Refresh page, check wallet connection, verify contract permissions</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Vote transaction fails</h4>
-                    <p><strong>Solution:</strong> Increase gas limit, check ETH balance, retry during lower network congestion</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Voting power not displaying correctly</h4>
-                    <p><strong>Solution:</strong> Wait for tier verification, contact Guardian support, refresh tier status</p>
-                </div>
-            </div>
-
-            <h3>Account Issues</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Lost Guardian status</h4>
-                    <p><strong>Solution:</strong> Check participation requirements, complete missing activities, contact support</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Delegation not working</h4>
-                    <p><strong>Solution:</strong> Verify delegate address, check delegation contract permissions, re-delegate</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Rewards not received</h4>
-                    <p><strong>Solution:</strong> Verify claim transaction, check participation requirements, submit support ticket</p>
-                </div>
-            </div>
-
-            <h3>Technical Support</h3>
-            <ul>
-                <li><strong>Guardian Support Forum</strong>: Dedicated help section</li>
-                <li><strong>Community Discord</strong>: Real-time assistance</li>
-                <li><strong>Documentation Portal</strong>: Detailed guides and FAQs</li>
-                <li><strong>Emergency Contact</strong>: For critical governance issues</li>
-            </ul>
-        </section>
-
-        <!-- Best Practices -->
-        <section class="section" id="best-practices">
-            <h2>🎯 Best Practices for Effective Governance</h2>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Research and Preparation</h4>
-                    <ul>
-                        <li>Stay informed about protocol development</li>
-                        <li>Understand technical details of each protocol</li>
-                        <li>Review past governance decisions and outcomes</li>
-                        <li>Network with knowledgeable Guardians</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>Voting Excellence</h4>
-                    <ul>
-                        <li>Never vote without understanding the full proposal</li>
-                        <li>Consider effects on each protocol and user group</li>
-                        <li>Avoid last-minute decisions, allow time for reflection</li>
-                        <li>Explain your reasoning to help others understand</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>Community Leadership</h4>
-                    <ul>
-                        <li>Mentor new Guardians and share knowledge</li>
-                        <li>Create quality proposals addressing real problems</li>
-                        <li>Facilitate discussion to reach informed consensus</li>
-                        <li>Bridge protocols and share insights across communities</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h4>Long-term Thinking</h4>
-                    <ul>
-                        <li>Consider protocol sustainability over short-term gains</li>
-                        <li>Support decisions that strengthen governance participation</li>
-                        <li>Prioritize security and innovation</li>
-                        <li>Think beyond individual protocols to entire ecosystem</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="success-box">
-                <p><strong>Success Formula</strong>: Consistent participation + informed decision-making + community collaboration = effective governance and maximum rewards</p>
-            </div>
-        </section>
-
-        <!-- Support -->
-        <section class="section" id="support">
-            <h2>📞 Support and Resources</h2>
-
-            <h3>Getting Help</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Guardian Onboarding</h4>
-                    <p>Comprehensive tutorial for new participants</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Technical Documentation</h4>
-                    <p>Detailed protocol specifications</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Community Forum</h4>
-                    <p>Peer support and discussion</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Office Hours</h4>
-                    <p>Weekly calls with core developers</p>
-                </div>
-                <div class="feature-item">
-                    <h4>1-on-1 Support</h4>
-                    <p>Personal assistance for complex issues</p>
-                </div>
-            </div>
-
-            <h3>Educational Resources</h3>
-            <ul>
-                <li><strong>Governance Academy</strong>: Learn advanced governance concepts</li>
-                <li><strong>Protocol Deep Dives</strong>: Technical education on each sub-protocol</li>
-                <li><strong>Best Practices Guide</strong>: Learn from successful Guardians</li>
-                <li><strong>Case Studies</strong>: Analysis of past governance decisions</li>
-                <li><strong>Video Tutorials</strong>: Visual guides for all governance functions</li>
-            </ul>
-
-            <h3>Community Connections</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h4>Guardian Discord</h4>
-                    <p>Real-time chat and coordination</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Twitter Updates</h4>
-                    <p>Latest news and announcements</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Monthly Calls</h4>
-                    <p>Community governance discussions</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Regional Meetups</h4>
-                    <p>Local Guardian gatherings</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Annual Conference</h4>
-                    <p>In-person governance summit</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <a href="#overview">Overview</a>
-                    <a href="#getting-started">Getting Started</a>
-                    <a href="#tally-integration">Tally Guide</a>
-                    <a href="#compensation">Rewards</a>
-                    <a href="#support">Support</a>
-                </div>
-                <p>© 2025 Oeconomia Protocol. A decentralized network maintained by active participants.</p>
-                <p class="disclaimer">This governance system rewards active participation and meaningful contributions to the Oeconomia ecosystem. Success depends on Guardian commitment to informed decision-making and collaborative protocol stewardship.</p>
-            </div>
+          </div>
         </div>
+
+        <div id="guardian-activation">
+          <h3>Step 3: Activate Governance Rights</h3>
+          <div class="step-box">
+            <div class="step-number">Step 3</div>
+            <ul>
+              <li>Complete identity verification process</li>
+              <li>Accept Guardian responsibilities agreement</li>
+              <li>Set up notification preferences for proposals</li>
+              <li>
+                Join the community Discord/forum for governance discussions
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tally Integration -->
+      <section class="section" id="tally-integration">
+        <h2>🗳️ Using Tally.xyz for Governance</h2>
+
+        <h3>Accessing Governance</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>1. Visit Tally.xyz</h4>
+            <p>
+              Navigate to the Oeconomia governance page on Tally.xyz platform
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>2. Connect Wallet</h4>
+            <p>Use the same wallet containing your OECgrd tokens</p>
+          </div>
+          <div class="feature-item">
+            <h4>3. Verify Status</h4>
+            <p>Confirm your Guardian tier and voting power display correctly</p>
+          </div>
+          <div class="feature-item">
+            <h4>4. Enable Notifications</h4>
+            <p>Set up alerts for new proposals and governance activities</p>
+          </div>
+        </div>
+
+        <h3>Understanding the Interface</h3>
+
+        <h4>Dashboard Elements</h4>
+        <ul>
+          <li>
+            <strong>Your Voting Power</strong>: Shows total influence based on
+            OECgrd amount × tier multiplier
+          </li>
+          <li>
+            <strong>Active Proposals</strong>: Current votes requiring your
+            attention
+          </li>
+          <li>
+            <strong>Proposal History</strong>: Past governance decisions and
+            your participation
+          </li>
+          <li>
+            <strong>Delegation Options</strong>: Ability to delegate voting
+            power to trusted community members
+          </li>
+        </ul>
+
+        <h4>Proposal Categories</h4>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Protocol Parameters</h4>
+            <p>Technical settings across all protocols</p>
+          </div>
+          <div class="feature-item">
+            <h4>Treasury Allocation</h4>
+            <p>Community fund distribution decisions</p>
+          </div>
+          <div class="feature-item">
+            <h4>Emergency Actions</h4>
+            <p>Urgent security or operational responses</p>
+          </div>
+          <div class="feature-item">
+            <h4>Cross-Protocol Integration</h4>
+            <p>New protocol additions or modifications</p>
+          </div>
+          <div class="feature-item">
+            <h4>Fee Structure</h4>
+            <p>Network fee adjustments and allocation changes</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Proposal Types -->
+      <section class="section" id="proposal-types">
+        <h2>📝 Proposal Types and Voting Process</h2>
+
+        <div class="feature-grid">
+          <div class="feature-item standard">
+            <h4>Standard Proposals</h4>
+            <p>
+              <strong>Duration:</strong> 7 days voting period<br />
+              <strong>Quorum:</strong> 10% of total OECgrd supply must
+              participate<br />
+              <strong>Threshold:</strong> 60% approval required
+            </p>
+
+            <p><strong>Examples:</strong></p>
+            <ul>
+              <li>Adjusting Alluria collateral ratios</li>
+              <li>Modifying Eloqura AMM curve parameters</li>
+              <li>Updating Artivya trading fees</li>
+              <li>Adding new Iridescia deployment templates</li>
+            </ul>
+          </div>
+
+          <div class="feature-item emergency">
+            <h4>Emergency Proposals</h4>
+            <p>
+              <strong>Duration:</strong> 24-48 hours<br />
+              <strong>Quorum:</strong> 5% of total OECgrd supply<br />
+              <strong>Threshold:</strong> 70% approval required
+            </p>
+
+            <p><strong>Examples:</strong></p>
+            <ul>
+              <li>Pausing protocol functions due to security issues</li>
+              <li>Activating emergency liquidation procedures</li>
+              <li>Implementing temporary parameter changes</li>
+              <li>Coordinating cross-protocol security responses</li>
+            </ul>
+          </div>
+
+          <div class="feature-item treasury">
+            <h4>Treasury Proposals</h4>
+            <p>
+              <strong>Duration:</strong> 14 days<br />
+              <strong>Quorum:</strong> 15% of total OECgrd supply<br />
+              <strong>Threshold:</strong> 65% approval required
+            </p>
+
+            <p><strong>Examples:</strong></p>
+            <ul>
+              <li>Funding development bounties</li>
+              <li>Paying for security audits</li>
+              <li>Supporting ecosystem projects</li>
+              <li>Compensating active contributors</li>
+            </ul>
+          </div>
+
+          <div class="feature-item constitutional">
+            <h4>Constitutional Changes</h4>
+            <p>
+              <strong>Duration:</strong> 21 days<br />
+              <strong>Quorum:</strong> 25% of total OECgrd supply<br />
+              <strong>Threshold:</strong> 75% approval required
+            </p>
+
+            <p><strong>Examples:</strong></p>
+            <ul>
+              <li>Modifying governance structure</li>
+              <li>Changing voting thresholds</li>
+              <li>Adding new protocol to the ecosystem</li>
+              <li>Altering fundamental tokenomics</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Voting Process</h3>
+        <div class="step-box">
+          <div class="step-number">Voting Steps</div>
+          <ol>
+            <li>Review proposal details and community discussion</li>
+            <li>Check impact assessment and risk analysis</li>
+            <li>Cast your vote: For, Against, or Abstain</li>
+            <li>Add optional comment explaining your reasoning</li>
+            <li>Confirm transaction (small gas fee required)</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Guardian Tiers -->
+      <section class="section" id="guardian-tiers">
+        <h2>🛡️ Guardian Responsibilities and Requirements</h2>
+
+        <h3>Participation Requirements by Tier</h3>
+        <div class="tier-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Voting Power</th>
+                <th>Participation Rate</th>
+                <th>Additional Requirements</th>
+                <th>Compensation Bonus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tier-standard">
+                <td><strong>Standard</strong></td>
+                <td>1x</td>
+                <td>50% of proposals</td>
+                <td>Basic governance participation</td>
+                <td>Base rate</td>
+              </tr>
+              <tr class="tier-enhanced">
+                <td><strong>Enhanced</strong></td>
+                <td>1.5x</td>
+                <td>75% of proposals</td>
+                <td>Submit feedback, protocol testing, mentoring</td>
+                <td>+25%</td>
+              </tr>
+              <tr class="tier-elite">
+                <td><strong>Elite</strong></td>
+                <td>2x</td>
+                <td>90%+ of proposals</td>
+                <td>Emergency response, development contributions</td>
+                <td>+50%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item standard">
+            <h4>Standard Guardians (1x voting power)</h4>
+            <p><strong>Minimum Requirements:</strong></p>
+            <ul>
+              <li>Vote on at least 50% of proposals</li>
+              <li>Participate in community discussions</li>
+              <li>Complete monthly network health check</li>
+            </ul>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+              <li>Basic governance rights</li>
+              <li>Access to Guardian-only information</li>
+              <li>Eligibility for participation rewards</li>
+            </ul>
+          </div>
+
+          <div class="feature-item enhanced">
+            <h4>Enhanced Guardians (1.5x voting power)</h4>
+            <p><strong>Additional Requirements:</strong></p>
+            <ul>
+              <li>Vote on at least 75% of proposals</li>
+              <li>Submit proposal feedback and analysis</li>
+              <li>Participate in protocol testing</li>
+              <li>Mentor new community members</li>
+            </ul>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+              <li>Increased voting influence</li>
+              <li>Priority access to new features</li>
+              <li>+25% compensation for governance work</li>
+            </ul>
+          </div>
+
+          <div class="feature-item elite">
+            <h4>Elite Guardians (2x voting power)</h4>
+            <p><strong>Additional Requirements:</strong></p>
+            <ul>
+              <li>Vote on 90%+ of proposals</li>
+              <li>Create detailed proposal analysis</li>
+              <li>Lead emergency response coordination</li>
+              <li>Contribute to protocol development</li>
+              <li>Maintain 24/7 availability for critical issues</li>
+            </ul>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+              <li>Maximum voting influence</li>
+              <li>Access to development discussions</li>
+              <li>+50% compensation for governance work</li>
+              <li>Ability to trigger emergency proposals</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Performance Tracking</h3>
+        <p>Your Guardian status is evaluated monthly based on:</p>
+        <ul>
+          <li>
+            <strong>Participation Rate</strong>: Percentage of proposals voted
+            on
+          </li>
+          <li>
+            <strong>Quality Contributions</strong>: Community feedback on your
+            proposals/comments
+          </li>
+          <li>
+            <strong>Network Support</strong>: Technical contributions and
+            assistance provided
+          </li>
+          <li>
+            <strong>Availability</strong>: Response time to critical governance
+            needs
+          </li>
+        </ul>
+      </section>
+
+      <!-- Voting Guide -->
+      <section class="section" id="voting-guide">
+        <h2>🎯 Step-by-Step Voting Guide</h2>
+
+        <h3>Before Voting</h3>
+        <div class="step-box">
+          <div class="step-number">Preparation</div>
+          <ol>
+            <li>
+              <strong>Read the Full Proposal</strong>
+              <ul>
+                <li>Review technical specifications</li>
+                <li>Understand financial implications</li>
+                <li>Check security audit results (if applicable)</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Research Community Sentiment</strong>
+              <ul>
+                <li>Read forum discussions</li>
+                <li>Join community calls</li>
+                <li>Review expert analysis from other Guardians</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Assess Impact</strong>
+              <ul>
+                <li>Consider effects on all five protocols</li>
+                <li>Evaluate risk/reward ratio</li>
+                <li>Think about long-term consequences</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <h3>During Voting</h3>
+        <div class="step-box">
+          <div class="step-number">Voting Process</div>
+          <ol>
+            <li>Navigate to Tally Proposal Page</li>
+            <li>Click "Vote" Button</li>
+            <li>
+              Select Your Choice:
+              <ul>
+                <li><strong>For</strong>: Support the proposal</li>
+                <li><strong>Against</strong>: Oppose the proposal</li>
+                <li>
+                  <strong>Abstain</strong>: Acknowledge without taking a
+                  position
+                </li>
+              </ul>
+            </li>
+            <li>
+              Add Comment (Recommended):
+              <ul>
+                <li>Explain your reasoning</li>
+                <li>Share relevant expertise</li>
+                <li>Suggest modifications if voting against</li>
+              </ul>
+            </li>
+            <li>
+              Confirm Transaction:
+              <ul>
+                <li>Review gas fees</li>
+                <li>Confirm with wallet</li>
+                <li>Wait for transaction confirmation</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <h3>After Voting</h3>
+        <div class="step-box">
+          <div class="step-number">Follow-up</div>
+          <ol>
+            <li>
+              <strong>Monitor Results</strong>: Track voting progress and
+              community sentiment
+            </li>
+            <li>
+              <strong>Engage in Discussion</strong>: Respond to questions about
+              your vote
+            </li>
+            <li>
+              <strong>Prepare for Implementation</strong>: If proposal passes,
+              understand your role in execution
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Compensation -->
+      <section class="section" id="compensation">
+        <h2>💰 Governance Compensation and Incentives</h2>
+
+        <h3>Earning Governance Rewards</h3>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">100-150</div>
+            <div class="stat-label">OEC Monthly Base Reward</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">500-2,000</div>
+            <div class="stat-label">OEC Proposal Creation</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">200-800</div>
+            <div class="stat-label">OEC Quality Analysis</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">1,000-5,000</div>
+            <div class="stat-label">OEC Emergency Response</div>
+          </div>
+        </div>
+
+        <h4>Active Participation Rewards</h4>
+        <ul>
+          <li>
+            <strong>Monthly Base</strong>: 100 OEC for Standard, 125 for
+            Enhanced, 150 for Elite
+          </li>
+          <li>
+            <strong>Proposal Creation</strong>: 500-2,000 OEC based on quality
+            and impact
+          </li>
+          <li>
+            <strong>Quality Analysis</strong>: 200-800 OEC for detailed proposal
+            reviews
+          </li>
+          <li>
+            <strong>Emergency Response</strong>: 1,000-5,000 OEC for critical
+            issue resolution
+          </li>
+        </ul>
+
+        <h4>Performance Bonuses</h4>
+        <ul>
+          <li>
+            <strong>Perfect Attendance</strong>: +50% monthly bonus for voting
+            on all proposals
+          </li>
+          <li>
+            <strong>Community Leadership</strong>: +100% bonus for mentoring and
+            guidance
+          </li>
+          <li>
+            <strong>Technical Contributions</strong>: Variable bonus for
+            development work
+          </li>
+          <li>
+            <strong>Cross-Protocol Expertise</strong>: Bonus for specialized
+            knowledge across protocols
+          </li>
+        </ul>
+
+        <h3>Compensation Claims Process</h3>
+        <div class="step-box">
+          <div class="step-number">Claims Process</div>
+          <ol>
+            <li>
+              <strong>Track Activity</strong>: Monitor your participation
+              through the Guardian dashboard
+            </li>
+            <li>
+              <strong>Monthly Review</strong>: System automatically calculates
+              earned rewards
+            </li>
+            <li>
+              <strong>Claim Rewards</strong>: Navigate to "Claim Rewards"
+              section
+            </li>
+            <li>
+              <strong>Verify Contributions</strong>: Community verification for
+              larger rewards
+            </li>
+            <li>
+              <strong>Receive Tokens</strong>: Claims processed within 48 hours
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Emergency Procedures -->
+      <section class="section" id="emergency-procedures">
+        <h2>🚨 Emergency Governance Procedures</h2>
+
+        <div class="warning-box">
+          <p>
+            <strong>Critical Alert System</strong>: Emergency procedures
+            activate during security incidents, protocol failures, or
+            time-sensitive operational issues requiring immediate Guardian
+            response.
+          </p>
+        </div>
+
+        <h3>When Emergencies Occur</h3>
+        <div class="step-box">
+          <div class="step-number">Emergency Response</div>
+          <ol>
+            <li>
+              <strong>Alert Notification</strong>: Guardians receive immediate
+              notifications
+            </li>
+            <li>
+              <strong>Rapid Assessment</strong>: 2-hour period for initial
+              community analysis
+            </li>
+            <li>
+              <strong>Emergency Proposal</strong>: Fast-track proposal creation
+              and submission
+            </li>
+            <li><strong>Expedited Voting</strong>: 24-48 hour voting window</li>
+            <li>
+              <strong>Immediate Implementation</strong>: Automated execution
+              upon approval
+            </li>
+          </ol>
+        </div>
+
+        <h3>Your Emergency Responsibilities</h3>
+        <ul>
+          <li>
+            <strong>Monitor Alerts</strong>: Keep notifications enabled at all
+            times
+          </li>
+          <li>
+            <strong>Rapid Response</strong>: Vote within 12 hours of emergency
+            proposal
+          </li>
+          <li>
+            <strong>Communication</strong>: Share critical information with
+            other Guardians
+          </li>
+          <li>
+            <strong>Technical Support</strong>: Provide expertise during crisis
+            resolution
+          </li>
+        </ul>
+
+        <h3>Emergency Contact Methods</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Tally.xyz</h4>
+            <p>Primary governance interface for emergency voting</p>
+          </div>
+          <div class="feature-item">
+            <h4>Discord</h4>
+            <p>Real-time community coordination and updates</p>
+          </div>
+          <div class="feature-item">
+            <h4>Guardian Forum</h4>
+            <p>Detailed technical discussions and analysis</p>
+          </div>
+          <div class="feature-item">
+            <h4>Mobile Alerts</h4>
+            <p>Critical notifications via SMS/push notifications</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Delegation -->
+      <section class="section" id="delegation">
+        <h2>🔄 Delegation and Proxy Voting</h2>
+
+        <h3>When to Consider Delegation</h3>
+        <ul>
+          <li>Extended absence from governance activities</li>
+          <li>Lack of technical expertise for specific proposals</li>
+          <li>Time constraints preventing proper research</li>
+          <li>Trust in another Guardian's expertise</li>
+        </ul>
+
+        <h3>Delegation Process</h3>
+        <div class="step-box">
+          <div class="step-number">Delegation Steps</div>
+          <ol>
+            <li>
+              <strong>Choose Delegate</strong>: Select trusted, active Guardian
+            </li>
+            <li>
+              <strong>Set Delegation</strong>: Use Tally.xyz delegation
+              interface
+            </li>
+            <li>
+              <strong>Confirm Terms</strong>: Agree on delegation scope and
+              duration
+            </li>
+            <li>
+              <strong>Monitor Activity</strong>: Track how your votes are being
+              used
+            </li>
+            <li>
+              <strong>Revoke if Needed</strong>: Cancel delegation at any time
+            </li>
+          </ol>
+        </div>
+
+        <h3>Finding Quality Delegates</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Review Voting History</h4>
+            <p>Check past decisions and reasoning behind votes</p>
+          </div>
+          <div class="feature-item">
+            <h4>Assess Expertise</h4>
+            <p>Look for relevant technical knowledge and experience</p>
+          </div>
+          <div class="feature-item">
+            <h4>Community Standing</h4>
+            <p>Consider reputation and contributions to ecosystem</p>
+          </div>
+          <div class="feature-item">
+            <h4>Alignment</h4>
+            <p>Ensure philosophical agreement on protocol direction</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics -->
+      <section class="section" id="analytics">
+        <h2>📊 Governance Analytics and Reporting</h2>
+
+        <h3>Tracking Your Impact</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Personal Dashboard</h4>
+            <ul>
+              <li>Total votes cast and participation rate</li>
+              <li>Governance rewards earned</li>
+              <li>Community reputation score</li>
+              <li>Proposal success rate (for creators)</li>
+              <li>Cross-protocol engagement metrics</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>Community Analytics</h4>
+            <ul>
+              <li>Overall governance participation rates</li>
+              <li>Proposal outcome trends</li>
+              <li>Guardian tier distribution</li>
+              <li>Treasury allocation patterns</li>
+              <li>Emergency response effectiveness</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Monthly Governance Reports</h3>
+        <ol>
+          <li>
+            <strong>Participation Summary</strong>: Individual and
+            community-wide statistics
+          </li>
+          <li>
+            <strong>Decision Impact</strong>: How governance choices affected
+            protocol performance
+          </li>
+          <li>
+            <strong>Reward Distribution</strong>: Breakdown of compensation
+            across all Guardians
+          </li>
+          <li>
+            <strong>Upcoming Priorities</strong>: Preview of next month's
+            expected proposals
+          </li>
+          <li>
+            <strong>Community Health</strong>: Analysis of governance engagement
+            and effectiveness
+          </li>
+        </ol>
+      </section>
+
+      <!-- Troubleshooting -->
+      <section class="section" id="troubleshooting">
+        <h2>❓ Troubleshooting Common Issues</h2>
+
+        <h3>Voting Problems</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Can't see OECgrd balance on Tally</h4>
+            <p>
+              <strong>Solution:</strong> Refresh page, check wallet connection,
+              verify contract permissions
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>Vote transaction fails</h4>
+            <p>
+              <strong>Solution:</strong> Increase gas limit, check ETH balance,
+              retry during lower network congestion
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>Voting power not displaying correctly</h4>
+            <p>
+              <strong>Solution:</strong> Wait for tier verification, contact
+              Guardian support, refresh tier status
+            </p>
+          </div>
+        </div>
+
+        <h3>Account Issues</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Lost Guardian status</h4>
+            <p>
+              <strong>Solution:</strong> Check participation requirements,
+              complete missing activities, contact support
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>Delegation not working</h4>
+            <p>
+              <strong>Solution:</strong> Verify delegate address, check
+              delegation contract permissions, re-delegate
+            </p>
+          </div>
+          <div class="feature-item">
+            <h4>Rewards not received</h4>
+            <p>
+              <strong>Solution:</strong> Verify claim transaction, check
+              participation requirements, submit support ticket
+            </p>
+          </div>
+        </div>
+
+        <h3>Technical Support</h3>
+        <ul>
+          <li>
+            <strong>Guardian Support Forum</strong>: Dedicated help section
+          </li>
+          <li><strong>Community Discord</strong>: Real-time assistance</li>
+          <li>
+            <strong>Documentation Portal</strong>: Detailed guides and FAQs
+          </li>
+          <li>
+            <strong>Emergency Contact</strong>: For critical governance issues
+          </li>
+        </ul>
+      </section>
+
+      <!-- Best Practices -->
+      <section class="section" id="best-practices">
+        <h2>🎯 Best Practices for Effective Governance</h2>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Research and Preparation</h4>
+            <ul>
+              <li>Stay informed about protocol development</li>
+              <li>Understand technical details of each protocol</li>
+              <li>Review past governance decisions and outcomes</li>
+              <li>Network with knowledgeable Guardians</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>Voting Excellence</h4>
+            <ul>
+              <li>Never vote without understanding the full proposal</li>
+              <li>Consider effects on each protocol and user group</li>
+              <li>Avoid last-minute decisions, allow time for reflection</li>
+              <li>Explain your reasoning to help others understand</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>Community Leadership</h4>
+            <ul>
+              <li>Mentor new Guardians and share knowledge</li>
+              <li>Create quality proposals addressing real problems</li>
+              <li>Facilitate discussion to reach informed consensus</li>
+              <li>Bridge protocols and share insights across communities</li>
+            </ul>
+          </div>
+          <div class="feature-item">
+            <h4>Long-term Thinking</h4>
+            <ul>
+              <li>Consider protocol sustainability over short-term gains</li>
+              <li>
+                Support decisions that strengthen governance participation
+              </li>
+              <li>Prioritize security and innovation</li>
+              <li>Think beyond individual protocols to entire ecosystem</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="success-box">
+          <p>
+            <strong>Success Formula</strong>: Consistent participation +
+            informed decision-making + community collaboration = effective
+            governance and maximum rewards
+          </p>
+        </div>
+      </section>
+
+      <!-- Support -->
+      <section class="section" id="support">
+        <h2>📞 Support and Resources</h2>
+
+        <h3>Getting Help</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Guardian Onboarding</h4>
+            <p>Comprehensive tutorial for new participants</p>
+          </div>
+          <div class="feature-item">
+            <h4>Technical Documentation</h4>
+            <p>Detailed protocol specifications</p>
+          </div>
+          <div class="feature-item">
+            <h4>Community Forum</h4>
+            <p>Peer support and discussion</p>
+          </div>
+          <div class="feature-item">
+            <h4>Office Hours</h4>
+            <p>Weekly calls with core developers</p>
+          </div>
+          <div class="feature-item">
+            <h4>1-on-1 Support</h4>
+            <p>Personal assistance for complex issues</p>
+          </div>
+        </div>
+
+        <h3>Educational Resources</h3>
+        <ul>
+          <li>
+            <strong>Governance Academy</strong>: Learn advanced governance
+            concepts
+          </li>
+          <li>
+            <strong>Protocol Deep Dives</strong>: Technical education on each
+            sub-protocol
+          </li>
+          <li>
+            <strong>Best Practices Guide</strong>: Learn from successful
+            Guardians
+          </li>
+          <li>
+            <strong>Case Studies</strong>: Analysis of past governance decisions
+          </li>
+          <li>
+            <strong>Video Tutorials</strong>: Visual guides for all governance
+            functions
+          </li>
+        </ul>
+
+        <h3>Community Connections</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>Guardian Discord</h4>
+            <p>Real-time chat and coordination</p>
+          </div>
+          <div class="feature-item">
+            <h4>Twitter Updates</h4>
+            <p>Latest news and announcements</p>
+          </div>
+          <div class="feature-item">
+            <h4>Monthly Calls</h4>
+            <p>Community governance discussions</p>
+          </div>
+          <div class="feature-item">
+            <h4>Regional Meetups</h4>
+            <p>Local Guardian gatherings</p>
+          </div>
+          <div class="feature-item">
+            <h4>Annual Conference</h4>
+            <p>In-person governance summit</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="#overview">Overview</a>
+            <a href="#getting-started">Getting Started</a>
+            <a href="#tally-integration">Tally Guide</a>
+            <a href="#compensation">Rewards</a>
+            <a href="#support">Support</a>
+          </div>
+          <p>
+            © 2025 Oeconomia Protocol. A decentralized network maintained by
+            active participants.
+          </p>
+          <p class="disclaimer">
+            This governance system rewards active participation and meaningful
+            contributions to the Oeconomia ecosystem. Success depends on
+            Guardian commitment to informed decision-making and collaborative
+            protocol stewardship.
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Action Button -->
     <button type="button" class="fab" id="fabButton">
-        <span class="fab-icon">📚</span>
+      <span class="fab-icon">📚</span>
     </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elements
-            const scrollIndicator = document.getElementById('scrollIndicator');
-            const tocSidebar = document.getElementById('tocSidebar');
-            const tocToggle = document.getElementById('tocToggle');
-            const fabButton = document.getElementById('fabButton');
-            const tocLinks = document.querySelectorAll('.toc-list a');
-            const sections = document.querySelectorAll('.section');
+      document.addEventListener("DOMContentLoaded", function () {
+        // Elements
+        const scrollIndicator = document.getElementById("scrollIndicator");
+        const tocSidebar = document.getElementById("tocSidebar");
+        const tocToggle = document.getElementById("tocToggle");
+        const fabButton = document.getElementById("fabButton");
+        const tocLinks = document.querySelectorAll(".toc-list a");
+        const sections = document.querySelectorAll(".section");
 
-            // Scroll progress indicator
-            function updateScrollProgress() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                if (scrollIndicator) {
-                    scrollIndicator.style.width = scrollPercent + '%';
-                }
-            }
+        // Scroll progress indicator
+        function updateScrollProgress() {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          if (scrollIndicator) {
+            scrollIndicator.style.width = scrollPercent + "%";
+          }
+        }
 
-            // Table of Contents functionality
-            function toggleTOC() {
-                const isOpen = tocSidebar.classList.contains('open');
-                
-                if (isOpen) {
-                    tocSidebar.classList.remove('open');
-                    document.body.classList.remove('sidebar-open');
-                    fabButton.innerHTML = '<span class="fab-icon">📚</span>';
-                } else {
-                    tocSidebar.classList.add('open');
-                    document.body.classList.add('sidebar-open');
-                    fabButton.innerHTML = '<span class="fab-icon">×</span>';
-                }
-            }
+        // Table of Contents functionality
+        function toggleTOC() {
+          const isOpen = tocSidebar.classList.contains("open");
 
-            // Close TOC when clicking outside
-            function closeTOCOnOutsideClick(event) {
-                if (tocSidebar && fabButton && 
-                    !tocSidebar.contains(event.target) && 
-                    !fabButton.contains(event.target) && 
-                    tocSidebar.classList.contains('open')) {
-                    toggleTOC();
-                }
-            }
+          if (isOpen) {
+            tocSidebar.classList.remove("open");
+            document.body.classList.remove("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">📚</span>';
+          } else {
+            tocSidebar.classList.add("open");
+            document.body.classList.add("sidebar-open");
+            fabButton.innerHTML = '<span class="fab-icon">×</span>';
+          }
+        }
 
-            // Smooth scrolling for TOC links
-            function smoothScrollToSection(event) {
-                event.preventDefault();
-                const targetId = event.target.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                
-                if (targetSection) {
-                    const headerOffset = 100;
-                    const elementPosition = targetSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        // Close TOC when clicking outside
+        function closeTOCOnOutsideClick(event) {
+          if (
+            tocSidebar &&
+            fabButton &&
+            !tocSidebar.contains(event.target) &&
+            !fabButton.contains(event.target) &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        }
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
+        // Smooth scrolling for TOC links
+        function smoothScrollToSection(event) {
+          event.preventDefault();
+          const targetId = event.target.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
 
-                    // Close TOC on mobile after clicking
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            toggleTOC();
-                        }, 300);
-                    }
-                }
-            }
+          if (targetSection) {
+            const headerOffset = 100;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
 
-            // Update active TOC link based on scroll position
-            function updateActiveTOCLink() {
-                let currentSection = '';
-                const scrollPos = window.scrollY + 150;
-
-                sections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
-                    const sectionHeight = section.offsetHeight;
-
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-
-                tocLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + currentSection) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            // Animate elements on scroll
-            function animateOnScroll() {
-                const elements = document.querySelectorAll('.feature-item, .protocol-card, .stat-item, .step-box');
-                const windowHeight = window.innerHeight;
-
-                elements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-
-                    if (elementTop < windowHeight - elementVisible) {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
-            }
-
-            // Initialize animations
-            function initializeAnimations() {
-                const elements = document.querySelectorAll('.feature-item, .protocol-card, .stat-item, .step-box');
-                
-                elements.forEach(element => {
-                    element.style.opacity = '0';
-                    element.style.transform = 'translateY(30px)';
-                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                });
-            }
-
-            // Performance optimization - throttle scroll events
-            function throttle(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
-            }
-
-            // Event Listeners
-            window.addEventListener('scroll', throttle(() => {
-                updateScrollProgress();
-                updateActiveTOCLink();
-                animateOnScroll();
-            }, 16));
-
-            document.addEventListener('click', closeTOCOnOutsideClick);
-
-            // TOC toggle button
-            if (tocToggle) {
-                tocToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleTOC();
-                });
-            }
-
-            // FAB button
-            if (fabButton) {
-                fabButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleTOC();
-                });
-            }
-
-            // TOC links
-            tocLinks.forEach(link => {
-                link.addEventListener('click', smoothScrollToSection);
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
             });
 
-            // Quick links
-            const quickLinks = document.querySelectorAll('.quick-link');
-            quickLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href').substring(1);
-                        const targetSection = document.getElementById(targetId);
-                        
-                        if (targetSection) {
-                            const headerOffset = 100;
-                            const elementPosition = targetSection.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            // Close TOC on mobile after clicking
+            if (window.innerWidth <= 768) {
+              setTimeout(() => {
+                toggleTOC();
+              }, 300);
+            }
+          }
+        }
 
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
+        // Update active TOC link based on scroll position
+        function updateActiveTOCLink() {
+          let currentSection = "";
+          const scrollPos = window.scrollY + 150;
 
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && tocSidebar && tocSidebar.classList.contains('open')) {
-                    toggleTOC();
-                }
-            });
+          sections.forEach((section) => {
+            const sectionTop =
+              section.getBoundingClientRect().top + window.pageYOffset;
+            const sectionHeight = section.offsetHeight;
 
-            // Initialize features
-            initializeAnimations();
-            
-            // Initial animation trigger
-            setTimeout(() => {
-                animateOnScroll();
-            }, 100);
+            if (
+              scrollPos >= sectionTop &&
+              scrollPos < sectionTop + sectionHeight
+            ) {
+              currentSection = section.getAttribute("id");
+            }
+          });
 
-            console.log('🏛️ Oeconomia Governance Guide loaded successfully!');
+          tocLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + currentSection) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+          const elements = document.querySelectorAll(
+            ".feature-item, .protocol-card, .stat-item, .step-box"
+          );
+          const windowHeight = window.innerHeight;
+
+          elements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+              element.style.opacity = "1";
+              element.style.transform = "translateY(0)";
+            }
+          });
+        }
+
+        // Initialize animations
+        function initializeAnimations() {
+          const elements = document.querySelectorAll(
+            ".feature-item, .protocol-card, .stat-item, .step-box"
+          );
+
+          elements.forEach((element) => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(30px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          });
+        }
+
+        // Performance optimization - throttle scroll events
+        function throttle(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // Event Listeners
+        window.addEventListener(
+          "scroll",
+          throttle(() => {
+            updateScrollProgress();
+            updateActiveTOCLink();
+            animateOnScroll();
+          }, 16)
+        );
+
+        document.addEventListener("click", closeTOCOnOutsideClick);
+
+        // TOC toggle button
+        if (tocToggle) {
+          tocToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // FAB button
+        if (fabButton) {
+          fabButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTOC();
+          });
+        }
+
+        // TOC links
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", smoothScrollToSection);
         });
+
+        // Quick links
+        const quickLinks = document.querySelectorAll(".quick-link");
+        quickLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            if (this.getAttribute("href").startsWith("#")) {
+              e.preventDefault();
+              const targetId = this.getAttribute("href").substring(1);
+              const targetSection = document.getElementById(targetId);
+
+              if (targetSection) {
+                const headerOffset = 100;
+                const elementPosition =
+                  targetSection.getBoundingClientRect().top;
+                const offsetPosition =
+                  elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth",
+                });
+              }
+            }
+          });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            tocSidebar &&
+            tocSidebar.classList.contains("open")
+          ) {
+            toggleTOC();
+          }
+        });
+
+        // Initialize features
+        initializeAnimations();
+
+        // Initial animation trigger
+        setTimeout(() => {
+          animateOnScroll();
+        }, 100);
+
+        console.log("🏛️ Oeconomia Governance Guide loaded successfully!");
+      });
     </script>
 
-        <link
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <button type="button" id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+    <button
+      type="button"
+      id="scrollToTopBtn"
+      class="scroll-top-btn"
+      title="Scroll to top"
+    >
       <i class="fas fa-chevron-up"></i>
     </button>
     <link rel="stylesheet" href="../styles/backtotop.css" />
     <script src="../scripts/backtotop.js"></script>
-
-</body>
+  </body>
 </html>
