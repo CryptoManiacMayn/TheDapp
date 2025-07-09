@@ -4,10 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OECONOMIA</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Syne:wght@400..800&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
@@ -18,7 +24,7 @@
       }
 
       body {
-        font-family: 'Syne', sans-serif;
+        font-family: "Syne", sans-serif;
         background: #000;
         color: #fff;
         overflow-x: hidden;
@@ -38,22 +44,41 @@
       }
 
       .animated-background::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 50%
+          );
         animation: backgroundMove 20s ease-in-out infinite;
       }
 
       @keyframes backgroundMove {
-        0%, 100% { transform: translate(0, 0) rotate(0deg); }
-        33% { transform: translate(-50px, -50px) rotate(120deg); }
-        66% { transform: translate(50px, 50px) rotate(240deg); }
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        33% {
+          transform: translate(-50px, -50px) rotate(120deg);
+        }
+        66% {
+          transform: translate(50px, 50px) rotate(240deg);
+        }
       }
 
       /* Floating particles */
@@ -77,8 +102,15 @@
       }
 
       @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
-        50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0;
+        }
+        50% {
+          transform: translateY(-100px) rotate(180deg);
+          opacity: 1;
+        }
       }
 
       /* Navigation */
@@ -126,7 +158,7 @@
       }
 
       .nav-links a::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -5px;
         left: 0;
@@ -154,7 +186,7 @@
       }
 
       .dapp-btn::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
@@ -208,8 +240,13 @@
       }
 
       @keyframes gradientShift {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
       }
 
       .hero h2 {
@@ -244,7 +281,8 @@
         animation: slideInUp 0.8s ease-out 1.4s forwards;
       }
 
-      .btn-primary, .btn-secondary {
+      .btn-primary,
+      .btn-secondary {
         padding: 1rem 2rem;
         border-radius: 25px;
         text-decoration: none;
@@ -265,7 +303,8 @@
         border: 2px solid rgba(255, 255, 255, 0.3);
       }
 
-      .btn-primary:hover, .btn-secondary:hover {
+      .btn-primary:hover,
+      .btn-secondary:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
       }
@@ -366,13 +405,18 @@
       }
 
       .feature-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+        background: linear-gradient(
+          135deg,
+          transparent,
+          rgba(0, 212, 255, 0.1),
+          transparent
+        );
         opacity: 0;
         transition: opacity 0.3s ease;
       }
@@ -599,8 +643,12 @@
       }
 
       @keyframes infiniteScroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
       }
 
       .blockchain-card {
@@ -616,13 +664,18 @@
       }
 
       .blockchain-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+        background: linear-gradient(
+          135deg,
+          transparent,
+          rgba(0, 212, 255, 0.1),
+          transparent
+        );
         opacity: 0;
         transition: opacity 0.3s ease;
       }
@@ -690,19 +743,30 @@
       }
 
       .cta::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1), transparent);
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 212, 255, 0.1),
+          transparent
+        );
         animation: pulse 4s ease-in-out infinite;
       }
 
       @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 0.5; }
-        50% { transform: scale(1.1); opacity: 1; }
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
       }
 
       .cta h2 {
@@ -909,16 +973,24 @@
       }
 
       /* Animation delays for staggered effects */
-      .stagger-1 { animation-delay: 0.1s; }
-      .stagger-2 { animation-delay: 0.2s; }
-      .stagger-3 { animation-delay: 0.3s; }
-      .stagger-4 { animation-delay: 0.4s; }
-      .stagger-5 { animation-delay: 0.5s; }
+      .stagger-1 {
+        animation-delay: 0.1s;
+      }
+      .stagger-2 {
+        animation-delay: 0.2s;
+      }
+      .stagger-3 {
+        animation-delay: 0.3s;
+      }
+      .stagger-4 {
+        animation-delay: 0.4s;
+      }
+      .stagger-5 {
+        animation-delay: 0.5s;
+      }
     </style>
   </head>
   <body>
-
-
     <!-- Navigation -->
     <nav>
       <div class="nav-content">
@@ -938,11 +1010,11 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-            <!-- Animated Background -->
-    <div class="animated-background"></div>
-    
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
+      <!-- Animated Background -->
+      <div class="animated-background"></div>
+
+      <!-- Floating Particles -->
+      <div class="particles" id="particles"></div>
 
       <div class="container">
         <div class="hero-content">
@@ -966,7 +1038,10 @@
     <section class="features section" id="features">
       <div class="features-video-background">
         <video autoplay muted loop playsinline>
-          <source src="https://www.shutterstock.com/shutterstock/videos/1055951651/preview/stock-footage-seamless-loop-of-d-animation-of-glowing-horizontal-lines-streaming-across-the-screen-deep-blues.mp4" type="video/mp4">
+          <source
+            src="https://www.shutterstock.com/shutterstock/videos/1055951651/preview/stock-footage-seamless-loop-of-d-animation-of-glowing-horizontal-lines-streaming-across-the-screen-deep-blues.mp4"
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         <div class="features-video-overlay"></div>
@@ -981,7 +1056,14 @@
         </h3>
         <div class="features-grid">
           <div class="feature-card stagger-1">
-            <div><img src="https://via.placeholder.com/60x60/00d4ff/000000?text=AI" alt="Neural DEX" width="60" height="60"></div>
+            <div>
+              <img
+                src="https://via.placeholder.com/60x60/00d4ff/000000?text=AI"
+                alt="Neural DEX"
+                width="60"
+                height="60"
+              />
+            </div>
             <h2>Neural DEX</h2>
             <h3>Self-Learning Exchange</h3>
             <p>
@@ -996,7 +1078,14 @@
             </div>
           </div>
           <div class="feature-card stagger-2">
-            <div><img src="https://via.placeholder.com/60x60/ff00ff/000000?text=PS" alt="Predictive Swap" width="60" height="60"></div>
+            <div>
+              <img
+                src="https://via.placeholder.com/60x60/ff00ff/000000?text=PS"
+                alt="Predictive Swap"
+                width="60"
+                height="60"
+              />
+            </div>
             <h2>Predictive Swap</h2>
             <h3>Oracle-Powered DEX</h3>
             <p>
@@ -1011,7 +1100,14 @@
             </div>
           </div>
           <div class="feature-card stagger-3">
-            <div><img src="https://via.placeholder.com/60x60/00ff88/000000?text=FL" alt="Fluid Lending" width="60" height="60"></div>
+            <div>
+              <img
+                src="https://via.placeholder.com/60x60/00ff88/000000?text=FL"
+                alt="Fluid Lending"
+                width="60"
+                height="60"
+              />
+            </div>
             <h2>Fluid Lending</h2>
             <h3>Algorithmic Credit Markets</h3>
             <p>
@@ -1032,7 +1128,19 @@
     <!-- Products Section -->
     <section class="products section" id="products">
       <div class="container">
-        <h2 style="text-align: center; font-size: 3rem; margin-bottom: 3rem; background: linear-gradient(45deg, #00d4ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Protocol Suite</h2>
+        <h2
+          style="
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Protocol Suite
+        </h2>
         <div class="accordion">
           <div class="accordion-item active stagger-1">
             <div class="accordion-header">
@@ -1048,7 +1156,11 @@
             </div>
             <div class="accordion-content">
               <div class="accordion-content-inner">
-                <img src="https://chainwire.org/wp-content/uploads/2025/02/010_1740463649FAI9XAnMud.jpg" alt="Protocol Pantheon" class="accordion-image" />
+                <img
+                  src="https://chainwire.org/wp-content/uploads/2025/02/010_1740463649FAI9XAnMud.jpg"
+                  alt="Protocol Pantheon"
+                  class="accordion-image"
+                />
                 <p class="accordion-description">
                   Oeconomia provides a non-custodial, decentralized ecosystem
                   where users retain full control over assets while interacting
@@ -1073,7 +1185,11 @@
             </div>
             <div class="accordion-content">
               <div class="accordion-content-inner">
-                <img src="https://via.placeholder.com/100x60/ff00ff/000000?text=AP" alt="Alluria Protocol" class="accordion-image" />
+                <img
+                  src="https://via.placeholder.com/100x60/ff00ff/000000?text=AP"
+                  alt="Alluria Protocol"
+                  class="accordion-image"
+                />
                 <p class="accordion-description">
                   Alluria enables users to self-custodially mint and manage the
                   ALUD stablecoin using ETH collateral, with a transparent,
@@ -1097,7 +1213,11 @@
             </div>
             <div class="accordion-content">
               <div class="accordion-content-inner">
-                <img src="https://via.placeholder.com/100x60/00ff88/000000?text=EP" alt="Eloqura Protocol" class="accordion-image" />
+                <img
+                  src="https://via.placeholder.com/100x60/00ff88/000000?text=EP"
+                  alt="Eloqura Protocol"
+                  class="accordion-image"
+                />
                 <p class="accordion-description">
                   Eloqura offers decentralized tools for liquidity provision,
                   cross-chain transfers, and yield strategies with customizable
@@ -1121,11 +1241,15 @@
             </div>
             <div class="accordion-content">
               <div class="accordion-content-inner">
-                <img src="https://via.placeholder.com/100x60/ffaa00/000000?text=ART" alt="Artivya Protocol" class="accordion-image" />
+                <img
+                  src="https://via.placeholder.com/100x60/ffaa00/000000?text=ART"
+                  alt="Artivya Protocol"
+                  class="accordion-image"
+                />
                 <p class="accordion-description">
                   Artivya is a user-controlled hybrid exchange combining order
-                  books and AMMs, with permissionless trading of tokens/NFTs
-                  and creator-governed royalty enforcement.
+                  books and AMMs, with permissionless trading of tokens/NFTs and
+                  creator-governed royalty enforcement.
                 </p>
               </div>
             </div>
@@ -1145,7 +1269,11 @@
             </div>
             <div class="accordion-content">
               <div class="accordion-content-inner">
-                <img src="https://via.placeholder.com/100x60/aa00ff/000000?text=IP" alt="Iridescia Protocol" class="accordion-image" />
+                <img
+                  src="https://via.placeholder.com/100x60/aa00ff/000000?text=IP"
+                  alt="Iridescia Protocol"
+                  class="accordion-image"
+                />
                 <p class="accordion-description">
                   Iridescia provides public, auditable smart contract templates
                   and security tools for developers to build and deploy their
@@ -1162,7 +1290,10 @@
     <section class="blockchain-networks section" id="blockchain-networks">
       <div class="blockchain-video-background">
         <video autoplay muted loop playsinline>
-          <source src="https://www.shutterstock.com/shutterstock/videos/3433949363/preview/stock-footage-abstract-gradient-particle-waves-seamlessly-flowing-with-soft-light-and-bokeh-fucsia-and-blue.mp4" type="video/mp4">
+          <source
+            src="https://www.shutterstock.com/shutterstock/videos/3433949363/preview/stock-footage-abstract-gradient-particle-waves-seamlessly-flowing-with-soft-light-and-bokeh-fucsia-and-blue.mp4"
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         <div class="blockchain-video-overlay"></div>
@@ -1452,20 +1583,25 @@
 
         // Create floating particles
         createParticles() {
-          const particleContainer = document.getElementById('particles');
+          const particleContainer = document.getElementById("particles");
           const particleCount = 50;
 
           for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            
+            const particle = document.createElement("div");
+            particle.className = "particle";
+            particle.style.left = Math.random() * 100 + "%";
+            particle.style.animationDelay = Math.random() * 6 + "s";
+            particle.style.animationDuration = Math.random() * 3 + 3 + "s";
+
             // Random colors
-            const colors = ['rgba(0, 212, 255, 0.6)', 'rgba(255, 0, 255, 0.6)', 'rgba(0, 255, 136, 0.6)'];
-            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-            
+            const colors = [
+              "rgba(0, 212, 255, 0.6)",
+              "rgba(255, 0, 255, 0.6)",
+              "rgba(0, 255, 136, 0.6)",
+            ];
+            particle.style.background =
+              colors[Math.floor(Math.random() * colors.length)];
+
             particleContainer.appendChild(particle);
             this.particles.push(particle);
           }
@@ -1473,55 +1609,60 @@
 
         // Setup scroll-triggered animations
         setupScrollAnimations() {
-          const animateElements = document.querySelectorAll('.section');
-          
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                
-                // Animate child elements with stagger
-                const staggerElements = entry.target.querySelectorAll('[class*="stagger-"]');
-                staggerElements.forEach((el, index) => {
-                  setTimeout(() => {
-                    if (el.classList.contains('feature-card')) {
-                      el.classList.add('animate');
-                    } else if (el.classList.contains('accordion-item')) {
-                      el.classList.add('animate');
-                    } else if (el.classList.contains('phase-card')) {
-                      el.classList.add('animate');
-                    }
-                  }, index * 150);
-                });
-              }
-            });
-          }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-          });
+          const animateElements = document.querySelectorAll(".section");
 
-          animateElements.forEach(el => observer.observe(el));
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("animate");
+
+                  // Animate child elements with stagger
+                  const staggerElements = entry.target.querySelectorAll(
+                    '[class*="stagger-"]'
+                  );
+                  staggerElements.forEach((el, index) => {
+                    setTimeout(() => {
+                      if (el.classList.contains("feature-card")) {
+                        el.classList.add("animate");
+                      } else if (el.classList.contains("accordion-item")) {
+                        el.classList.add("animate");
+                      } else if (el.classList.contains("phase-card")) {
+                        el.classList.add("animate");
+                      }
+                    }, index * 150);
+                  });
+                }
+              });
+            },
+            {
+              threshold: 0.1,
+              rootMargin: "0px 0px -50px 0px",
+            }
+          );
+
+          animateElements.forEach((el) => observer.observe(el));
           this.observers.push(observer);
         }
 
         // Setup accordion functionality
         setupAccordion() {
-          const accordionItems = document.querySelectorAll('.accordion-item');
-          
-          accordionItems.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            
-            header.addEventListener('click', () => {
-              const isActive = item.classList.contains('active');
-              
+          const accordionItems = document.querySelectorAll(".accordion-item");
+
+          accordionItems.forEach((item) => {
+            const header = item.querySelector(".accordion-header");
+
+            header.addEventListener("click", () => {
+              const isActive = item.classList.contains("active");
+
               // Close all accordion items
-              accordionItems.forEach(otherItem => {
-                otherItem.classList.remove('active');
+              accordionItems.forEach((otherItem) => {
+                otherItem.classList.remove("active");
               });
-              
+
               // Open clicked item if it wasn't active
               if (!isActive) {
-                item.classList.add('active');
+                item.classList.add("active");
               }
             });
           });
@@ -1529,46 +1670,46 @@
 
         // Setup scroll to top button
         setupScrollToTop() {
-          const scrollBtn = document.getElementById('scrollToTopBtn');
-          
-          window.addEventListener('scroll', () => {
+          const scrollBtn = document.getElementById("scrollToTopBtn");
+
+          window.addEventListener("scroll", () => {
             if (window.scrollY > 300) {
-              scrollBtn.classList.add('show');
+              scrollBtn.classList.add("show");
             } else {
-              scrollBtn.classList.remove('show');
+              scrollBtn.classList.remove("show");
             }
           });
 
-          scrollBtn.addEventListener('click', () => {
+          scrollBtn.addEventListener("click", () => {
             window.scrollTo({
               top: 0,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
           });
         }
 
         // Setup navigation effects
         setupNavigation() {
-          const nav = document.querySelector('nav');
-          
-          window.addEventListener('scroll', () => {
+          const nav = document.querySelector("nav");
+
+          window.addEventListener("scroll", () => {
             if (window.scrollY > 50) {
-              nav.style.background = 'rgba(0, 0, 0, 0.95)';
+              nav.style.background = "rgba(0, 0, 0, 0.95)";
             } else {
-              nav.style.background = 'rgba(0, 0, 0, 0.9)';
+              nav.style.background = "rgba(0, 0, 0, 0.9)";
             }
           });
 
           // Smooth scrolling for navigation links
           const navLinks = document.querySelectorAll('nav a[href^="#"]');
-          navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+          navLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
               e.preventDefault();
-              const target = document.querySelector(link.getAttribute('href'));
+              const target = document.querySelector(link.getAttribute("href"));
               if (target) {
                 target.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start'
+                  behavior: "smooth",
+                  block: "start",
                 });
               }
             });
@@ -1577,7 +1718,7 @@
 
         // Cleanup observers
         destroy() {
-          this.observers.forEach(observer => observer.disconnect());
+          this.observers.forEach((observer) => observer.disconnect());
         }
       }
 
@@ -1594,61 +1735,69 @@
         }
 
         initializeVideoBackground() {
-          const video = document.querySelector('.blockchain-video-background video');
+          const video = document.querySelector(
+            ".blockchain-video-background video"
+          );
           if (video) {
-            video.addEventListener('canplaythrough', () => {
-              video.classList.add('loaded');
+            video.addEventListener("canplaythrough", () => {
+              video.classList.add("loaded");
             });
-            
+
             setTimeout(() => {
-              if (!video.classList.contains('loaded')) {
-                video.classList.add('loaded');
+              if (!video.classList.contains("loaded")) {
+                video.classList.add("loaded");
               }
             }, 1000);
           }
         }
 
         initializeCardAnimations() {
-          const blockchainSection = document.getElementById('blockchain-networks');
-          const blockchainCards = document.querySelectorAll('.blockchain-card');
+          const blockchainSection = document.getElementById(
+            "blockchain-networks"
+          );
+          const blockchainCards = document.querySelectorAll(".blockchain-card");
           let hasTriggered = false;
-          
+
           const triggerAnimation = () => {
             if (this.isAnimating) return;
-            
+
             this.isAnimating = true;
             hasTriggered = true;
-            
+
             blockchainCards.forEach((card, index) => {
               setTimeout(() => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px) scale(0.9)';
-                
+                card.style.opacity = "0";
+                card.style.transform = "translateY(30px) scale(0.9)";
+
                 setTimeout(() => {
-                  card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                  card.style.opacity = '1';
-                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.transition =
+                    "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+                  card.style.opacity = "1";
+                  card.style.transform = "translateY(0) scale(1)";
                 }, 100);
               }, index * 100);
             });
-            
+
             setTimeout(() => {
               this.isAnimating = false;
             }, 2000);
           };
-          
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                if (!hasTriggered) {
-                  setTimeout(triggerAnimation, 200);
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                  if (!hasTriggered) {
+                    setTimeout(triggerAnimation, 200);
+                  }
                 }
-              }
-            });
-          }, {
-            threshold: [0.1, 0.3, 0.5]
-          });
-          
+              });
+            },
+            {
+              threshold: [0.1, 0.3, 0.5],
+            }
+          );
+
           if (blockchainSection) {
             observer.observe(blockchainSection);
           }
@@ -1656,13 +1805,13 @@
       }
 
       // Initialize animations when DOM is loaded
-      document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener("DOMContentLoaded", () => {
         const oeconomiaAnimations = new OeconomiaAnimations();
         const blockchainAnimations = new BlockchainNetworkAnimations();
-        
+
         // Add some interactive effects
-        document.addEventListener('mousemove', (e) => {
-          const cursor = document.createElement('div');
+        document.addEventListener("mousemove", (e) => {
+          const cursor = document.createElement("div");
           cursor.style.cssText = `
             position: fixed;
             top: ${e.clientY}px;
@@ -1675,16 +1824,16 @@
             z-index: 9999;
             animation: cursorFade 0.5s ease-out forwards;
           `;
-          
+
           document.body.appendChild(cursor);
-          
+
           setTimeout(() => {
             cursor.remove();
           }, 500);
         });
-        
+
         // Add cursor fade animation
-        const style = document.createElement('style');
+        const style = document.createElement("style");
         style.textContent = `
           @keyframes cursorFade {
             0% { opacity: 1; transform: scale(1); }
