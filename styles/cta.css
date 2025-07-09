@@ -109,17 +109,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-
-
   opacity: 0.9;
 }
 
 .zcard-background.yellow {
-  background: linear-gradient(90deg, #6282FF 0%, #4929ea 100%);
+  background: linear-gradient(90deg, #6282ff 0%, #4929ea 100%);
 }
 
 .zcard-background.blue {
-  background: linear-gradient(90deg, #8763FF 0%, #E811FE 100%);
+  background: linear-gradient(90deg, #8763ff 0%, #e811fe 100%);
 }
 
 .zcard-background.purple {
@@ -296,8 +294,6 @@
     transform: translateY(0) rotateX(0deg);
   }
 }
-
-
 
 @keyframes pulse {
   0%,
