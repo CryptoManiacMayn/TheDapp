@@ -11,23 +11,21 @@ class CubeManager {
     this.currentRotation = { x: 0, y: 0 };
     this.isAnimating = false;
     this.hasTargetRotation = false;
+    
+    // Mouse tracking
     this.mouseX = 0;
     this.mouseY = 0;
-    this.prevMouseX = 0;
-    this.prevMouseY = 0;
-    this.mouseVelocityX = 0;
-    this.mouseVelocityY = 0;
+    this.lastMouseX = 0;
+    this.lastMouseY = 0;
+    this.isMouseMoving = false;
+    this.mouseStopTimeout = null;
     
-    // Enhanced mouse settings for much better responsiveness
+    // Enhanced mouse settings
     this.mouseInfluence = 5;
-    this.hoverInfluence = .12;
+    this.hoverInfluence = 0.12;
     this.baseInfluence = 2.5;
     this.targetInfluence = 0.5;
-    this.interpolationSpeed = 0.15;
-    this.velocityDamping = 0.95;
-    this.maxRotationSpeed = 0.1;
-    
-    this.lastMouseMoveTime = Date.now();
+    this.interpolationSpeed = 0.08;
     
     // Define rotations for each accordion section
     this.sectionRotations = {
@@ -351,21 +349,30 @@ class CubeManager {
   }
   
   addMouseEffects() {
-    // Enhanced global mouse tracking with velocity calculation
+    // Simple mouse tracking with proper movement detection
     document.addEventListener('mousemove', (event) => {
-      // Store previous mouse position for velocity calculation
-      this.prevMouseX = this.mouseX;
-      this.prevMouseY = this.mouseY;
+      // Convert mouse position to normalized coordinates
+      const newMouseX = (event.clientX / window.innerWidth) * 4 - 2;
+      const newMouseY = -(event.clientY / window.innerHeight) * 4 + 2;
       
-      // Convert mouse position to normalized coordinates relative to viewport
-      this.mouseX = (event.clientX / window.innerWidth) * 4 - 2;
-      this.mouseY = -(event.clientY / window.innerHeight) * 4 + 2;
-      
-      // Calculate mouse velocity for momentum effect
-      this.mouseVelocityX = this.mouseX - this.prevMouseX;
-      this.mouseVelocityY = this.mouseY - this.prevMouseY;
-      
-      this.lastMouseMoveTime = Date.now();
+      // Check if mouse actually moved
+      if (Math.abs(newMouseX - this.lastMouseX) > 0.001 || Math.abs(newMouseY - this.lastMouseY) > 0.001) {
+        this.mouseX = newMouseX;
+        this.mouseY = newMouseY;
+        this.lastMouseX = newMouseX;
+        this.lastMouseY = newMouseY;
+        this.isMouseMoving = true;
+        
+        // Clear existing timeout
+        if (this.mouseStopTimeout) {
+          clearTimeout(this.mouseStopTimeout);
+        }
+        
+        // Set timeout to detect when mouse stops
+        this.mouseStopTimeout = setTimeout(() => {
+          this.isMouseMoving = false;
+        }, 50); // 50ms delay before considering mouse stopped
+      }
     });
     
     // Container-specific effects for cursor and tooltips
@@ -382,6 +389,7 @@ class CubeManager {
     this.container.addEventListener('mouseleave', () => {
       this.mouseInfluence = this.baseInfluence;
       this.container.classList.remove('interactive');
+      this.isMouseMoving = false;
     });
     
     // Double-click to enable free rotation
@@ -565,53 +573,28 @@ class CubeManager {
   animate() {
     requestAnimationFrame(() => this.animate());
     
-    // Much more responsive mouse following effect
-    if (!this.isAnimating) {
-      // Calculate target rotation with higher sensitivity
+    // Only update rotation if mouse is actively moving and not during section animations
+    if (this.isMouseMoving && !this.isAnimating) {
+      // Calculate target rotation
       const sensitivity = this.mouseInfluence * 0.2;
       const targetRotationX = this.mouseY * sensitivity;
       const targetRotationY = this.mouseX * sensitivity;
       
-      // Apply momentum for more natural movement
-      const momentum = 0.02;
-      const velocityInfluence = Math.min(Math.abs(this.mouseVelocityX) + Math.abs(this.mouseVelocityY), 0.1);
-      const currentSensitivity = sensitivity + (velocityInfluence * momentum);
-      
       if (this.hasTargetRotation) {
-        // More mouse freedom even when locked to section
+        // Allow slight mouse influence when locked to section
         const influenceFactor = this.targetInfluence;
         this.cube.rotation.x = this.targetRotation.x + targetRotationX * influenceFactor;
         this.cube.rotation.y = this.targetRotation.y + targetRotationY * influenceFactor;
       } else {
-        // Free mouse movement with enhanced responsiveness
-        const targetX = targetRotationX;
-        const targetY = targetRotationY;
-        
-        // Apply rotation limits for smooth experience
+        // Free mouse movement
         const maxRotation = 6;
-        const clampedTargetX = Math.max(-maxRotation, Math.min(maxRotation, targetX));
-        const clampedTargetY = Math.max(-maxRotation, Math.min(maxRotation, targetY));
+        const clampedTargetX = Math.max(-maxRotation, Math.min(maxRotation, targetRotationX));
+        const clampedTargetY = Math.max(-maxRotation, Math.min(maxRotation, targetRotationY));
         
-        // Much faster interpolation for immediate response
+        // Smooth interpolation
         this.cube.rotation.x += (clampedTargetX - this.cube.rotation.x) * this.interpolationSpeed;
         this.cube.rotation.y += (clampedTargetY - this.cube.rotation.y) * this.interpolationSpeed;
       }
-      
-      // Apply velocity damping for momentum effect
-      this.mouseVelocityX *= this.velocityDamping;
-      this.mouseVelocityY *= this.velocityDamping;
-    }
-    
-    // Enhanced floating animation
-    if (!this.isAnimating && !this.hasTargetRotation) {
-      const floatStrength = Math.max(0.02, 0.1 - (Math.abs(this.mouseVelocityX) + Math.abs(this.mouseVelocityY)) * 5);
-      this.cube.position.y = Math.sin(Date.now() * 0.001) * floatStrength;
-    }
-    
-    // Auto-rotation
-    const timeSinceLastMouseMove = Date.now() - (this.lastMouseMoveTime || Date.now());
-    if (timeSinceLastMouseMove > 5000 && !this.hasTargetRotation && !this.isAnimating) {
-      this.cube.rotation.y += 0.001;
     }
     
     this.renderer.render(this.scene, this.camera);
