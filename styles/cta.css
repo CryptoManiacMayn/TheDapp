@@ -109,17 +109,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-    background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+
 
   opacity: 0.9;
 }
 
 .zcard-background.yellow {
-  background: linear-gradient(135deg, #7f67fe 0%, #4929ea 100%);
+  background: linear-gradient(90deg, #6282FF 0%, #4929ea 100%);
 }
 
 .zcard-background.blue {
-  background: linear-gradient(135deg, #de18fe 0%, #c44569 100%);
+  background: linear-gradient(90deg, #8763FF 0%, #E811FE 100%);
 }
 
 .zcard-background.purple {
@@ -128,7 +128,7 @@
 
 .zchart-overlay {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   right: 1px;
   width: 450px;
   height: 450px;
