@@ -172,7 +172,7 @@
 
 .blockchain-card.primary-launch:hover {
   border-color: rgba(0, 255, 136, 0.5);
-  box-shadow: 0 10px 10px rgba(0, 255, 136, 0.3);
+  box-shadow: 0 10px 1px rgba(0, 255, 136, 0.1);
 }
 
 /* Card Header */
@@ -702,7 +702,7 @@
 
 .blockchain-networks.section-animated .deployment-strategy {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 10px 10px rgba(0, 212, 255, 0.2);
 }
 
 .phase-card {

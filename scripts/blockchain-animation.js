@@ -296,26 +296,26 @@ class BlockchainNetworksAnimator {
             .blockchain-card.animate-in:hover {
                 transform: translateY(-15px) rotateY(10deg) scale(1.05);
                 box-shadow: 
-                    0 20px 40px rgba(0, 212, 255, 0.4),
-                    0 0 30px rgba(0, 212, 255, 0.3);
+                    0 2px 10px rgba(0, 212, 255, 0.4),
+                    0 0 10px rgba(0, 212, 255, 0.3);
             }
             
             /* Primary launch cards special effects */
             .blockchain-card.primary-launch.animate-in {
-                box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+
             }
             
             .blockchain-card.primary-launch.glow-effect {
                 box-shadow: 
-                    0 10px 30px rgba(0, 255, 136, 0.3),
-                    0 0 20px rgba(0, 255, 136, 0.2),
+                    0 1px 10px rgba(0, 255, 136, 0.3),
+                    0 0 10px rgba(0, 255, 136, 0.2),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
             
             .blockchain-card.primary-launch.animate-in:hover {
                 box-shadow: 
-                    0 20px 40px rgba(0, 255, 136, 0.4),
-                    0 0 30px rgba(0, 255, 136, 0.3);
+                    0 1px 10px rgba(0, 255, 136, 0.4),
+                    0 0 10px rgba(0, 255, 136, 0.3);
             }
         `;
         
