@@ -20,6 +20,13 @@
   margin-bottom: 60px;
 }
 
+.animate-fade-in {
+  animation: fadeInUp 1s ease-out forwards !important;
+}
+
+.animate-slide-up {
+  animation: cardReveal 0.8s ease-out forwards !important;
+}
 
 
 .cta h2 {
@@ -54,7 +61,8 @@
   margin-bottom: 2rem;
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 1s ease-out forwards;
+  /* Remove the animation line and just use transition */
+  transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
 .zheader h1 {
@@ -88,29 +96,34 @@ gap: 1rem;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   transform: translateY(50px) rotateX(15deg);
-  animation: cardReveal 0.8s ease-out forwards;
   height: 350px;
+  /* Keep transition but allow animation to override */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.zreport-card:nth-child(1) {
-  animation-delay: 0.1s;
+.zreport-card[style*="animation"] {
+  transition: none !important;
 }
-.zreport-card:nth-child(2) {
-  animation-delay: 0.2s;
+
+.zreport-card.animate-in {
+  animation: cardReveal 0.8s ease-out forwards;
 }
-.zreport-card:nth-child(3) {
-  animation-delay: 0.3s;
-}
+
+/* Remove the nth-child animation delays since we're handling timing in JS */
+.zreport-card:nth-child(1),
+.zreport-card:nth-child(2),
+.zreport-card:nth-child(3),
 .zreport-card:nth-child(4) {
-  animation-delay: 0.4s;
+  animation-delay: unset;
 }
 
 .zreport-card:hover {
-  transform: translateY(-12px) scale(1.03);
-  box-shadow: 0 25px 50px rgba(255, 107, 157, 0.2);
+  transform: translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 1px 50px rgba(232, 226, 228, 0.2);
+  border: #00d4ff solid 2px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .zcard-background {
@@ -292,6 +305,10 @@ gap: 1rem;
 }
 
 @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -299,6 +316,10 @@ gap: 1rem;
 }
 
 @keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(50px) rotateX(15deg);
+  }
   to {
     opacity: 1;
     transform: translateY(0) rotateX(0deg);
@@ -363,5 +384,14 @@ gap: 1rem;
   }
   100% {
     left: 100%;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(180deg); 
   }
 }

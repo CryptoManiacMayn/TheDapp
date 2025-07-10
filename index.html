@@ -598,6 +598,7 @@
     </section>
 
 <!-- CTA Section -->
+<!-- CTA Section - Fixed HTML Structure -->
 <section class="cta" id="cta">
   <!-- Animated Background -->
   <div class="animated-background"></div>
@@ -608,35 +609,32 @@
   <div class="particles" id="particles"></div>
   <div class="container">
 
-
     <div class="zfloating-elements">
-      <div class="zfloating-circle fc-1"></div>
-      <div class="zfloating-circle fc-2"></div>
-      <div class="zpulse-effect pe-1"></div>
-      <div class="zpulse-effect pe-2"></div>
+      <div class="zfloating-circle zfc-1"></div>
+      <div class="zfloating-circle zfc-2"></div>
+      <div class="zpulse-effect zpe-1"></div>
+      <div class="zpulse-effect zpe-2"></div>
     </div>
 
     <div class="zcontainer">
-      <div class="zheader">
-
+      <div class="zheader" data-animate="fadeIn">
+        <!-- Add header content if needed -->
       </div>
 
-      <div class="zcards-grid">
-        <div class="zreport-card">
+      <!-- Single grid container with all three cards -->
+      <div class="zcards-grid" data-animate="stagger">
+        
+        <!-- Card 1: Report -->
+        <div class="zreport-card" data-animate="slideUp">
           <div class="zcard-background"></div>
           <div class="zchart-overlay">
-            <img
-              src="images\OEC Logo.png"
-              alt="Pepsi Logo"
-              class="zlogo-image"
-            />
+            <img src="images/OEC Logo.png" alt="OEC Logo" class="zlogo-image" />
           </div>
           <div class="zshimmer"></div>
           <div class="zcard-content">
             <div class="zbadge">Pill Container 📊</div>
             <div class="zmain-title">Report<br /></div>
             <div class="ztoken-list">Welcome • Goals • Synopsis</div>
-
             <div class="zcard-footer">
               <div class="zcard-title">Weekly Digest - Week 1</div>
               <div class="zcard-description">
@@ -651,21 +649,17 @@
           </div>
         </div>
 
-        <div class="zreport-card">
+        <!-- Card 2: Forum -->
+        <div class="zreport-card" data-animate="slideUp">
           <div class="zcard-background"></div>
           <div class="zchart-overlay">
-            <img
-              src="images\OEC Logo.png"
-              alt="Pepsi Logo"
-              class="zlogo-image"
-            />
+            <img src="images/OEC Logo.png" alt="OEC Logo" class="zlogo-image" />
           </div>
           <div class="zshimmer"></div>
           <div class="zcard-content">
             <div class="zbadge exclusive">Exclusive Content ⭐</div>
             <div class="zmain-title">Forum</div>
             <div class="ztoken-list">$2.37B unlock value expected</div>
-
             <div class="zcard-footer">
               <div class="zcard-title">Unlocks Activity in July 2025</div>
               <div class="zcard-description">
@@ -680,14 +674,11 @@
           </div>
         </div>
 
-        <div class="zreport-card">
+        <!-- Card 3: Stats -->
+        <div class="zreport-card" data-animate="slideUp">
           <div class="zcard-background"></div>
           <div class="zchart-overlay">
-            <img
-              src="images\OEC Logo.png"
-              alt="Pepsi Logo"
-              class="zlogo-image"
-            />
+            <img src="images/OEC Logo.png" alt="OEC Logo" class="zlogo-image" />
           </div>
           <div class="zshimmer"></div>
           <div class="zcard-content">
@@ -696,7 +687,6 @@
             <div class="ztoken-list">
               $NEWT • $SAHARA • $SUI • $SOL • $ENA • $WLD
             </div>
-
             <div class="zcard-footer">
               <div class="zcard-title">Weekly Unlock Digest</div>
               <div class="zcard-description">
@@ -710,7 +700,8 @@
             </div>
           </div>
         </div>
-      </div>
+
+      </div> <!-- End of zcards-grid -->
     </div>
     
     </div>
