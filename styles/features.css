@@ -8,8 +8,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative; /* ADD THIS */
-  overflow: hidden;   /* ADD THIS */
+  position: relative;
+  overflow: hidden;
 }
 
 /* Video Background Container - Preload and stabilize */
