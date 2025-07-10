@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oeconomia Protocol Suite - Development Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 50%, #2a2d5a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #64b5f6, #42a5f5, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn.primary {
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #2196f3, #21cbf3, #4caf50);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .phase {
+            position: relative;
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .phase:nth-child(even) .phase-content {
+            margin-left: auto;
+            margin-right: 60px;
+            text-align: right;
+        }
+
+        .phase:nth-child(odd) .phase-content {
+            margin-right: auto;
+            margin-left: 60px;
+        }
+
+        .phase-content {
+            width: 45%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+                        -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phase-content:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .phase-marker {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2196f3;
+            transform: translateX(-50%);
+            border: 4px solid #0a0e27;
+            z-index: 10;
+        }
+
+        .phase-date {
+            font-weight: 600;
+            color: #64b5f6;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .phase-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .phase-description {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .protocols {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .protocol-tag {
+            background: rgba(33, 150, 243, 0.2);
+            color: #64b5f6;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .milestones {
+            margin-top: 15px;
+        }
+
+        .milestone {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+
+        .milestone-check {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #4caf50;
+            background: #4caf50;
+            position: relative;
+        }
+
+        .milestone-check::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .milestone.pending .milestone-check {
+            background: transparent;
+            border-color: #757575;
+        }
+
+        .milestone.pending .milestone-check::after {
+            display: none;
+        }
+
+        .edit-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .edit-panel {
+            background: #1a1d3a;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .edit-panel h3 {
+            margin-bottom: 20px;
+            color: #64b5f6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .status-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #2196f3;
+            border-color: #2196f3;
+        }
+
+        .export-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .phase-content {
+                width: calc(100% - 80px);
+                margin-left: 60px !important;
+                margin-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .phase-marker {
+                left: 30px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        #fileInput {
+            display: none;
+        }
+        #deleteBtn,
+        .delete-btn {
+            display: none;
+            background: #f44336;
+        }
+        #deleteBtn.show,
+        .delete-btn.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Oeconomia Protocol Suite</h1>
+            <p>Comprehensive DeFi Infrastructure Development Roadmap</p>
+        </div>
+
+        <div class="controls">
+            <div class="status-filters">
+                <button type="button" class="filter-btn active" data-status="all">All Phases</button>
+                <button type="button" class="filter-btn" data-status="completed">Completed</button>
+                <button type="button" class="filter-btn" data-status="in-progress">In Progress</button>
+                <button type="button" class="filter-btn" data-status="planned">Planned</button>
+            </div>
+            <button type="button" class="btn primary" onclick="addPhase()">Add Phase</button>
+            <button type="button" class="btn" onclick="exportRoadmap()">Export JSON</button>
+            <button type="button" class="btn" onclick="importRoadmap()">Import JSON</button>
+        </div>
+
+        <div class="timeline" id="timeline">
+            <!-- Timeline phases will be dynamically generated -->
+        </div>
+
+        <div class="export-section">
+            <h3>Export & Share</h3>
+            <p>Export your customized roadmap as JSON to save or share with your team</p>
+            <button class="btn primary" onclick="downloadRoadmap()">Download Roadmap</button>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="edit-mode" id="editMode">
+        <div class="edit-panel">
+            <h3>Edit Phase</h3>
+            <form id="phaseForm">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="phaseDate" placeholder="Q1 2024">
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="phaseTitle" placeholder="Phase Title">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="phaseDescription" placeholder="Phase description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="phaseStatus">
+                        <option value="completed">Completed</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="planned">Planned</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Protocols (comma-separated)</label>
+                    <input type="text" id="phaseProtocols" placeholder="Oeconomia Gov, Alluria, Eloqura">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
+                </div>
+                <div class="controls">
+                    <button type="button" class="btn primary" onclick="savePhase()">Save</button>
+                    <button type="button" class="btn delete-btn" onclick="deletePhase()" id="deleteBtn">Delete</button>
+                    <button type="button" class="btn" onclick="closeEditMode()">Cancel</button>
+                </div>
+    <input type="file" id="fileInput" accept=".json" onchange="handleFileImport(event)">
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" onchange="handleFileImport(event)">
+
+    <script>
+        let roadmapData = [
+            {
+                id: 1,
+                date: "Q1 2024",
+                title: "Foundation & Governance",
+                description: "Establish core governance framework and launch OEC token with Guardian staking mechanism. Deploy foundational smart contracts for cross-protocol coordination.",
+                status: "completed",
+                protocols: ["Oeconomia Gov"],
+                milestones: [
+                    "OEC token deployment",
+                    "Guardian staking system",
+                    "Governance voting mechanism",
+                    "Treasury management setup"
+                ]
+            },
+            {
+                id: 2,
+                date: "Q2 2024",
+                title: "Alluria Protocol Launch",
+                description: "Deploy Alluria lending protocol with ALUD stablecoin, ETH collateral vaults, and community-driven liquidation system. Achieve capital efficiency with 110% collateral ratio.",
+                status: "completed",
+                protocols: ["Alluria", "Oeconomia Gov"],
+                milestones: [
+                    "Smart contract audit completion",
+                    "ALUD stablecoin deployment",
+                    "Vault system implementation",
+                    "Stability pool launch",
+                    "Mainnet deployment"
+                ]
+            },
+            {
+                id: 3,
+                date: "Q3 2024",
+                title: "Eloqura AMM & Cross-Chain",
+                description: "Launch Eloqura's automated market making with multi-curve support and cross-chain infrastructure. Enable concentrated liquidity and MEV protection.",
+                status: "in-progress",
+                protocols: ["Eloqura", "Alluria"],
+                milestones: [
+                    "AMM pools deployment",
+                    "Cross-chain bridge testing",
+                    "Validator network setup",
+                    "ALUD liquidity pools",
+                    "MEV protection implementation"
+                ]
+            },
+            {
+                id: 4,
+                date: "Q4 2024",
+                title: "Protocol Optimization Network",
+                description: "Deploy Eloqura's Protocol Optimization Network with AI-driven strategies, automated yield farming, and sophisticated risk management.",
+                status: "in-progress",
+                protocols: ["Eloqura"],
+                milestones: [
+                    "Strategy engine deployment",
+                    "Risk assessment module",
+                    "Yield optimization algorithms",
+                    "Cross-protocol integration",
+                    "Performance monitoring"
+                ]
+            },
+            {
+                id: 5,
+                date: "Q1 2025",
+                title: "Artivya Exchange Platform",
+                description: "Launch Artivya's hybrid order book and AMM trading platform with professional features, NFT marketplace, and advanced analytics.",
+                status: "planned",
+                protocols: ["Artivya", "Eloqura"],
+                milestones: [
+                    "Order book engine development",
+                    "NFT marketplace integration",
+                    "Professional trading tools",
+                    "Market maker incentives",
+                    "Mobile application"
+                ]
+            },
+            {
+                id: 6,
+                date: "Q2 2025",
+                title: "Iridescia Development Infrastructure",
+                description: "Deploy Iridescia's smart contract development platform with template engine, security framework, and multi-chain deployment tools.",
+                status: "planned",
+                protocols: ["Iridescia"],
+                milestones: [
+                    "Template library creation",
+                    "Security analysis tools",
+                    "IDE development",
+                    "Multi-chain deployment",
+                    "Developer onboarding"
+                ]
+            },
+            {
+                id: 7,
+                date: "Q3 2025",
+                title: "Cross-Protocol Integration",
+                description: "Complete deep integration between all protocols, enabling unified user experiences and cross-protocol yield strategies.",
+                status: "planned",
+                protocols: ["All Protocols"],
+                milestones: [
+                    "Unified governance implementation",
+                    "Cross-protocol fee optimization",
+                    "Shared security model",
+                    "Advanced yield strategies",
+                    "Institutional onboarding"
+                ]
+            },
+            {
+                id: 8,
+                date: "Q4 2025",
+                title: "Ecosystem Expansion",
+                description: "Scale ecosystem across multiple chains, launch institutional services, and establish Oeconomia as leading DeFi infrastructure.",
+                status: "planned",
+                protocols: ["All Protocols"],
+                milestones: [
+                    "Multi-chain deployment",
+                    "Institutional partnerships",
+                    "Enterprise solutions",
+                    "Developer ecosystem growth",
+                    "Global expansion"
+                ]
+            }
+        ];
+
+        let currentEditingId = null;
+
+        function renderTimeline() {
+            const timeline = document.getElementById('timeline');
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.status;
+            
+            const filteredData = activeFilter === 'all' 
+                ? roadmapData 
+                : roadmapData.filter(phase => phase.status === activeFilter);
+
+            timeline.innerHTML = filteredData.map(phase => `
+                <div class="phase" data-status="${phase.status}">
+                    <div class="phase-marker"></div>
+                    <div class="phase-content" onclick="editPhase(${phase.id})">
+                        <div class="phase-date">${phase.date}</div>
+                        <div class="phase-title">${phase.title}</div>
+                        <div class="phase-description">${phase.description}</div>
+                        <div class="protocols">
+                            ${phase.protocols.map(protocol => `<span class="protocol-tag">${protocol}</span>`).join('')}
+                        </div>
+                        <div class="milestones">
+                            ${phase.milestones.map(milestone => `
+                                <div class="milestone ${phase.status === 'completed' ? '' : 'pending'}">
+                                    <div class="milestone-check"></div>
+                                    <span>${milestone}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Animate phases
+            setTimeout(() => {
+                document.querySelectorAll('.phase').forEach((phase, index) => {
+                    phase.style.animationDelay = `${index * 0.1}s`;
+                });
+            }, 100);
+        }
+
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderTimeline();
+                });
+            });
+        }
+
+        function addPhase() {
+            currentEditingId = null;
+            document.getElementById('phaseForm').reset();
+            document.getElementById('deleteBtn').style.display = 'none';
+            document.getElementById('editMode').style.display = 'flex';
+        }
+
+        function editPhase(id) {
+            const phase = roadmapData.find(p => p.id === id);
+            if (!phase) return;
+
+            currentEditingId = id;
+            document.getElementById('phaseDate').value = phase.date;
+            document.getElementById('phaseTitle').value = phase.title;
+            document.getElementById('phaseDescription').value = phase.description;
+            document.getElementById('phaseStatus').value = phase.status;
+            document.getElementById('phaseProtocols').value = phase.protocols.join(', ');
+            document.getElementById('phaseMilestones').value = phase.milestones.join('\n');
+            document.getElementById('deleteBtn').style.display = 'inline-block';
+            document.getElementById('editMode').style.display = 'flex';
+        }
+
+        function savePhase() {
+            const formData = {
+                date: document.getElementById('phaseDate').value,
+                title: document.getElementById('phaseTitle').value,
+                description: document.getElementById('phaseDescription').value,
+                status: document.getElementById('phaseStatus').value,
+                protocols: document.getElementById('phaseProtocols').value.split(',').map(p => p.trim()).filter(p => p),
+                milestones: document.getElementById('phaseMilestones').value.split('\n').filter(m => m.trim())
+            };
+
+            if (!formData.title || !formData.description) {
+                alert('Please fill in required fields');
+                return;
+            }
+
+            if (currentEditingId) {
+                const index = roadmapData.findIndex(p => p.id === currentEditingId);
+                roadmapData[index] = { ...roadmapData[index], ...formData };
+            } else {
+                const newId = Math.max(...roadmapData.map(p => p.id)) + 1;
+                roadmapData.push({ id: newId, ...formData });
+            }
+
+            closeEditMode();
+            renderTimeline();
+        }
+
+        function deletePhase() {
+            if (currentEditingId && confirm('Are you sure you want to delete this phase?')) {
+                roadmapData = roadmapData.filter(p => p.id !== currentEditingId);
+                closeEditMode();
+                renderTimeline();
+            }
+        }
+
+        function closeEditMode() {
+            document.getElementById('editMode').style.display = 'none';
+            currentEditingId = null;
+        }
+
+        function exportRoadmap() {
+            const dataStr = JSON.stringify(roadmapData, null, 2);
+            navigator.clipboard.writeText(dataStr).then(() => {
+                alert('Roadmap data copied to clipboard!');
+            }).catch(() => {
+                console.log('Roadmap data:', dataStr);
+                alert('Please copy the roadmap data from the console');
+            });
+        }
+
+        function downloadRoadmap() {
+            const dataStr = JSON.stringify(roadmapData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'oeconomia-roadmap.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importRoadmap() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData) && importedData.length > 0) {
+                        roadmapData = importedData;
+                        renderTimeline();
+                        alert('Roadmap imported successfully!');
+                    } else {
+                        alert('Invalid roadmap format');
+                    }
+                } catch (error) {
+                    alert('Error parsing JSON file');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editMode').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditMode();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTimeline();
+            setupFilters();
+        });
+    </script>
+
+            <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <button id="scrollToTopBtn" class="scroll-top-btn" title="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <link rel="stylesheet" href="../styles/backtotop.css" />
+    <script src="../scripts/backtotop.js"></script>
+    
+</body>
+</html>
