@@ -1125,3 +1125,328 @@ nav {
     padding: 6px;
   }
 }
+
+
+/* Mobile Menu Styles - Add this to your styles.css */
+
+/* Mobile Menu Container */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    transform: translateY(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+}
+
+.mobile-menu.active {
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.mobile-nav-links li {
+    margin: 1.5rem 0;
+}
+
+.mobile-nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.mobile-nav-links a:hover {
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateX(10px);
+}
+
+.mobile-nav-buttons {
+    margin-top: 2rem;
+}
+
+.mobile-nav-buttons .dapp-btn {
+    width: 200px;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+/* Enhanced hamburger menu styles */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+    outline: none;
+    z-index: 1001; /* Above mobile menu */
+    position: relative;
+}
+
+.menu-toggle:hover {
+    color: #00d4ff;
+    transform: scale(1.1);
+}
+
+/* Show hamburger menu on mobile screens */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-buttons {
+        display: none;
+    }
+}
+
+/* ACCORDION MOBILE FIXES */
+
+/* Fix viewport and container issues on mobile */
+@media (max-width: 768px) {
+    
+    /* Ensure proper viewport handling */
+    html {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+    
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        min-width: 320px; /* Minimum mobile width */
+    }
+    
+    /* Fix container padding and overflow on mobile */
+    .container {
+        padding: 20px 15px; /* Reduced side padding for mobile */
+        margin: 0 auto;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Products section mobile layout */
+    .products {
+        padding: 60px 0;
+        overflow-x: hidden;
+    }
+    
+    .products .container {
+        display: block; /* Stack vertically on mobile */
+        padding: 20px 10px; /* Even less padding */
+        gap: 20px;
+    }
+    
+    /* Accordion mobile fixes */
+    .accordion {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    .accordion-item {
+        margin: 5px 0; /* Remove side margins */
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .accordion-header {
+        padding: 15px 12px; /* Reduced padding */
+        min-height: 60px;
+        box-sizing: border-box;
+    }
+    
+    .accordion-title {
+        font-size: 1rem; /* Smaller font on mobile */
+        gap: 10px;
+        flex: 1;
+        min-width: 0; /* Allow text to wrap */
+    }
+    
+    .accordion-title span {
+        word-wrap: break-word;
+        line-height: 1.3;
+    }
+    
+    /* Hide accordion icon on very small screens */
+    .accordion-icon {
+        display: none;
+    }
+    
+    .outer-accordion-icon {
+        right: 45px; /* Move closer to arrow */
+        font-size: 1.2rem;
+    }
+    
+    .accordion-arrow {
+        padding: 8px;
+        flex-shrink: 0;
+    }
+    
+    /* Accordion content mobile layout */
+    .accordion-content-inner {
+        display: block; /* Stack vertically */
+        padding: 15px 12px;
+    }
+    
+    .accordion-image {
+        width: 100%;
+        max-width: 280px;
+        height: 120px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+    }
+    
+    .accordion-description {
+        padding: 0;
+        text-align: left;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    /* Dynamic cube container mobile */
+    .dynamic-image-container {
+        order: -1;
+        height: 250px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    
+    #dynamic-cube-container {
+        height: 100%;
+        min-height: 250px;
+    }
+    
+    /* Dynamic image info mobile */
+    .dynamic-image-info {
+        padding: 15px;
+        height: auto;
+        min-height: 80px;
+    }
+    
+    .dynamic-image-title {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+    
+    .dynamic-image-subtitle {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    
+    .dynamic-image-btn {
+        width: 140px;
+        padding: 12px 20px;
+        font-size: 11px;
+    }
+    
+    /* Ensure three.js cube fits properly */
+    .dynamic-image-container canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 8px; /* Even more conservative padding */
+    }
+    
+    .products .container {
+        padding: 20px 5px;
+    }
+    
+    .accordion-header {
+        padding: 12px 8px;
+    }
+    
+    .accordion-content-inner {
+        padding: 12px 8px;
+    }
+    
+    .accordion-title {
+        font-size: 0.95rem;
+    }
+    
+    .outer-accordion-icon {
+        right: 40px;
+        font-size: 1rem;
+    }
+    
+    .dynamic-image-container {
+        height: 220px;
+        margin: 0 5px 20px 5px;
+    }
+    
+    /* Mobile menu improvements for small screens */
+    .mobile-nav-links a {
+        font-size: 1.3rem;
+        padding: 0.8rem;
+    }
+    
+    .mobile-nav-links li {
+        margin: 1rem 0;
+    }
+}
+
+/* Landscape orientation fixes for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .dynamic-image-container {
+        height: 200px;
+    }
+    
+    .mobile-menu-content {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+    }
+    
+    .mobile-nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .mobile-nav-links li {
+        margin: 0.5rem;
+    }
+    
+    .mobile-nav-links a {
+        font-size: 1.2rem;
+        padding: 0.6rem 1rem;
+    }
+}
