@@ -72,7 +72,7 @@ class SectionNavigator {
             'home': 100,              // No offset for hero section
             'features': 20,        // Medium offset for features
             'products': 20,        // More offset for products
-            'blockchain-networks': 10,        // More offset for products
+            'blockchain-networks': 5,        // More offset for products
             'roadmap-section': -20, // Less offset for roadmap
             'cta': 20,            // Less offset for CTA
             'footer': 0            // Most offset for footer
@@ -149,7 +149,7 @@ class SectionNavigator {
                 'home': 100,              // No offset for hero section
                 'features': 20,        // Medium offset for features
                 'products': 20,        // More offset for products
-                'blockchain-networks': 10,        // More offset for products
+                'blockchain-networks': 5,        // More offset for products
                 'roadmap-section': -20, // Less offset for roadmap
                 'cta': 20,            // Less offset for CTA
                 'footer': 0            // Most offset for footer
