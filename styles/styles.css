@@ -57,7 +57,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(10, 10, 10, 0.9);
+  background-color: rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   z-index: 1000;
@@ -88,7 +88,9 @@ nav {
 
 .logo:hover {
   transform: scale(1.05); /* Slight enlargement on hover */
-  filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5)); /* Enhanced glow on hover */
+  filter: drop-shadow(
+    0 0 15px rgba(0, 212, 255, 0.5)
+  ); /* Enhanced glow on hover */
 }
 
 .nav-links {
@@ -372,26 +374,22 @@ nav {
 
 /* Enhanced CTA Section Responsive Styles */
 
-
-
-
-
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
   .cta-cards-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-  
+
   .cta-card {
     height: 280px;
   }
-  
+
   .platform-description {
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .ai-pill {
     width: auto;
     min-width: 200px;
@@ -402,31 +400,31 @@ nav {
   .cta {
     padding: 60px 0;
   }
-  
+
   .cta-content {
     margin-bottom: 40px;
   }
-  
+
   .cta-cards-section {
     margin-top: 60px;
   }
-  
+
   .cta-cards-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .cta-card {
     height: 260px;
     margin: 0 auto;
     max-width: 400px;
   }
-  
+
   .platform-description {
     padding: 0.5rem;
     gap: 0.5rem;
   }
-  
+
   .ai-pill {
     min-width: 150px;
     padding: 0.6rem 0.8rem;
@@ -437,20 +435,20 @@ nav {
   .cta-cards-section h3 {
     margin-bottom: 2rem;
   }
-  
+
   .cta-card {
     height: 240px;
   }
-  
+
   .cta-card-content {
     padding: 1rem;
   }
-  
+
   .platform-description {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .ai-pill {
     min-width: 120px;
     font-size: 0.75rem;
@@ -462,7 +460,7 @@ nav {
   .cta-card {
     cursor: pointer;
   }
-  
+
   .cta-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0, 212, 255, 0.25);
@@ -691,7 +689,7 @@ nav {
   .hero {
     padding: 80px 0;
   }
-  
+
   .hero h1 {
     font-size: clamp(2.5rem, 15vw, 4rem);
     line-height: 1.1;
@@ -711,7 +709,7 @@ nav {
     align-items: center;
     gap: 0.75rem;
   }
-  
+
   .btn-primary,
   .btn-secondary {
     width: min(280px, 90vw);
@@ -742,7 +740,7 @@ nav {
   .hero h1 {
     font-size: clamp(2rem, 18vw, 3.5rem);
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -779,39 +777,203 @@ nav {
   box-shadow: 0 1px 25px rgba(0, 212, 255, 0.5);
 }
 /* Products dropdown */
-
 .dropdown {
   position: relative;
 }
 
+/* Create the bridge area FIRST - on the dropdown container itself */
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: 35px;
+  left: -20px;
+  width: 100px; /* Match dropdown width */
+  height: 35px; /* Match the reduced gap */
+  background: transparent;
+  z-index: 1;
+  pointer-events: auto; /* This captures the hover */
+  margin-top: -20px;
+  cursor: pointer;
+}
+
+/* ALTERNATIVE: Remove gap entirely for reliable hover */
 .dropdown-content {
   position: absolute;
   top: 100%;
-  left: -75px;
-  background: rgba(15, 15, 30, 0.95);
+  left: -265px;
+  background: rgb(0, 0, 0);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  min-width: 200px;
-  border-radius: 8px;
-  padding: 10px 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  min-width: 450px; /* Increased width for preview area */
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   z-index: 100;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(50px);
+  transform: translateX(50px);
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  margin-top: 5px;
 
+  margin-top: 31px; /* Reduced gap - more reliable */
+  overflow: hidden;
 }
 
+/* Show dropdown on hover of either the dropdown trigger OR the content */
 .dropdown:hover .dropdown-content {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.dropdown-content a {
+/* Main dropdown layout */
+.dropdown-layout {
+  display: flex;
+  min-height: 200px;
+}
+
+/* Left side - Menu items */
+.dropdown-menu {
+  flex: 1;
+  padding: 10px 0;
+  border-right: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Dropdown Styles */
+.dropdown > a {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* Add the blue hover color to dropdown trigger links */
+.dropdown > a:hover,
+.dropdown:hover > a {
+  color: #00d4ff;
+}
+
+/* Add the color line effect to dropdown trigger links */
+.dropdown > a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  transition: width 0.3s ease;
+}
+
+/* Show the line on hover of dropdown OR when dropdown is active */
+.dropdown:hover > a::after,
+.dropdown > a:hover::after {
+  width: 100%;
+}
+
+/* Enhanced dropdown menu link styles with color line effect */
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative; /* Needed for pseudo-element positioning */
+}
+
+/* Add color line effect to dropdown menu items */
+.dropdown-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 20px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  transition: width 0.3s ease;
+}
+
+.dropdown-menu a:hover::after {
+  width: calc(100% - 40px); /* Account for padding */
+}
+
+.dropdown-menu a:hover {
+  background: rgba(0, 212, 255, 0.1);
+  color: white;
+  padding-left: 25px;
+}
+
+/* Make static preview sections clickable */
+.dropdown-static-preview-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.dropdown-static-preview-link:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.1),
+    rgba(255, 0, 255, 0.1)
+  );
+  transform: scale(1.02);
+}
+
+/* Enhanced hover effect for static preview */
+.dropdown-static-preview-link:hover .static-preview-image {
+  transform: scale(1.1);
+  border-color: rgba(0, 212, 255, 1);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+.dropdown-static-preview-link:hover .static-preview-title {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+/* Update the static preview container to remove padding since the link now handles it */
+.dropdown-static-preview {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.05),
+    rgba(255, 0, 255, 0.05)
+  );
+  border-right: 1px solid rgba(0, 212, 255, 0.1);
+  padding: 0; /* Remove padding since link handles it */
+}
+
+/* UPDATED: Menu items on the right */
+.dropdown-menu {
+  flex: 1;
+  padding: 10px 0;
+  /* Removed border-right */
+}
+
+.dropdown-menu a {
   display: flex;
   align-items: center;
   padding: 12px 20px;
@@ -820,7 +982,7 @@ nav {
   transition: all 0.2s ease;
 }
 
-.dropdown-content a:hover {
+.dropdown-menu a:hover {
   background: rgba(0, 212, 255, 0.1);
   color: white;
   padding-left: 25px;
@@ -840,66 +1002,126 @@ nav {
   font-size: 18px;
 }
 
-/* Mobile menu toggle */
-.menu-toggle {
-  display: none;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1001;
+/* Static preview content styles */
+.static-preview-image {
+  width: 210px;
+  height: 90px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  object-fit: cover;
+
+  transition: all 0.3s ease;
 }
 
+.static-preview-image:hover {
+  transform: scale(1.05);
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+.static-preview-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #00d4ff;
+  margin-bottom: 8px;
+}
+
+.static-preview-description {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.static-preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.static-preview-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .dropdown-content {
+    min-width: 320px;
+  }
+
+  .dropdown-layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .dropdown-static-preview {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    padding: 15px;
+  }
+
+  .static-preview-image {
+    width: 800px;
+    height: 80px;
+  }
+}
+
+/* Hamburger Menu Icon Fix - Add this to your styles.css */
+
+.menu-toggle {
+  display: none; /* Hidden by default, shows on mobile */
+  background: transparent; /* Remove any background */
+  border: none; /* Remove any border */
+  color: white; /* Make icon white */
+  font-size: 1.5rem; /* Size of the hamburger icon */
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.3s ease;
+  outline: none; /* Remove focus outline */
+}
+
+.menu-toggle:hover {
+  color: #00d4ff; /* Blue on hover, matching other nav elements */
+  transform: scale(1.1); /* Slight scale on hover */
+}
+
+.menu-toggle:focus {
+  outline: none; /* Remove focus outline */
+}
+
+/* Ensure Font Awesome icon inherits the color */
+.menu-toggle i {
+  color: inherit; /* Inherits white/blue color from parent */
+  background: transparent; /* No background on the icon */
+}
+
+/* Show hamburger menu on mobile screens */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
   }
 
   .nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(10, 10, 10, 0.98);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: 1000;
+    display: none; /* Hide regular nav links on mobile */
   }
 
-  .nav-links.active {
-    transform: translateX(0);
+  .nav-buttons {
+    display: none; /* Hide nav buttons on mobile */
   }
+}
 
-  .nav-links li {
-    margin: 20px 0;
-  }
-
-  .dropdown-content {
-    position: static;
-    display: none;
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    padding: 0;
-    background: rgba(0, 0, 0, 0.3);
-  }
-
-  .dropdown.active .dropdown-content {
-    display: block;
-  }
-
-  .dropdown-content a {
-    padding-left: 40px;
+/* Additional mobile responsive adjustments */
+@media (max-width: 480px) {
+  .menu-toggle {
+    font-size: 1.3rem;
+    padding: 6px;
   }
 }

@@ -76,3 +76,4 @@
             // Document is already loaded
             setupHeroAnimation();
         }
+

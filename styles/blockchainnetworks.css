@@ -76,7 +76,10 @@
   display: flex;
   gap: 0.25rem;
   width: fit-content;
-  animation: seamlessScroll 60s linear infinite;
+  /* Animation will be applied dynamically by JavaScript */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .blockchain-cards-wrapper:hover {
@@ -327,7 +330,7 @@
 .phase-card:hover {
   transform: translateY(-5px);
   border-color: rgba(0, 212, 255, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+  box-shadow: 0 1px 30px rgba(0, 212, 255, 0.15);
 }
 
 .phase-number {
@@ -702,7 +705,7 @@
 
 .blockchain-networks.section-animated .deployment-strategy {
     transform: translateY(-10px);
-    box-shadow: 0 10px 10px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 1px 20px rgba(0, 212, 255, 0.2);
 }
 
 .phase-card {

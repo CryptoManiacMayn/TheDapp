@@ -1,4 +1,4 @@
-// Enhanced seamless infinite scroll for blockchain networks
+// Enhanced infinite scroll for blockchain networks - FIXED VERSION
 document.addEventListener("DOMContentLoaded", function () {
     const blockchainSection = document.getElementById("blockchain-networks");
     let isAnimating = false;
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Setup seamless infinite scroll
+    // Setup TRULY seamless infinite scroll
     function setupSeamlessScroll() {
         const wrapper = document.querySelector('.blockchain-cards-wrapper');
         const cardsContainer = document.querySelector('.blockchain-scroll-container');
@@ -25,58 +25,155 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!wrapper || !cardsContainer) return;
 
         // Get all existing blockchain cards
-        const originalCards = wrapper.querySelectorAll('.blockchain-card');
+        const originalCards = Array.from(wrapper.querySelectorAll('.blockchain-card'));
         
         if (originalCards.length === 0) return;
 
         // Clear the wrapper
         wrapper.innerHTML = '';
 
-        // Create the first set container
-        const firstSet = document.createElement('div');
-        firstSet.className = 'blockchain-cards-set';
-        
-        // Create the duplicate set container
-        const secondSet = document.createElement('div');
-        secondSet.className = 'blockchain-cards-set';
-
-        // Clone all original cards to both sets
-        originalCards.forEach(card => {
-            // Add to first set
-            firstSet.appendChild(card.cloneNode(true));
-            // Add to second set (for seamless loop)
-            secondSet.appendChild(card.cloneNode(true));
-        });
-
-        // Add both sets to wrapper
-        wrapper.appendChild(firstSet);
-        wrapper.appendChild(secondSet);
-
-        // Calculate the exact width for seamless scrolling
+        // Calculate dimensions
         const cardWidth = 200; // Width of each card
         const gap = 4; // Gap between cards (0.25rem = 4px)
         const totalCards = originalCards.length;
-        const setWidth = (cardWidth + gap) * totalCards;
+        const singleSetWidth = (cardWidth + gap) * totalCards - gap; // Subtract last gap
 
-        // Set CSS custom property for animation
-        document.documentElement.style.setProperty('--scroll-width', `${setWidth}px`);
+        // Create THREE sets for seamless scrolling (original + 2 duplicates)
+        for (let setIndex = 0; setIndex < 3; setIndex++) {
+            const cardSet = document.createElement('div');
+            cardSet.className = 'blockchain-cards-set';
+            cardSet.style.display = 'flex';
+            cardSet.style.gap = '0.25rem';
+            cardSet.style.flexShrink = '0';
+            
+            // Clone all original cards to this set
+            originalCards.forEach(card => {
+                const clonedCard = card.cloneNode(true);
+                cardSet.appendChild(clonedCard);
+            });
+            
+            wrapper.appendChild(cardSet);
+        }
 
-        // Update the CSS animation dynamically
+        // Set wrapper styles for seamless scrolling
+        wrapper.style.display = 'flex';
+        wrapper.style.gap = '0.25rem';
+        wrapper.style.width = 'fit-content';
+
+        // Create and inject the seamless scroll animation
+        const animationName = 'seamlessInfiniteScroll';
+        const existingStyle = document.getElementById('blockchain-infinite-scroll-style');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+
         const style = document.createElement('style');
+        style.id = 'blockchain-infinite-scroll-style';
         style.textContent = `
-            @keyframes seamlessScroll {
+            @keyframes ${animationName} {
                 0% {
                     transform: translateX(0);
                 }
                 100% {
-                    transform: translateX(-${setWidth}px);
+                    transform: translateX(-${singleSetWidth + gap}px);
                 }
+            }
+            
+            .blockchain-cards-wrapper {
+                animation: ${animationName} 60s linear infinite;
+            }
+            
+            .blockchain-cards-wrapper:hover {
+                animation-play-state: paused;
+            }
+            
+            /* Ensure smooth performance */
+            .blockchain-cards-wrapper {
+                will-change: transform;
+                backface-visibility: hidden;
+                transform: translateZ(0);
             }
         `;
         document.head.appendChild(style);
 
-        console.log('Seamless scroll setup complete');
-        console.log(`Set width: ${setWidth}px, Cards: ${totalCards}`);
+        console.log('True infinite scroll setup complete');
+        console.log(`Single set width: ${singleSetWidth}px, Cards: ${totalCards}, Total sets: 3`);
+    }
+
+    // Alternative method using pure CSS approach
+    function setupCSSInfiniteScroll() {
+        const wrapper = document.querySelector('.blockchain-cards-wrapper');
+        const cardsContainer = document.querySelector('.blockchain-scroll-container');
+        
+        if (!wrapper || !cardsContainer) return;
+
+        // Get original cards
+        const originalCards = Array.from(wrapper.querySelectorAll('.blockchain-card'));
+        if (originalCards.length === 0) return;
+
+        // Clear wrapper
+        wrapper.innerHTML = '';
+
+        // Create a container for all the scrolling content
+        const scrollContent = document.createElement('div');
+        scrollContent.className = 'blockchain-scroll-content';
+        
+        // Add original cards
+        originalCards.forEach(card => {
+            scrollContent.appendChild(card.cloneNode(true));
+        });
+        
+        // Add duplicates for seamless scroll (we need enough to fill the screen + extra)
+        for (let i = 0; i < 2; i++) {
+            originalCards.forEach(card => {
+                scrollContent.appendChild(card.cloneNode(true));
+            });
+        }
+
+        wrapper.appendChild(scrollContent);
+
+        // Apply styles
+        const cardWidth = 200;
+        const gap = 4;
+        const totalOriginalWidth = (cardWidth + gap) * originalCards.length;
+
+        // Update CSS
+        const existingStyle = document.getElementById('blockchain-css-infinite-style');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+
+        const style = document.createElement('style');
+        style.id = 'blockchain-css-infinite-style';
+        style.textContent = `
+            .blockchain-scroll-content {
+                display: flex;
+                gap: 0.25rem;
+                animation: infiniteScrollCSS 60s linear infinite;
+                will-change: transform;
+            }
+            
+            .blockchain-scroll-content:hover {
+                animation-play-state: paused;
+            }
+            
+            @keyframes infiniteScrollCSS {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-${totalOriginalWidth}px);
+                }
+            }
+            
+            .blockchain-cards-wrapper {
+                display: flex;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('CSS infinite scroll setup complete');
     }
 
     // Handle video background
@@ -100,34 +197,29 @@ document.addEventListener("DOMContentLoaded", function () {
         const blockchainCards = document.querySelectorAll('.blockchain-card');
         let hasTriggered = false;
         
-        // Function to trigger animation
         function triggerAnimation() {
             if (isAnimating) return;
             
             isAnimating = true;
             hasTriggered = true;
             
-            // Step 1: Prepare cards for animation
             blockchainCards.forEach((card) => {
                 card.classList.remove('animate-in');
                 card.classList.add('preparing-animation');
             });
             
-            // Step 2: Start animation after delay
             setTimeout(() => {
                 blockchainCards.forEach((card) => {
                     card.classList.remove('preparing-animation');
                     card.classList.add('animate-in');
                 });
                 
-                // Reset animation flag after animation completes
                 setTimeout(() => {
                     isAnimating = false;
                 }, animationConfig.animationDuration + 1000);
             }, animationConfig.preparationDelay);
         }
         
-        // Function to reset animation state
         function resetAnimation() {
             if (!hasTriggered) return;
             
@@ -138,19 +230,16 @@ document.addEventListener("DOMContentLoaded", function () {
             hasTriggered = false;
         }
         
-        // Intersection Observer for blockchain cards
         const cardObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Trigger animation when enough of the section is visible
                         if (entry.intersectionRatio >= animationConfig.triggerThreshold) {
                             setTimeout(() => {
                                 triggerAnimation();
                             }, 100);
                         }
                     } else {
-                        // Reset animation when leaving section
                         if (entry.intersectionRatio < 0.05) {
                             setTimeout(() => {
                                 resetAnimation();
@@ -175,16 +264,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize everything
     function initialize() {
-        // Setup seamless scroll first
+        // Use the improved seamless scroll method
         setupSeamlessScroll();
         
-        // Initialize video background
+        // Alternative: uncomment this line and comment the above to try the CSS method
+        // setupCSSInfiniteScroll();
+        
         initializeVideoBackground();
         
-        // Initialize card animations (after seamless scroll setup)
         setTimeout(() => {
             const animationController = initializeBlockchainCardAnimations();
-            // Expose controls globally
             window.blockchainAnimationController = animationController;
         }, 100);
     }
@@ -192,11 +281,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize when DOM is ready
     initialize();
 
-    // Expose setup function globally for manual initialization if needed
+    // Expose setup functions globally
     window.setupSeamlessBlockchainScroll = setupSeamlessScroll;
+    window.setupCSSInfiniteScroll = setupCSSInfiniteScroll;
 });
 
-// Enhanced particle system for visual effects
+// Keep the rest of the existing animation classes
 class OeconomiaAnimations {
     constructor() {
         this.particles = [];
@@ -211,7 +301,6 @@ class OeconomiaAnimations {
         this.setupNavigation();
     }
 
-    // Create floating particles
     createParticles() {
         const particleContainer = document.getElementById('particles');
         if (!particleContainer) return;
@@ -225,7 +314,6 @@ class OeconomiaAnimations {
             particle.style.animationDelay = Math.random() * 6 + 's';
             particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
             
-            // Random colors
             const colors = ['rgba(0, 212, 255, 0.6)', 'rgba(255, 0, 255, 0.6)', 'rgba(0, 255, 136, 0.6)'];
             particle.style.background = colors[Math.floor(Math.random() * colors.length)];
             
@@ -234,7 +322,6 @@ class OeconomiaAnimations {
         }
     }
 
-    // Setup scroll-triggered animations
     setupScrollAnimations() {
         const animateElements = document.querySelectorAll('.section');
         
@@ -243,7 +330,6 @@ class OeconomiaAnimations {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate');
                     
-                    // Animate child elements with stagger
                     const staggerElements = entry.target.querySelectorAll('[class*="stagger-"]');
                     staggerElements.forEach((el, index) => {
                         setTimeout(() => {
@@ -265,7 +351,6 @@ class OeconomiaAnimations {
         this.observers.push(observer);
     }
 
-    // Setup scroll to top button
     setupScrollToTop() {
         const scrollBtn = document.getElementById('scrollToTopBtn');
         if (!scrollBtn) return;
@@ -286,7 +371,6 @@ class OeconomiaAnimations {
         });
     }
 
-    // Setup navigation effects
     setupNavigation() {
         const nav = document.querySelector('nav');
         if (!nav) return;
@@ -299,7 +383,6 @@ class OeconomiaAnimations {
             }
         });
 
-        // Smooth scrolling for navigation links
         const navLinks = document.querySelectorAll('nav a[href^="#"]');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -315,7 +398,6 @@ class OeconomiaAnimations {
         });
     }
 
-    // Cleanup observers
     destroy() {
         this.observers.forEach(observer => observer.disconnect());
     }
@@ -348,7 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
     
-    // Add cursor fade animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes cursorFade {
